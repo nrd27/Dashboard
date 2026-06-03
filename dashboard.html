@@ -83,9 +83,22 @@ h1{font-size:32px;font-weight:900;letter-spacing:-.8px;margin:12px 0 6px;line-he
 .file{display:none}
 
 /* ═══════════════════════════════════════════
+   Collapsible Sections
+   ═══════════════════════════════════════════ */
+.collapse-header{display:flex;align-items:center;justify-content:space-between;cursor:pointer;
+  padding:10px 14px;user-select:none;-webkit-user-select:none;gap:8px}
+.collapse-header h3{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--soft);margin:0;flex-shrink:0}
+.collapse-summary{font-size:11px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;text-align:right;opacity:0;transition:opacity .2s}
+.collapse-header[aria-expanded="false"] .collapse-summary{opacity:1}
+.collapse-arrow{font-size:14px;color:var(--muted);transition:transform .2s;flex-shrink:0}
+.collapse-header[aria-expanded="false"] .collapse-arrow{transform:rotate(-90deg)}
+.collapse-body{overflow:hidden;transition:max-height .25s ease,opacity .2s ease;max-height:600px;opacity:1;padding:0 14px 14px}
+.collapse-body.collapsed{max-height:0;opacity:0;padding:0 14px}
+
+/* ═══════════════════════════════════════════
    Filters (sticky)
    ═══════════════════════════════════════════ */
-.filters{padding:14px;margin-bottom:16px;position:sticky;top:0;z-index:10}
+.filters{padding:0;margin-bottom:16px;position:sticky;top:0;z-index:10}
 .filtergrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 input,select{width:100%;height:42px;border:1px solid var(--line);border-radius:var(--radius-sm);
   background:rgba(6,16,30,.7);color:var(--text);padding:0 10px;font-size:13px;
@@ -98,6 +111,54 @@ select{appearance:auto}
 .chip{display:inline-flex;gap:5px;align-items:center;padding:5px 10px;border-radius:999px;
   background:rgba(255,122,26,.12);border:1px solid rgba(255,122,26,.2);font-size:11px;color:var(--accent2);font-weight:700}
 .chip button{border:0;background:0;color:var(--accent);font-weight:900;padding:0;font-size:14px}
+
+/* Multi-select keyword dropdown */
+.multiselect{position:relative;width:100%}
+.multiselect-btn{width:100%;height:42px;border:1px solid var(--line);border-radius:var(--radius-sm);
+  background:rgba(6,16,30,.7);color:var(--text);padding:0 10px;font-size:13px;text-align:left;
+  display:flex;align-items:center;justify-content:space-between;gap:6px;cursor:pointer;
+  transition:border-color .15s}
+:root.light .multiselect-btn{background:rgba(255,255,255,.7)}
+.multiselect-btn:focus,.multiselect-btn.open{border-color:var(--accent)}
+.multiselect-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+.multiselect-badge{background:var(--accent);color:#111;border-radius:999px;padding:1px 7px;
+  font-size:10px;font-weight:800;flex-shrink:0}
+.multiselect-drop{position:absolute;top:46px;left:0;right:0;max-height:300px;overflow-y:auto;
+  border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--bg2);
+  box-shadow:0 12px 36px rgba(0,0,0,.4);z-index:15;display:none}
+.multiselect-drop.open{display:block}
+.multiselect-search{width:100%;padding:8px 10px;border:0;border-bottom:1px solid var(--line);
+  background:transparent;color:var(--text);font-size:12px;outline:0}
+.multiselect-search::placeholder{color:var(--muted)}
+.multiselect-item{display:flex;align-items:center;gap:8px;padding:8px 12px;cursor:pointer;
+  font-size:12px;color:var(--text);transition:background .1s}
+.multiselect-item:hover{background:rgba(255,122,26,.08)}
+.multiselect-item input[type="checkbox"]{accent-color:var(--accent);width:15px;height:15px;flex-shrink:0;cursor:pointer}
+.multiselect-item label{cursor:pointer;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.multiselect-actions{display:flex;gap:6px;padding:6px 10px;border-bottom:1px solid var(--line)}
+.multiselect-actions button{flex:1;padding:5px;border-radius:6px;font-size:11px;font-weight:700;
+  background:var(--glass);border:1px solid var(--line);color:var(--muted)}
+.multiselect-actions button:hover{color:var(--text);border-color:var(--accent)}
+
+/* Trend drill-down popup */
+.trend-popup-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:24;opacity:0;pointer-events:none;transition:opacity .2s}
+.trend-popup-backdrop.open{opacity:1;pointer-events:auto}
+.trend-popup{position:fixed;z-index:25;background:var(--bg2);border:1px solid var(--line);
+  border-radius:var(--radius);box-shadow:0 12px 48px rgba(0,0,0,.4);padding:16px;
+  max-width:480px;width:90vw;max-height:60vh;overflow-y:auto;display:none}
+.trend-popup.open{display:block}
+.trend-popup h3{font-size:14px;font-weight:800;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
+.trend-popup .trend-post{display:flex;gap:8px;padding:8px 0;border-bottom:1px solid var(--line);font-size:12px;align-items:start}
+.trend-popup .trend-post:last-child{border-bottom:0}
+.trend-popup .tp-avatar{width:28px;height:28px;border-radius:6px;display:grid;place-items:center;
+  font-size:11px;font-weight:900;color:#001018;flex-shrink:0}
+.trend-popup .tp-body{min-width:0;flex:1}
+.trend-popup .tp-head{font-weight:700;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.trend-popup .tp-msg{color:var(--soft);margin-top:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.trend-popup .tp-meta{color:var(--muted);font-size:11px}
+.trend-popup-close{background:0;border:0;color:var(--muted);font-size:18px;cursor:pointer;padding:0 4px}
+.trend-hint{font-size:11px;color:var(--muted);margin-top:4px;display:flex;align-items:center;gap:4px}
+.trend-hint::before{content:'';display:inline-block;width:8px;height:8px;border-radius:50%;border:2px solid var(--accent);flex-shrink:0}
 
 /* ═══════════════════════════════════════════
    KPI Cards
@@ -237,18 +298,48 @@ svg{display:block;width:100%;height:100%;overflow:visible}
   .filtergrid{grid-template-columns:1fr 1fr}
 }
 @media(max-width:720px){
-  .app{padding:14px 10px 80px}
-  h1{font-size:26px}
+  .app{padding:12px 6px 80px}
+  h1{font-size:22px}
+  .lead{font-size:12px;display:none}
   .filtergrid,.filterActions,.feedTools{grid-template-columns:1fr}
   .kpis{grid-template-columns:1fr 1fr}
-  .kpi .value{font-size:24px}
+  .kpi{padding:10px}
+  .kpi .value{font-size:20px}
+  .kpi .label{font-size:9px}
   .btnrow{grid-template-columns:1fr}
-  .post{grid-template-columns:40px 1fr}
+  .post{grid-template-columns:36px 1fr;gap:8px;padding:10px}
   .post>.sent{grid-column:2;justify-self:start}
-  .barrow{grid-template-columns:70px 1fr 44px}
+  .barrow{grid-template-columns:60px 1fr 40px}
+  .panel{padding:12px}
+  .panel h2{font-size:14px}
+  .chart{height:220px}
+  .mini{height:180px}
+  .xmini{height:160px}
+  .drawer{width:100vw;padding:16px;border-radius:var(--radius) var(--radius) 0 0;border-left:0;border-top:1px solid var(--line)}
+  .tabbar{gap:2px;-webkit-overflow-scrolling:touch}
+  .tabbtn{padding:6px 12px;font-size:11px;min-height:36px}
+  .feedTools{gap:6px}
+  .hero .toolbar{gap:6px}
+  .eyebrow{font-size:10px;padding:4px 10px}
+  .multiselect-drop{position:fixed;top:auto;bottom:0;left:0;right:0;max-height:50vh;
+    border-radius:var(--radius) var(--radius) 0 0;z-index:30}
+  /* Trend popup as bottom sheet on mobile */
+  .trend-popup{position:fixed;bottom:0;left:0;right:0;top:auto;width:100%;max-width:100%;
+    border-radius:var(--radius) var(--radius) 0 0;max-height:65vh}
+  .card{border-radius:var(--radius-sm)}
+  .collapse-header{padding:8px 12px;min-height:44px}
+  select,input,.multiselect-btn{height:44px;font-size:14px}
+  .pgbtn{min-width:40px;min-height:40px;display:grid;place-items:center}
+  .topic{min-height:36px}
 }
 @media(max-width:420px){
-  .kpis{grid-template-columns:1fr}
+  .kpis{grid-template-columns:1fr 1fr}
+  .post{grid-template-columns:30px 1fr}
+  .avatar{width:30px;height:30px;font-size:12px;border-radius:8px}
+  h1{font-size:20px}
+  .account{max-width:140px}
+  .heatmap{font-size:8px}
+  .hm-label{font-size:8px}
 }
 </style>
 </head>
@@ -267,13 +358,20 @@ svg{display:block;width:100%;height:100%;overflow:visible}
       </div>
     </div>
     <div class="card upload" id="dropZone">
-      <div class="drop" id="dropArea">
-        <b>Import Zocial Eye export</b>
-        <span>XLSX or CSV &middot; Drag &amp; drop or click below &middot; 100% local</span>
+      <div class="collapse-header" id="importToggle" aria-expanded="true">
+        <h3>Import Data</h3>
+        <span class="collapse-summary" id="importSummary"></span>
+        <span class="collapse-arrow">&#9660;</span>
       </div>
-      <div class="btnrow">
-        <button class="btn" id="chooseBtn">Choose File</button>
-        <button class="btn secondary" id="clearBtn">Clear Data</button>
+      <div class="collapse-body" id="importBody">
+        <div class="drop" id="dropArea">
+          <b>Import Zocial Eye export</b>
+          <span>XLSX or CSV &middot; Drag &amp; drop or click below &middot; 100% local</span>
+        </div>
+        <div class="btnrow">
+          <button class="btn" id="chooseBtn">Choose File</button>
+          <button class="btn secondary" id="clearBtn">Clear Data</button>
+        </div>
       </div>
       <input class="file" id="fileInput" type="file" accept=".xlsx,.xls,.csv">
     </div>
@@ -281,21 +379,40 @@ svg{display:block;width:100%;height:100%;overflow:visible}
 
   <!-- Filters -->
   <section class="card filters" id="filterBar">
-    <div class="filtergrid">
-      <input id="q" placeholder="Search messages, accounts, topics...">
-      <select id="fSource"><option value="">All Platforms</option></select>
-      <select id="fBrand"><option value="">All Brands</option></select>
-      <select id="fKeyword"><option value="">All Keywords</option></select>
-      <select id="fSentiment"><option value="">All Sentiment</option></select>
-      <select id="fAudience"><option value="">All Audience Tiers</option></select>
-      <input id="fFrom" type="date">
-      <input id="fTo" type="date">
+    <div class="collapse-header" id="filterToggle" aria-expanded="true">
+      <h3>Filters</h3>
+      <span class="collapse-summary" id="filterSummary"></span>
+      <span class="collapse-arrow">&#9660;</span>
     </div>
-    <div class="filterActions">
-      <button class="btn secondary" id="resetBtn">Reset Filters</button>
-      <button class="btn secondary" id="exportBtn">Export CSV</button>
+    <div class="collapse-body" id="filterBody">
+      <div class="filtergrid">
+        <input id="q" placeholder="Search messages, accounts, topics...">
+        <select id="fSource"><option value="">All Platforms</option></select>
+        <select id="fBrand"><option value="">All Brands</option></select>
+        <div class="multiselect" id="kwMultiselect">
+          <button class="multiselect-btn" id="kwBtn" type="button">
+            <span class="multiselect-label">All Keywords</span>
+          </button>
+          <div class="multiselect-drop" id="kwDrop">
+            <input class="multiselect-search" id="kwSearch" type="text" placeholder="Search keywords...">
+            <div class="multiselect-actions">
+              <button id="kwSelectAll" type="button">Select All</button>
+              <button id="kwClearAll" type="button">Clear All</button>
+            </div>
+            <div id="kwItems"></div>
+          </div>
+        </div>
+        <select id="fSentiment"><option value="">All Sentiment</option></select>
+        <select id="fAudience"><option value="">All Audience Tiers</option></select>
+        <input id="fFrom" type="date">
+        <input id="fTo" type="date">
+      </div>
+      <div class="filterActions">
+        <button class="btn secondary" id="resetBtn">Reset Filters</button>
+        <button class="btn secondary" id="exportBtn">Export CSV</button>
+      </div>
     </div>
-    <div class="chips" id="chips"></div>
+    <div class="chips" id="chips" style="padding:0 14px 8px"></div>
   </section>
 
   <!-- Dashboard -->
@@ -309,6 +426,7 @@ svg{display:block;width:100%;height:100%;overflow:visible}
         <div class="tabbar" id="trendTabs"></div>
         <div class="sub">Daily volume or engagement across the selected period</div>
         <div class="chart" id="trend"></div>
+        <div class="trend-hint">Click any data point to see top posts for that date</div>
       </div>
       <div class="card panel fadeIn">
         <h2>Sentiment Distribution</h2>
@@ -425,6 +543,11 @@ svg{display:block;width:100%;height:100%;overflow:visible}
   <h2 id="dTitle">Post Detail</h2>
   <div id="dBody"></div>
 </aside>
+<div class="trend-popup-backdrop" id="trendPopupBackdrop"></div>
+<div class="trend-popup" id="trendPopup">
+  <h3><span id="trendPopupTitle">Posts</span><button class="trend-popup-close" id="trendPopupClose">&times;</button></h3>
+  <div id="trendPopupBody"></div>
+</div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -540,12 +663,85 @@ $('themeBtn').onclick=function(){
 };
 
 /* ═══════════════════════════════════════════
+   Collapsible Sections
+   ═══════════════════════════════════════════ */
+function initCollapsible(toggleId,bodyId){
+  var toggle=$(toggleId),body=$(bodyId);
+  toggle.onclick=function(){
+    var expanded=toggle.getAttribute('aria-expanded')==='true';
+    toggle.setAttribute('aria-expanded',String(!expanded));
+    body.classList.toggle('collapsed',expanded);
+  };
+}
+initCollapsible('importToggle','importBody');
+initCollapsible('filterToggle','filterBody');
+
+/* ═══════════════════════════════════════════
+   Multi-select Keyword
+   ═══════════════════════════════════════════ */
+var SELECTED_KW=new Set();
+function buildKwDropdown(keywords){
+  var html=keywords.map(function(kw){
+    var checked=SELECTED_KW.has(kw)?'checked':'';
+    return'<div class="multiselect-item"><input type="checkbox" id="kw_'+esc(kw)+'" value="'+esc(kw)+'" '+checked+'><label for="kw_'+esc(kw)+'">'+esc(kw)+'</label></div>';
+  }).join('');
+  $('kwItems').innerHTML=html||'<div style="padding:12px;color:var(--muted);font-size:12px;text-align:center">No keywords</div>';
+  $('kwItems').querySelectorAll('input[type="checkbox"]').forEach(function(cb){
+    cb.onchange=function(){
+      if(cb.checked)SELECTED_KW.add(cb.value);else SELECTED_KW.delete(cb.value);
+      updateKwLabel();scheduleFilter();
+    };
+  });
+  updateKwLabel();
+}
+function updateKwLabel(){
+  var btn=$('kwBtn'),label=btn.querySelector('.multiselect-label');
+  var existing=btn.querySelector('.multiselect-badge');
+  if(existing)existing.remove();
+  if(SELECTED_KW.size===0){label.textContent='All Keywords'}
+  else{
+    label.textContent=Array.from(SELECTED_KW).slice(0,2).join(', ')+(SELECTED_KW.size>2?' ...':'');
+    var badge=document.createElement('span');badge.className='multiselect-badge';badge.textContent=SELECTED_KW.size;
+    btn.appendChild(badge);
+  }
+}
+$('kwBtn').onclick=function(e){
+  e.stopPropagation();
+  var drop=$('kwDrop'),btn=$('kwBtn');
+  var isOpen=drop.classList.contains('open');
+  drop.classList.toggle('open',!isOpen);
+  btn.classList.toggle('open',!isOpen);
+  if(!isOpen){$('kwSearch').value='';filterKwItems('');setTimeout(function(){$('kwSearch').focus()},50)}
+};
+$('kwSelectAll').onclick=function(){
+  $('kwItems').querySelectorAll('.multiselect-item:not([style*="display:none"]) input[type="checkbox"]').forEach(function(cb){cb.checked=true;SELECTED_KW.add(cb.value)});
+  updateKwLabel();scheduleFilter();
+};
+$('kwClearAll').onclick=function(){
+  SELECTED_KW.clear();
+  $('kwItems').querySelectorAll('input[type="checkbox"]').forEach(function(cb){cb.checked=false});
+  updateKwLabel();scheduleFilter();
+};
+$('kwSearch').onclick=function(e){e.stopPropagation()};
+$('kwSearch').oninput=function(){filterKwItems(this.value)};
+function filterKwItems(q){
+  var lq=lower(q);
+  $('kwItems').querySelectorAll('.multiselect-item').forEach(function(item){
+    var label=item.querySelector('label').textContent;
+    item.style.display=!lq||lower(label).indexOf(lq)>=0?'':'none';
+  });
+}
+document.addEventListener('click',function(e){
+  if(!$('kwMultiselect').contains(e.target)){$('kwDrop').classList.remove('open');$('kwBtn').classList.remove('open')}
+});
+
+/* ═══════════════════════════════════════════
    Init Filters
    ═══════════════════════════════════════════ */
 function initFilters(){
   fillSel('fSource',unique('source'),'All Platforms');
   fillSel('fBrand',unique('category'),'All Brands');
-  fillSel('fKeyword',unique('mainKeyword').filter(function(x){return x!=='-'}),'All Keywords');
+  buildKwDropdown(unique('mainKeyword').filter(function(x){return x!=='-'}));
   fillSel('fSentiment',['Positive','Negative','Neutral','Unknown'],'All Sentiment');
   var tiers=TIER_ORDER.filter(function(t){return DATA.some(function(r){return r.audienceSize===t})});
   fillSel('fAudience',tiers,'All Audience Tiers');
@@ -560,11 +756,13 @@ var _ft;
 function scheduleFilter(){clearTimeout(_ft);_ft=setTimeout(applyFilters,80)}
 function applyFilters(){
   var q=lower($('q').value),src=$('fSource').value,cat=$('fBrand').value,
-    kw=$('fKeyword').value,sent=$('fSentiment').value,aud=$('fAudience').value,
+    sent=$('fSentiment').value,aud=$('fAudience').value,
     from=$('fFrom').value,to=$('fTo').value;
+  var hasKw=SELECTED_KW.size>0;
   FILTERED=DATA.filter(function(r){
     return(!q||lower(r.message+' '+r.account+' '+r.mainKeyword+' '+r.subKeyword+' '+r.category+' '+r.ner).indexOf(q)>=0)&&
-    (!src||r.source===src)&&(!cat||r.category===cat)&&(!kw||r.mainKeyword===kw)&&
+    (!src||r.source===src)&&(!cat||r.category===cat)&&
+    (!hasKw||SELECTED_KW.has(r.mainKeyword))&&
     (!sent||r.sentiment===sent)&&(!aud||r.audienceSize===aud)&&
     (!from||r.date>=from)&&(!to||r.date<=to);
   });
@@ -574,7 +772,7 @@ function applyFilters(){
 /* ═══════════════════════════════════════════
    Filter Event Binding
    ═══════════════════════════════════════════ */
-['q','fSource','fBrand','fKeyword','fSentiment','fAudience','fFrom','fTo'].forEach(function(id){
+['q','fSource','fBrand','fSentiment','fAudience','fFrom','fTo'].forEach(function(id){
   $(id).addEventListener('input',scheduleFilter)});
 ['sortBy','sortDir','perPage'].forEach(function(id){$(id).addEventListener('input',function(){PAGE=0;renderFeed()})});
 
@@ -584,6 +782,7 @@ function applyFilters(){
 function render(){
   closeDrawer();
   $('dash').classList.toggle('hidden',!DATA.length);
+  updateSummaries();
   renderChips();renderKpis();
   drawTrend();drawSentiment();drawPlatforms();renderBrandBattle();
   drawAudienceTier();drawAccountType();drawSentTimeline();
@@ -592,16 +791,40 @@ function render(){
   renderFeed();
 }
 
+function updateSummaries(){
+  // Import summary
+  if(DATA.length){
+    $('importSummary').textContent=DATA.length.toLocaleString()+' records loaded';
+  }
+  // Filter summary
+  var active=[];
+  if($('fSource').value)active.push($('fSource').value);
+  if($('fBrand').value)active.push($('fBrand').value);
+  if(SELECTED_KW.size)active.push(SELECTED_KW.size+' keywords');
+  if($('fSentiment').value)active.push($('fSentiment').value);
+  if($('fAudience').value)active.push($('fAudience').value);
+  if($('q').value)active.push('"'+$('q').value+'"');
+  $('filterSummary').textContent=active.length?FILTERED.length.toLocaleString()+' results | '+active.join(', '):(DATA.length?FILTERED.length.toLocaleString()+' results — no filters':'');
+}
+
 /* ═══════════════════════════════════════════
    Chips
    ═══════════════════════════════════════════ */
 function renderChips(){
-  var pairs=[['Platform','fSource'],['Brand','fBrand'],['Keyword','fKeyword'],
+  var pairs=[['Platform','fSource'],['Brand','fBrand'],
     ['Sentiment','fSentiment'],['Tier','fAudience']];
   var html='';
   pairs.forEach(function(p){var v=$(p[1]).value;if(v)html+='<div class="chip">'+p[0]+': '+esc(v)+' <button data-c="'+p[1]+'">x</button></div>'});
+  SELECTED_KW.forEach(function(kw){
+    html+='<div class="chip">KW: '+esc(kw)+' <button data-kw="'+esc(kw)+'">x</button></div>';
+  });
   $('chips').innerHTML=html;
-  $('chips').querySelectorAll('button').forEach(function(b){b.onclick=function(){$(b.dataset.c).value='';applyFilters()}});
+  $('chips').querySelectorAll('button[data-c]').forEach(function(b){b.onclick=function(){$(b.dataset.c).value='';applyFilters()}});
+  $('chips').querySelectorAll('button[data-kw]').forEach(function(b){b.onclick=function(){
+    SELECTED_KW.delete(b.dataset.kw);
+    var cb=$('kwItems').querySelector('input[value="'+b.dataset.kw+'"]');if(cb)cb.checked=false;
+    updateKwLabel();applyFilters();
+  }});
 }
 
 /* ═══════════════════════════════════════════
@@ -631,7 +854,7 @@ function renderKpis(){
    ═══════════════════════════════════════════ */
 function emptyEl(el){el.innerHTML='<div class="empty">No data</div>'}
 
-function drawLineChart(elId,series){
+function drawLineChart(elId,series,onClickPoint){
   var el=$(elId);if(!series.length||!series[0].data.length)return emptyEl(el);
   var w=el.clientWidth||400,h=el.clientHeight||220;
   var p={l:44,r:14,t:14,b:32};
@@ -653,10 +876,20 @@ function drawLineChart(elId,series){
     var pts=s.data.map(function(d,i){return xScale(i)+','+yScale(d.y)}).join(' ');
     svg+='<polyline points="'+pts+'" fill="none" stroke="'+s.color+'" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity=".85"/>';
     s.data.forEach(function(d,i){
-      svg+='<circle cx="'+xScale(i)+'" cy="'+yScale(d.y)+'" r="3.5" fill="'+s.color+'" opacity="0"><title>'+esc(s.name)+' '+esc(d.x)+': '+fmt(d.y)+'</title><set attributeName="opacity" to="1" begin="mouseover" end="mouseout"/></circle>';
+      var clickable=typeof onClickPoint==='function';
+      var r2=clickable?(window.innerWidth<=720?'8':'6'):'3.5';
+      svg+='<circle cx="'+xScale(i)+'" cy="'+yScale(d.y)+'" r="'+r2+'" fill="'+s.color+'" opacity="'+(clickable?'.5':'0')+'" stroke="'+s.color+'" stroke-width="2" style="'+(clickable?'cursor:pointer':'')+'" data-date="'+esc(d.x)+'" data-brand="'+esc(s.name)+'"><title>'+esc(s.name)+' '+esc(d.x)+': '+fmt(d.y)+' — click to see posts</title><set attributeName="opacity" to="1" begin="mouseover" end="mouseout"/></circle>';
     });
   });
   svg+='</svg>';el.innerHTML=svg;
+  if(typeof onClickPoint==='function'){
+    el.querySelectorAll('circle[data-date]').forEach(function(c){
+      c.addEventListener('click',function(e){
+        e.stopPropagation();
+        onClickPoint(c.getAttribute('data-date'),c.getAttribute('data-brand'),e);
+      });
+    });
+  }
 }
 
 function drawDonut(elId,data){
@@ -719,12 +952,58 @@ function drawTrend(){
     var series=brands.map(function(b){
       return{name:b,color:bColor(b),data:dates.map(function(d){return{x:d,y:byDate.get(d).get(b)||0}})};
     });
-    drawLineChart('trend',series);
+    drawLineChart('trend',series,showTrendDrilldown);
   }else{
     var totals=dates.map(function(d){var t=0;byDate.get(d).forEach(function(v){t+=v});return{x:d,y:t}});
-    drawLineChart('trend',[{name:'Total',color:'var(--accent)',data:totals}]);
+    drawLineChart('trend',[{name:'Total',color:'var(--accent)',data:totals}],showTrendDrilldown);
   }
 }
+
+/* ═══════════════════════════════════════════
+   Trend Drill-down Popup
+   ═══════════════════════════════════════════ */
+function showTrendDrilldown(date,brand,evt){
+  var posts=FILTERED.filter(function(r){
+    return r.date===date&&(brand==='Total'||r.category===brand);
+  }).sort(function(a,b){return b.engagement-a.engagement}).slice(0,20);
+  var metricLabel=trendMetric==='mentions'?'Mentions':trendMetric==='followers'?'Followers':'Engagement';
+  $('trendPopupTitle').textContent=date+' / '+(brand==='Total'?'All Brands':brand)+' — Top '+metricLabel;
+  if(!posts.length){$('trendPopupBody').innerHTML='<div class="empty">No posts on this date</div>'}
+  else{
+    $('trendPopupBody').innerHTML=posts.map(function(r){
+      var urlLink=r.directUrl&&r.directUrl!=='-'?'<a href="'+esc(r.directUrl)+'" target="_blank" rel="noreferrer" style="font-size:11px;margin-left:6px">Open &rarr;</a>':'';
+      return'<div class="trend-post">'+
+        '<div class="tp-avatar" style="background:'+pColor(r.source)+'">'+esc((r.source||'?')[0].toUpperCase())+'</div>'+
+        '<div class="tp-body">'+
+          '<div class="tp-head"><span>'+esc(r.account)+'</span><span class="sent '+esc(r.sentiment)+'" style="font-size:10px;padding:2px 6px">'+esc(r.sentiment)+'</span>'+urlLink+'</div>'+
+          '<div class="tp-msg">'+esc(r.message||'(No message)')+'</div>'+
+          '<div class="tp-meta">Eng '+fmt(r.engagement)+' &middot; ER '+pct(r.er)+' &middot; '+esc(r.source)+' &middot; '+esc(r.category)+'</div>'+
+        '</div></div>';
+    }).join('');
+  }
+  var popup=$('trendPopup');
+  popup.classList.add('open');
+  $('trendPopupBackdrop').classList.add('open');
+  // Position near click on desktop, bottom sheet on mobile
+  if(window.innerWidth<=720){
+    popup.style.left='0';popup.style.top='auto';popup.style.bottom='0';
+  }else{
+    popup.style.bottom='';
+    var x=evt.clientX,y=evt.clientY;
+    var pw=Math.min(480,window.innerWidth*.9);
+    var left=Math.min(x,window.innerWidth-pw-20);
+    var top=Math.min(y+10,window.innerHeight-300);
+    popup.style.left=Math.max(10,left)+'px';
+    popup.style.top=Math.max(10,top)+'px';
+  }
+}
+function closeTrendPopup(){$('trendPopup').classList.remove('open');$('trendPopupBackdrop').classList.remove('open')}
+$('trendPopupClose').onclick=closeTrendPopup;
+$('trendPopupBackdrop').onclick=closeTrendPopup;
+document.addEventListener('click',function(e){
+  if($('trendPopup').classList.contains('open')&&!$('trendPopup').contains(e.target)&&!e.target.closest('#trend circle'))
+    closeTrendPopup();
+});
 
 /* ═══════════════════════════════════════════
    Platform
@@ -1052,6 +1331,15 @@ function handleFile(file){
       DATA=normalize(rows);
       setColors();initFilters();applyFilters();
       $('lastUpdated').textContent=DATA.length.toLocaleString()+' records | '+file.name+' | '+new Date().toLocaleTimeString();
+      $('importSummary').textContent=DATA.length.toLocaleString()+' records | '+file.name;
+      // Auto-collapse import section after loading
+      $('importToggle').setAttribute('aria-expanded','false');
+      $('importBody').classList.add('collapsed');
+      // Auto-collapse filter section on mobile
+      if(window.innerWidth<=720){
+        $('filterToggle').setAttribute('aria-expanded','false');
+        $('filterBody').classList.add('collapsed');
+      }
       toast('Loaded '+DATA.length.toLocaleString()+' records');
     }catch(e){
       console.error(e);toast('Error: '+e.message);$('lastUpdated').textContent='Error reading file';
@@ -1077,13 +1365,15 @@ function exportCSV(){
 $('chooseBtn').onclick=function(){$('fileInput').click()};
 $('fileInput').onchange=function(e){handleFile(e.target.files[0])};
 $('clearBtn').onclick=function(){
-  DATA=[];FILTERED=[];PAGE=0;
+  DATA=[];FILTERED=[];PAGE=0;SELECTED_KW.clear();
   $('dash').classList.add('hidden');$('lastUpdated').textContent='No data loaded';
-  ['q','fSource','fBrand','fKeyword','fSentiment','fAudience','fFrom','fTo'].forEach(function(id){$(id).value=''});
+  ['q','fSource','fBrand','fSentiment','fAudience','fFrom','fTo'].forEach(function(id){$(id).value=''});
+  updateKwLabel();$('kwItems').innerHTML='';
   $('chips').innerHTML='';
 };
 $('resetBtn').onclick=function(){
-  ['q','fSource','fBrand','fKeyword','fSentiment','fAudience'].forEach(function(id){$(id).value=''});
+  ['q','fSource','fBrand','fSentiment','fAudience'].forEach(function(id){$(id).value=''});
+  SELECTED_KW.clear();
   initFilters();applyFilters();
 };
 $('exportBtn').onclick=exportCSV;
