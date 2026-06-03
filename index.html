@@ -36,7 +36,7 @@
       <div class="chips" id="keywordChips"></div><div id="activeTopic" class="activeTopic"></div>
     </div>
     <div class="kpis"><div class="card kpi"><div class="label">Mentions</div><div class="value" id="kMentions">0</div><div class="hint">Total matched records</div></div><div class="card kpi"><div class="label">Engagement</div><div class="value" id="kEng">0</div><div class="hint" id="kAvgEng">Avg per mention</div></div><div class="card kpi"><div class="label">Positive share</div><div class="value" id="kPos">0%</div><div class="hint">Positive / known sentiment</div></div><div class="card kpi"><div class="label">Top platform</div><div class="value" id="kPlatform">-</div><div class="hint" id="kPlatformHint">By selected metric</div></div><div class="card kpi"><div class="label">Top brand</div><div class="value" id="kBrand">-</div><div class="hint" id="kBrandHint">By selected metric</div></div><div class="card kpi"><div class="label">Active topics</div><div class="value" id="kTopics">0</div><div class="hint">Grouped word cloud</div></div></div>
-    <div class="grid"><div class="card panel"><h2>Trend over time</h2><div class="chart" id="trend"></div></div><div class="card panel"><h2>Sentiment mix</h2><div class="chart small" id="sentimentChart"></div></div><div class="card panel"><h2>Platform performance</h2><div class="chart small" id="platformChart"></div></div><div class="card panel"><h2>Smart topic cloud</h2><div class="note">Grouped by hashtag, keyword, entity and phrase. Click a topic to filter messages.</div><div class="wordTools"><select id="cloudType"><option value="all">All topic types</option><option value="hashtag">Hashtags</option><option value="keyword">Keywords</option><option value="entity">Entities</option><option value="phrase">Phrases</option></select><select id="cloudRank"><option value="smart">Rank by smart score</option><option value="mentions">Rank by mentions</option><option value="engagement">Rank by engagement</option></select><button class="ghost" id="clearTopicBtn">Clear topic</button></div><div class="wordCloud" id="wordCloud"></div></div></div>
+    <div class="grid"><div class="card panel"><h2>Trend over time</h2><div class="chart" id="trend"></div></div><div class="card panel"><h2>Sentiment mix</h2><div class="chart small" id="sentimentChart"></div></div><div class="card panel"><h2>Platform performance</h2><div class="chart small" id="platformChart"></div></div><div class="card panel"><h2>Smart topic cloud</h2><div class="note">Generic topic extraction: hashtags, keywords, entities, noun-like phrases, dynamic stopwords and variant grouping. Click a topic to filter messages.</div><div class="wordTools"><select id="cloudType"><option value="all">All topic types</option><option value="hashtag">Hashtags</option><option value="keyword">Keywords</option><option value="entity">Entities</option><option value="phrase">Phrases</option></select><select id="cloudRank"><option value="smart">Rank by smart score</option><option value="mentions">Rank by mentions</option><option value="engagement">Rank by engagement</option></select><button class="ghost" id="clearTopicBtn">Clear topic</button></div><div class="wordCloud" id="wordCloud"></div></div></div>
     <div class="card panel" style="margin-top:12px"><h2>Comparison Lab</h2><div class="note">เทียบ performance ระหว่าง Brand / Keyword / Platform / Account เพื่อดู mention, engagement, avg engagement, ER และ share of voice</div><div class="compareControls"><select id="compareBy"><option value="category">Compare by brand/category</option><option value="mainKeyword">Compare by main keyword</option><option value="source">Compare by platform</option><option value="account">Compare by account</option><option value="sentiment">Compare by sentiment</option></select><select id="compareMetric"><option value="engagement">Rank by engagement</option><option value="mentions">Rank by mentions</option><option value="avgEngagement">Rank by avg engagement</option><option value="positiveShare">Rank by positive share</option><option value="er">Rank by ER</option></select><select id="compareLimit"><option value="8">Top 8</option><option value="12">Top 12</option><option value="20">Top 20</option></select><button class="ghost" id="exportCompareBtn">Export comparison CSV</button></div><div class="compareGrid"><div><h2 id="compareTitle" style="margin-top:0">Performance ranking</h2><div class="chart" id="compareChart"></div></div><div><h2 style="margin-top:0">Share of voice</h2><div class="chart small" id="sovChart"></div></div></div><div class="tableWrap" style="max-height:420px;margin-top:14px"><table><thead><tr><th>#</th><th>Name</th><th>Mentions</th><th>Share</th><th>Engagement</th><th>Avg Eng.</th><th>ER</th><th>Positive</th><th>Negative</th><th>Best platform</th></tr></thead><tbody id="compareRows"></tbody></table></div></div>
     <div class="card panel" style="margin-top:12px"><h2>Message explorer</h2><div class="tableTools"><select id="sortBy"><option value="date">Sort by date</option><option value="engagement">Sort by engagement</option><option value="account">Sort by account</option><option value="source">Sort by platform</option><option value="category">Sort by brand</option><option value="sentiment">Sort by sentiment</option></select><select id="sortDir"><option value="desc">High/New → Low/Old</option><option value="asc">Low/Old → High/New</option></select><select id="rowLimit"><option value="100">Show 100</option><option value="300">Show 300</option><option value="1000">Show 1000</option></select><button class="ghost" id="topEngBtn">Top engagement</button></div><div class="tableWrap"><table><thead><tr><th data-sort="date">Date</th><th data-sort="source">Platform</th><th data-sort="category">Brand</th><th data-sort="mainKeyword">Keyword</th><th data-sort="sentiment">Sentiment</th><th data-sort="account">Account</th><th data-sort="engagement">Engagement</th><th>Message</th></tr></thead><tbody id="rows"></tbody></table></div></div>
     <div class="foot">For realtime refresh, import a new XLSX/CSV export. The file is read locally in the browser.</div>
@@ -68,14 +68,111 @@ function group(arr,key){const m=new Map(); arr.forEach(r=>{const keys=key==='key
 function render(){FILTERED=filtered(); const metric=$('metric').value; renderKpis(metric); drawLine('trend',trendData(FILTERED,metric)); drawDonut('sentimentChart',group(FILTERED,'sentiment').map(x=>({name:x.name,value:x.mentions}))); drawBars('platformChart',group(FILTERED,'source').sort((a,b)=>metricValue(b,metric)-metricValue(a,metric)).slice(0,8).map(x=>({name:x.name,value:metricValue(x,metric)})),metric); renderWordCloud(); renderCompare(); renderTable();}
 function renderKpis(metric){const total=sum(FILTERED,'engagement'), known=FILTERED.filter(r=>r.sentiment!=='Unknown'), pos=known.filter(r=>r.sentiment==='Positive').length; $('kMentions').textContent=fmt(FILTERED.length); $('kEng').textContent=fmt(total); $('kAvgEng').textContent='Avg '+fmt(total/(FILTERED.length||1))+' per mention'; $('kPos').textContent=Math.round(pos/(known.length||1)*100)+'%'; const pf=group(FILTERED,'source').sort((a,b)=>metricValue(b,metric)-metricValue(a,metric))[0]; $('kPlatform').textContent=pf?pf.name:'-'; $('kPlatformHint').textContent=pf?fmt(metricValue(pf,metric))+' '+metric:'No data'; const br=group(FILTERED,'category').sort((a,b)=>metricValue(b,metric)-metricValue(a,metric))[0]; $('kBrand').textContent=br?br.name:'-'; $('kBrandHint').textContent=br?fmt(metricValue(br,metric))+' '+metric:'No data'; $('kTopics').textContent=fmt(TOPICS.length); $('activeTopic').innerHTML=ACTIVE_TOPIC?`Active topic: <b>${esc(ACTIVE_TOPIC.label)}</b> · ${fmt(ACTIVE_TOPIC.mentions)} mentions`:''}
 function trendData(arr,metric){const m=new Map(); arr.forEach(r=>{if(!r.month)return; m.set(r.month,(m.get(r.month)||0)+metricValue(r,metric))}); return [...m].map(([name,value])=>({name,value})).sort((a,b)=>a.name.localeCompare(b.name))}
-const TH_STOP=['และ','หรือ','ที่','ใน','ของ','ให้','ได้','แล้ว','คือ','กับ','จาก','เป็น','มี','ไป','มา','ให้','หน่อย','มาก','เลย','แบบ','นี้','นั้น','เรา','เขา','คุณ','มัน','ก็','ไม่','ยัง','แต่','ถ้า','เอา','ไว้','ครับ','ค่ะ','นะ','อะ','จ้า','บริโภคแต่น้อยและออกกำลังกายเพื่อสุขภาพ'];
-const EN_STOP=['the','and','for','this','that','you','are','with','https','http','com','www','to','of','in','on','a','an','is','it','or','as','by','at','from','new','official','thailand'];
-function normalTopic(s){return lower(s).replace(/https?:\/\/\S+/g,' ').replace(/[_\-]+/g,' ').replace(/[#@]/g,'').replace(/[!"$%&'()*+,./:;<=>?@[\\\]^`{|}~“”‘’…•\n\r\t]+/g,' ').replace(/\s+/g,' ').trim()}
-function isStop(w){const n=normalTopic(w); return !n||n.length<2||/^\d+$/.test(n)||TH_STOP.includes(n)||EN_STOP.includes(n)||n.includes('บริโภคแต่น้อย')}
-function segWords(text){const clean=normalTopic(text); if(!clean)return []; try{const seg=new Intl.Segmenter('th',{granularity:'word'}); return [...seg.segment(clean)].filter(x=>x.isWordLike).map(x=>x.segment).filter(w=>!isStop(w))}catch(e){return clean.split(/\s+/).filter(w=>!isStop(w))}}
-function addTopic(map,label,type,row,weight=1){label=safe(label); if(!label||label==='-')return; const key=normalTopic(label); if(isStop(key))return; if(!map.has(key))map.set(key,{key,label,type,variants:new Map(),rowIds:new Set(),mentions:0,engagement:0,score:0}); const o=map.get(key); o.variants.set(label,(o.variants.get(label)||0)+1); if(!o.rowIds.has(row.idx)){o.rowIds.add(row.idx); o.mentions++; o.engagement+=row.engagement||0} o.score+=weight}
-function buildTopics(rows){const map=new Map(); rows.forEach(r=>{const text=[r.message,r.mainKeyword,r.subKeyword].join(' '); (text.match(/#[\w\u0E00-\u0E7F]+/g)||[]).forEach(t=>addTopic(map,t,'hashtag',r,5)); r.keywordList.forEach(k=>addTopic(map,k,'keyword',r,6)); splitKeywords(r.namedEntity).forEach(e=>addTopic(map,e.replace(/\s*\([^)]*\)/g,''),'entity',r,4)); const words=segWords(r.message).filter(w=>!/^#/.test(w)); for(const w of words)addTopic(map,w,'phrase',r,1); for(let n=2;n<=3;n++){for(let i=0;i<=words.length-n;i++){const phrase=words.slice(i,i+n).join(' '); if(phrase.length>3)addTopic(map,phrase,'phrase',r,n+1)}} }); let arr=[...map.values()].map(o=>{o.label=[...o.variants].sort((a,b)=>b[1]-a[1])[0]?.[0]||o.label; o.keys=[o.key,...[...o.variants.keys()].map(normalTopic)].filter(Boolean); o.smart=o.mentions*2+Math.log10(o.engagement+10)*3+o.score*.25+(o.type==='keyword'?6:o.type==='hashtag'?5:o.type==='entity'?3:0); return o}); const bestByRoot=new Map(); arr.forEach(o=>{const root=o.key.replace(/\s+/g,''); if(!bestByRoot.has(root)||bestByRoot.get(root).smart<o.smart)bestByRoot.set(root,o)}); arr=[...bestByRoot.values()].filter(o=>o.mentions>1||o.type!=='phrase'); return arr}
-function renderWordCloud(){const type=$('cloudType').value, rank=$('cloudRank').value; TOPICS=buildTopics(FILTERED).filter(t=>type==='all'||t.type===type); const sorted=TOPICS.sort((a,b)=>(rank==='engagement'?b.engagement-a.engagement:rank==='mentions'?b.mentions-a.mentions:b.smart-a.smart)).slice(0,55); const max=Math.max(...sorted.map(x=>rank==='engagement'?x.engagement:rank==='mentions'?x.mentions:x.smart),1), min=Math.min(...sorted.map(x=>rank==='engagement'?x.engagement:rank==='mentions'?x.mentions:x.smart),1); $('wordCloud').innerHTML=sorted.length?sorted.map(t=>{const val=rank==='engagement'?t.engagement:rank==='mentions'?t.mentions:t.smart; const fs=13+(val-min)/(max-min||1)*24; return `<button class="word" style="font-size:${fs}px" data-key="${esc(t.key)}">${esc(t.label)}<span class="type">${t.type} · ${fmt(t.mentions)}</span></button>`}).join(''):'<div class="empty">No topics</div>'; $('wordCloud').querySelectorAll('.word').forEach(el=>{const t=sorted.find(x=>x.key===el.dataset.key); el.onmousemove=e=>showTip(e,`<b>${esc(t.label)}</b><br>${t.type}<br>${fmt(t.mentions)} mentions<br>${fmt(t.engagement)} engagement<br>Variants: ${esc([...t.variants.keys()].slice(0,5).join(', '))}`); el.onmouseleave=hideTip; el.onclick=()=>{ACTIVE_TOPIC=t; $('q').value='Topic: '+t.label; render()}})}
+const BASE_STOP=[
+'และ','หรือ','ที่','ใน','ของ','ให้','ได้','แล้ว','คือ','กับ','จาก','เป็น','มี','ไป','มา','ไว้','ครับ','ค่ะ','นะ','อะ','จ้า','จัง','เลย','มาก','น้อย','กว่า','แบบ','นี้','นั้น','นี่','โน่น','เรา','เขา','เธอ','คุณ','ผม','ฉัน','มัน','ก็','ไม่','ยัง','แต่','ถ้า','เอา','กัน','ออก','เข้า','อยู่','มาแล้ว','ทำไม','อะไร','ยังไง','บริโภค','ออกกำลังกาย','สุขภาพ',
+'a','an','the','and','or','for','with','without','this','that','these','those','you','your','are','is','was','were','be','been','to','of','in','on','at','by','from','as','it','its','we','our','they','their','i','me','my','new','official','page','post','video','photo','review','รีวิว','content','campaign','brand','product','http','https','www','com','co','th'
+];
+const GENERIC_FIELD_KEYS=['message','mainKeyword','subKeyword','namedEntity','category','account','source'];
+function normalTopic(s){return lower(s).replace(/https?:\/\/\S+/g,' ').replace(/&[a-z]+;/g,' ').replace(/[_\-–—]+/g,' ').replace(/[#@]/g,'').replace(/[!"$%&'()*+,./:;<=>?@[\\\]^`{|}~“”‘’…•\n\r\t]+/g,' ').replace(/\s+/g,' ').trim()}
+function stripEntityType(s){return safe(s).replace(/\s*\([^)]*\)\s*/g,'').replace(/\s+/g,' ').trim()}
+function tokenBase(w){return normalTopic(w).replace(/(ing|ed|es|s)$/,'')}
+function isThai(s){return /[\u0E00-\u0E7F]/.test(s)}
+function isStop(w,extra=new Set()){const n=normalTopic(w); if(!n||n.length<2||/^\d+$/.test(n)||/^\d+[kmb]?$/i.test(n))return true; if(BASE_STOP.includes(n)||extra.has(n))return true; if(n.includes('บริโภคแต่น้อย')||n.includes('ออกกำลังกายเพื่อสุขภาพ'))return true; return false}
+function segmentText(text){const clean=normalTopic(text); if(!clean)return []; try{const seg=new Intl.Segmenter(isThai(clean)?'th':'en',{granularity:'word'}); return [...seg.segment(clean)].filter(x=>x.isWordLike).map(x=>x.segment)}catch(e){return clean.split(/\s+/)}}
+function getDynamicStop(rows){
+  const docs=rows.length||1, df=new Map();
+  rows.forEach(r=>{const seen=new Set(segmentText([r.message,r.account].join(' ')).map(tokenBase).filter(Boolean)); seen.forEach(w=>df.set(w,(df.get(w)||0)+1))});
+  const extra=new Set();
+  df.forEach((c,w)=>{const share=c/docs; if(share>.62 || (docs>80&&c>45&&share>.38))extra.add(w)});
+  return extra;
+}
+function phraseQuality(words,extra){
+  if(words.length<2||words.length>4)return 0;
+  const clean=words.map(w=>normalTopic(w)).filter(w=>!isStop(w,extra));
+  if(clean.length<2)return 0;
+  const chars=clean.join('').length; if(chars<5)return 0;
+  const uniq=new Set(clean).size/clean.length;
+  const hasUseful=clean.some(w=>w.length>=3||isThai(w));
+  return hasUseful ? chars*uniq : 0;
+}
+function canonicalKey(label,type){
+  let k=normalTopic(stripEntityType(label));
+  if(type==='hashtag') k=k.replace(/\s+/g,'');
+  if(!isThai(k)) k=k.split(' ').map(tokenBase).join(' ');
+  return k;
+}
+function addTopic(map,label,type,row,weight=1,extra=new Set(),matchedTokens=[]){
+  label=safe(stripEntityType(label)); if(!label||label==='-')return;
+  const key=canonicalKey(label,type); if(isStop(key,extra))return;
+  if(!map.has(key))map.set(key,{key,label,type,variants:new Map(),rowIds:new Set(),mentions:0,engagement:0,score:0,tokens:new Set(),keys:[key]});
+  const o=map.get(key); o.variants.set(label,(o.variants.get(label)||0)+1);
+  normalTopic(label).split(/\s+/).filter(Boolean).forEach(t=>o.tokens.add(tokenBase(t)));
+  matchedTokens.forEach(t=>o.tokens.add(tokenBase(t)));
+  if(!o.rowIds.has(row.idx)){o.rowIds.add(row.idx); o.mentions++; o.engagement+=row.engagement||0}
+  o.score+=weight;
+}
+function extractCandidateTopics(row,extra){
+  const out=[]; const message=safe(row.message);
+  (message.match(/#[\w\u0E00-\u0E7F]+/g)||[]).forEach(x=>out.push({label:x,type:'hashtag',weight:7}));
+  row.keywordList.forEach(x=>out.push({label:x,type:'keyword',weight:8}));
+  splitKeywords(row.namedEntity).map(stripEntityType).filter(Boolean).forEach(x=>out.push({label:x,type:'entity',weight:6}));
+  const rawWords=segmentText(message).map(w=>normalTopic(w)).filter(w=>!isStop(w,extra));
+  rawWords.forEach(w=>out.push({label:w,type:'phrase',weight:1.1,tokens:[w]}));
+  for(let n=2;n<=4;n++){
+    for(let i=0;i<=rawWords.length-n;i++){
+      const chunk=rawWords.slice(i,i+n); const q=phraseQuality(chunk,extra);
+      if(q>0)out.push({label:chunk.join(' '),type:'phrase',weight:2+n+(q/18),tokens:chunk});
+    }
+  }
+  return out;
+}
+function mergeRelatedTopics(arr){
+  arr.forEach(o=>{o.label=[...o.variants].sort((a,b)=>b[1]-a[1])[0]?.[0]||o.label; o.keys=[...new Set([o.key,...[...o.variants.keys()].map(v=>canonicalKey(v,o.type))].filter(Boolean))];});
+  arr.sort((a,b)=>b.score+b.mentions*2-a.score-a.mentions*2);
+  const used=new Set(), merged=[];
+  for(const a of arr){
+    if(used.has(a.key))continue;
+    const group=[a]; used.add(a.key);
+    for(const b of arr){
+      if(used.has(b.key)||a===b)continue;
+      const ta=a.tokens,tb=b.tokens; if(!ta.size||!tb.size)continue;
+      const inter=[...ta].filter(x=>tb.has(x)).length, small=Math.min(ta.size,tb.size), large=Math.max(ta.size,tb.size);
+      const contains=a.key.includes(b.key)||b.key.includes(a.key);
+      const close=(inter/small>=.8 && large<=small+2) || (contains && inter>=1);
+      const safeMerge=(a.type===b.type)||['keyword','hashtag','entity'].includes(a.type)||['keyword','hashtag','entity'].includes(b.type);
+      if(close&&safeMerge){group.push(b); used.add(b.key)}
+    }
+    const best=group.sort((x,y)=>(y.type==='keyword')-(x.type==='keyword') || (y.type==='hashtag')-(x.type==='hashtag') || y.mentions-x.mentions || y.engagement-x.engagement)[0];
+    group.forEach(g=>{if(g===best)return; g.rowIds.forEach(id=>best.rowIds.add(id)); best.engagement+=g.engagement; best.score+=g.score; g.variants.forEach((v,k)=>best.variants.set(k,(best.variants.get(k)||0)+v)); g.tokens.forEach(t=>best.tokens.add(t)); best.keys.push(...g.keys)});
+    best.mentions=best.rowIds.size; best.keys=[...new Set(best.keys)]; merged.push(best);
+  }
+  return merged;
+}
+function buildTopics(rows){
+  const map=new Map(), extra=getDynamicStop(rows);
+  rows.forEach(r=>extractCandidateTopics(r,extra).forEach(c=>addTopic(map,c.label,c.type,r,c.weight,extra,c.tokens||[])));
+  let arr=mergeRelatedTopics([...map.values()]).map(o=>{
+    const typeBoost=o.type==='keyword'?9:o.type==='hashtag'?8:o.type==='entity'?6:0;
+    const density=o.mentions/(rows.length||1);
+    const phraseBoost=o.tokens.size>=2?3:0;
+    const broadPenalty=density>.55 && o.type==='phrase' ? 12 : 0;
+    o.smart=o.mentions*2.2+Math.log10(o.engagement+10)*4+o.score*.35+typeBoost+phraseBoost-broadPenalty;
+    return o;
+  });
+  arr=arr.filter(o=>{
+    if(o.type!=='phrase')return o.mentions>=1;
+    if(o.tokens.size===1)return o.mentions>=3 && o.engagement>0;
+    return o.mentions>=2 || o.engagement>=100;
+  });
+  return arr;
+}
+function topicMatch(r){
+  if(!ACTIVE_TOPIC)return true;
+  const hay=normalTopic([r.message,r.mainKeyword,r.subKeyword,r.namedEntity,r.category,r.account].join(' '));
+  return ACTIVE_TOPIC.keys.some(k=>k&&hay.includes(k)) || [...ACTIVE_TOPIC.tokens].some(t=>t&&hay.includes(t));
+}
+function renderWordCloud(){const type=$('cloudType').value, rank=$('cloudRank').value; TOPICS=buildTopics(FILTERED).filter(t=>type==='all'||t.type===type); const sorted=TOPICS.sort((a,b)=>(rank==='engagement'?b.engagement-a.engagement:rank==='mentions'?b.mentions-a.mentions:b.smart-a.smart)).slice(0,55); const max=Math.max(...sorted.map(x=>rank==='engagement'?x.engagement:rank==='mentions'?x.mentions:x.smart),1), min=Math.min(...sorted.map(x=>rank==='engagement'?x.engagement:rank==='mentions'?x.mentions:x.smart),1); $('wordCloud').innerHTML=sorted.length?sorted.map(t=>{const val=rank==='engagement'?t.engagement:rank==='mentions'?t.mentions:t.smart; const fs=13+(val-min)/(max-min||1)*24; const v=[...t.variants.keys()].slice(0,4).join(', '); return `<button class="word" style="font-size:${fs}px" data-key="${esc(t.key)}">${esc(t.label)}<span class="type">${t.type} · ${fmt(t.mentions)} · ${esc(v)}</span></button>`}).join(''):'<div class="empty">No topics</div>'; $('wordCloud').querySelectorAll('.word').forEach(el=>{const t=sorted.find(x=>x.key===el.dataset.key); el.onmousemove=e=>showTip(e,`<b>${esc(t.label)}</b><br>${t.type}<br>${fmt(t.mentions)} mentions<br>${fmt(t.engagement)} engagement<br>Grouped variants: ${esc([...t.variants.keys()].slice(0,8).join(', '))}<br>Match keys: ${esc(t.keys.slice(0,6).join(', '))}`); el.onmouseleave=hideTip; el.onclick=()=>{ACTIVE_TOPIC=t; $('q').value='Topic: '+t.label; render()}})}
+
 function renderCompare(){const by=$('compareBy').value,m=$('compareMetric').value,limit=+$('compareLimit').value; const key=by==='mainKeyword'?'keywordList':by; const base=group(FILTERED,key).map(o=>{const best=group(o.rows,'source').sort((a,b)=>b.engagement-a.engagement)[0]; return {...o,share:FILTERED.length?o.mentions/FILTERED.length:0,positiveShare:(o.positive+o.negative+o.neutral)?o.positive/(o.positive+o.negative+o.neutral):0,bestPlatform:best?best.name:'-'} }); COMPARE=base.sort((a,b)=>metricValue(b,m)-metricValue(a,m)).slice(0,limit); $('compareTitle').textContent='Performance ranking · '+$('compareBy').selectedOptions[0].textContent; drawBars('compareChart',COMPARE.map(x=>({name:x.name,value:metricValue(x,m)})),m); drawBars('sovChart',COMPARE.map(x=>({name:x.name,value:x.share*100})),'share %'); $('compareRows').innerHTML=COMPARE.map((x,i)=>`<tr><td><span class="rank">${i+1}</span></td><td>${esc(x.name)}<div class="segbar"><div class="segfill" style="width:${Math.min(100,x.share*100)}%"></div></div></td><td>${fmt(x.mentions)}</td><td>${pct(x.share)}</td><td>${fmt(x.engagement)}</td><td>${fmt(x.avgEngagement)}</td><td>${pct(x.er)}</td><td class="pos">${pct(x.positiveShare)}</td><td class="neg">${fmt(x.negative)}</td><td>${esc(x.bestPlatform)}</td></tr>`).join('')}
 function sortRows(rows){const by=$('sortBy').value,dir=$('sortDir').value; return rows.slice().sort((a,b)=>{let x=a[by],y=b[by]; if(by==='engagement'){x=+x||0;y=+y||0} else {x=safe(x); y=safe(y)} const v=typeof x==='number'?x-y:String(x).localeCompare(String(y)); return dir==='asc'?v:-v})}
 function renderTable(){const rows=sortRows(FILTERED).slice(0,+$('rowLimit').value); $('rows').innerHTML=rows.map(r=>`<tr data-i="${r.idx}"><td>${esc(r.date)}</td><td><span class="pill source">${esc(r.source)}</span></td><td>${esc(r.category)}</td><td>${esc(r.mainKeyword)}</td><td><span class="pill ${esc(r.sentiment)}">${esc(r.sentiment)}</span></td><td>${esc(r.account)}</td><td>${fmt(r.engagement)}</td><td>${esc(r.message).slice(0,180)}</td></tr>`).join(''); $('rows').querySelectorAll('tr').forEach(tr=>tr.onclick=()=>openDetail(DATA.find(r=>r.idx==tr.dataset.i)))}
