@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Social Intelligence Dashboard V6.3 Beta</title>
+<title>Social Intelligence Dashboard V6.3.1 Beta</title>
 <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 <style>
 :root{
@@ -39,7 +39,7 @@ button,input,select{font:inherit}button{cursor:pointer}.app{width:100%;max-width
 <body>
 <div class="app">
   <div class="header">
-    <div class="top"><div class="title"><h1>Social Intelligence Dashboard V6.3 Beta</h1><div class="sub">Premium tab dashboard · Import XLSX/CSV locally · Brand battle, platform battle, topic intelligence and content leaderboard.</div></div><div class="badge"><span class="live"></span><span id="lastUpdated">No data loaded · V6.3</span></div></div>
+    <div class="top"><div class="title"><h1>Social Intelligence Dashboard V6.3.1 Beta</h1><div class="sub">Premium tab dashboard · Import XLSX/CSV locally · Brand battle, platform battle, topic intelligence and content leaderboard.</div></div><div class="badge"><span class="live"></span><span id="lastUpdated">No data loaded · V6.3.1</span></div></div>
     <div class="tabs"><button class="tab active" data-tab="overview">Overview</button><button class="tab" data-tab="brand">Brand Battle</button><button class="tab" data-tab="platform">Platform</button><button class="tab" data-tab="topics">Topics</button><button class="tab" data-tab="content">Content</button><button class="tab" data-tab="influencers">Influencers</button></div>
   </div>
 
@@ -82,6 +82,19 @@ button,input,select{font:inherit}button{cursor:pointer}.app{width:100%;max-width
         </div>
       </div>
       <div class="card panel">
+        <h2>Brand × Platform × Tier comparison</h2>
+        <div class="note">Compare unique influencer usage across selected brands. % is calculated within each brand's total unique accounts.</div>
+        <div class="tableScroll">
+          <table class="table">
+            <thead>
+              <tr><th>#</th><th>Brand</th><th>Platform</th><th>Tier</th><th>Influencers</th><th>% of brand</th><th>Brand total</th><th>Mentions</th><th>Engagement</th><th>Reach proxy</th><th>ER</th></tr>
+            </thead>
+            <tbody id="brandPlatformTierRows"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card panel">
         <h2>Account summary table</h2>
         <div class="tableScroll">
           <table class="table">
@@ -93,7 +106,7 @@ button,input,select{font:inherit}button{cursor:pointer}.app{width:100%;max-width
         </div>
       </div>
     </section>
-    <div class="foot">V6.3 Beta · Local-only dashboard. XLSX/CSV is parsed in your browser and is not uploaded.</div>
+    <div class="foot">V6.3.1 Beta · Local-only dashboard. XLSX/CSV is parsed in your browser and is not uploaded.</div>
   </div>
 </div>
 <div class="tooltip" id="tip"></div><div class="drawer" id="drawer"><div class="drawerTop"><h2 id="dAccount">Post detail</h2><button class="ghost close" id="closeBtn">Close</button></div><div id="detail"></div></div><div class="trendPopupBackdrop" id="trendBackdrop"></div><div class="trendPopup" id="trendPopup"><div class="trendPopupTop"><div><h2 id="trendTitle">Top posts</h2><div class="note" id="trendSub"></div></div><button class="ghost close" id="trendClose">Close</button></div><div id="trendBody"></div></div>
@@ -268,14 +281,68 @@ function buildTopics(){
 function topicButton(t){const k=t.positive+t.negative+t.neutral;return`<button class="topicBtn" data-k="${esc(t.label)}"><b>${esc(t.label)}</b><span>${fmt(t.mentions)} mentions · ${fmt(t.engagement)} eng. · Pos ${pct(k?t.positive/k:0)} · Neg ${pct(k?t.negative/k:0)}</span></button>`}function setTopicList(id,arr){$(id).innerHTML=arr.length?arr.slice(0,12).map(topicButton).join(''):'<div class="empty">No topics</div>';$(id).querySelectorAll('button').forEach(b=>b.onclick=()=>{$('q').value=b.dataset.k;activeTab='content';setTab();render()})}
 
 function accountGroups(){const m=new Map();FILTERED.forEach(r=>{const k=r.account||'Unknown';if(!m.has(k))m.set(k,{name:k,rows:[],mentions:0,engagement:0,followers:0,positive:0,negative:0,neutral:0,unknown:0,platforms:new Map(),types:new Map(),tiers:new Map()});const o=m.get(k);o.rows.push(r);o.mentions++;o.engagement+=r.engagement;o.followers=Math.max(o.followers,Number(r.followers||0));if(r.sentiment==='Positive')o.positive++;else if(r.sentiment==='Negative')o.negative++;else if(r.sentiment==='Neutral')o.neutral++;else o.unknown++;o.platforms.set(r.source,(o.platforms.get(r.source)||0)+1);o.types.set(r.accountType||'Creator',(o.types.get(r.accountType||'Creator')||0)+1);o.tiers.set(r.audienceTier||'Unknown',(o.tiers.get(r.audienceTier||'Unknown')||0)+1)});return[...m.values()].map(o=>{o.er=o.followers?o.engagement/o.followers:0;o.platform=[...o.platforms.entries()].sort((a,b)=>b[1]-a[1])[0]?.[0]||'Unknown';o.type=[...o.types.entries()].sort((a,b)=>b[1]-a[1])[0]?.[0]||'Creator';o.tier=[...o.tiers.entries()].sort((a,b)=>b[1]-a[1])[0]?.[0]||'Unknown';return o})}
-function renderInfluencers(){if(!$('audienceTierCards'))return;const tiers=['Pico','Nano','Micro','Mid-tier','Macro','Mega','Elite','Unknown'];const tierColors={'Pico':'#64748b','Nano':'#8b5cf6','Micro':'#38bdf8','Mid-tier':'#22c55e','Macro':'#f59e0b','Mega':'#ef4444','Elite':'#ec4899','Unknown':'#94a3b8'};const tierData=tiers.map(t=>({name:t,value:FILTERED.filter(r=>(r.audienceTier||'Unknown')===t).length,color:tierColors[t]})).filter(x=>x.value);const total=FILTERED.length||1;$('audienceTierCards').innerHTML=tierData.length?tierData.map(t=>`<div class="tierCard"><span>${esc(t.name)}</span><b style="color:${t.color}">${fmt(t.value)}</b><span>${pct(t.value/total)}</span></div>`).join(''):'<div class="empty">No audience tier data</div>';const typeData=group(FILTERED,'accountType').sort((a,b)=>b.mentions-a.mentions).map(o=>({name:o.name||'Creator',value:o.mentions,color:brandColor(o.name||'Creator')}));renderBars('accountTypeChart',typeData,'mentions');const acc=accountGroups();setRankList('topAccountsEng',acc.slice().sort((a,b)=>b.engagement-a.engagement).slice(0,8),'engagement');setRankList('topAccountsReach',acc.slice().sort((a,b)=>b.followers-a.followers).slice(0,8),'followers');setRankList('topAccountsER',acc.slice().filter(a=>a.followers>0).sort((a,b)=>b.er-a.er).slice(0,8),'er');$('accountRows').innerHTML=acc.slice().sort((a,b)=>b.engagement-a.engagement).slice(0,50).map((o,i)=>`<tr><td>${i+1}</td><td>${esc(o.name)}</td><td>${esc(o.type)}</td><td>${esc(o.tier)}</td><td>${esc(o.platform)}</td><td>${fmt(o.mentions)}</td><td>${fmt(o.engagement)}</td><td>${fmt(o.followers)}</td><td>${pct(o.er)}</td><td>${pct((o.positive)/(Math.max(1,o.positive+o.negative+o.neutral)))}</td></tr>`).join('')||'<tr><td colspan="10">No account data</td></tr>'}
+function renderInfluencers(){
+  if(!$('audienceTierCards'))return;
+  const tiers=['Pico','Nano','Micro','Mid-tier','Macro','Mega','Elite','Unknown'];
+  const tierColors={'Pico':'#64748b','Nano':'#8b5cf6','Micro':'#38bdf8','Mid-tier':'#22c55e','Macro':'#f59e0b','Mega':'#ef4444','Elite':'#ec4899','Unknown':'#94a3b8'};
+  const tierData=tiers.map(t=>({name:t,value:FILTERED.filter(r=>(r.audienceTier||'Unknown')===t).length,color:tierColors[t]})).filter(x=>x.value);
+  const total=FILTERED.length||1;
+  $('audienceTierCards').innerHTML=tierData.length?tierData.map(t=>`<div class="tierCard"><span>${esc(t.name)}</span><b style="color:${t.color}">${fmt(t.value)}</b><span>${pct(t.value/total)}</span></div>`).join(''):'<div class="empty">No audience tier data</div>';
+  const typeData=group(FILTERED,'accountType').sort((a,b)=>b.mentions-a.mentions).map(o=>({name:o.name||'Creator',value:o.mentions,color:brandColor(o.name||'Creator')}));
+  renderBars('accountTypeChart',typeData,'mentions');
+  const acc=accountGroups();
+  setRankList('topAccountsEng',acc.slice().sort((a,b)=>b.engagement-a.engagement).slice(0,8),'engagement');
+  setRankList('topAccountsReach',acc.slice().sort((a,b)=>b.followers-a.followers).slice(0,8),'followers');
+  setRankList('topAccountsER',acc.slice().filter(a=>a.followers>0).sort((a,b)=>b.er-a.er).slice(0,8),'er');
+  renderBrandPlatformTierComparison();
+  $('accountRows').innerHTML=acc.slice().sort((a,b)=>b.engagement-a.engagement).slice(0,50).map((o,i)=>`<tr><td>${i+1}</td><td>${esc(o.name)}</td><td>${esc(o.type)}</td><td>${esc(o.tier)}</td><td>${esc(o.platform)}</td><td>${fmt(o.mentions)}</td><td>${fmt(o.engagement)}</td><td>${fmt(o.followers)}</td><td>${pct(o.er)}</td><td>${pct((o.positive)/(Math.max(1,o.positive+o.negative+o.neutral)))}</td></tr>`).join('')||'<tr><td colspan="10">No account data</td></tr>';
+}
+function renderBrandPlatformTierComparison(){
+  const el=$('brandPlatformTierRows');
+  if(!el)return;
+  const brandAccounts=new Map();
+  const comboMap=new Map();
+  FILTERED.forEach(r=>{
+    const brand=r.category||'Unknown';
+    const platform=r.source||'Unknown';
+    const tier=r.audienceTier||'Unknown';
+    const account=r.account||'Unknown';
+    if(!brandAccounts.has(brand))brandAccounts.set(brand,new Set());
+    brandAccounts.get(brand).add(account);
+    const key=[brand,platform,tier].join('\u0001');
+    if(!comboMap.has(key))comboMap.set(key,{brand,platform,tier,accounts:new Set(),mentions:0,engagement:0,followersByAccount:new Map()});
+    const o=comboMap.get(key);
+    o.accounts.add(account);
+    o.mentions++;
+    o.engagement+=Number(r.engagement||0);
+    o.followersByAccount.set(account,Math.max(o.followersByAccount.get(account)||0,Number(r.followers||0)));
+  });
+  const brandOrder=[...brandAccounts.entries()].sort((a,b)=>b[1].size-a[1].size).map(x=>x[0]);
+  const platformOrder=[...new Set(FILTERED.map(r=>r.source||'Unknown'))].sort((a,b)=>safe(a).localeCompare(safe(b)));
+  const tierOrder=['Pico','Nano','Micro','Mid-tier','Macro','Mega','Elite','Unknown'];
+  const rows=[...comboMap.values()].map(o=>{
+    o.influencers=o.accounts.size;
+    o.brandTotal=brandAccounts.get(o.brand)?.size||0;
+    o.share=o.brandTotal?o.influencers/o.brandTotal:0;
+    o.followers=[...o.followersByAccount.values()].reduce((a,b)=>a+b,0);
+    o.er=o.followers?o.engagement/o.followers:0;
+    return o;
+  }).sort((a,b)=>{
+    const brandDiff=brandOrder.indexOf(a.brand)-brandOrder.indexOf(b.brand);
+    if(brandDiff!==0)return brandDiff;
+    const platDiff=platformOrder.indexOf(a.platform)-platformOrder.indexOf(b.platform);
+    if(platDiff!==0)return platDiff;
+    return tierOrder.indexOf(a.tier)-tierOrder.indexOf(b.tier);
+  });
+  el.innerHTML=rows.length?rows.map((o,i)=>`<tr><td>${i+1}</td><td><span style="color:${brandColor(o.brand)};font-weight:900">${esc(o.brand)}</span></td><td>${esc(o.platform)}</td><td>${esc(o.tier)}</td><td>${fmt(o.influencers)}</td><td>${pct(o.share)}</td><td>${fmt(o.brandTotal)}</td><td>${fmt(o.mentions)}</td><td>${fmt(o.engagement)}</td><td>${fmt(o.followers)}</td><td>${pct(o.er)}</td></tr>`).join(''):'<tr><td colspan="11">No comparison data</td></tr>';
+}
 function setRankList(id,rows,metric){const el=$(id);if(!el)return;el.innerHTML=rows.length?rows.map((o,i)=>`<div class="rankItem"><div class="rankNo">${i+1}</div><div class="rankMain"><div class="rankName">${esc(o.name)}</div><div class="rankSub">${esc(o.platform)} · ${esc(o.type)} · ${esc(o.tier)} · ${fmt(o.mentions)} mentions</div></div><div class="rankVal">${metric==='er'?pct(o.er):fmt(o[metric])}</div></div>`).join(''):'<div class="empty">No account data</div>'}
 function renderTopics(){setTopicList('topicMentioned',TOPICS.slice().sort((a,b)=>b.mentions-a.mentions));setTopicList('topicEngaged',TOPICS.slice().sort((a,b)=>b.engagement-a.engagement));setTopicList('topicPositive',TOPICS.slice().sort((a,b)=>(b.positive/Math.max(1,b.mentions))-(a.positive/Math.max(1,a.mentions))));setTopicList('topicNegative',TOPICS.slice().sort((a,b)=>(b.negative/Math.max(1,b.mentions))-(a.negative/Math.max(1,a.mentions))))}
 function renderFeed(){const by=$('sortBy').value,dir=$('sortDir').value,limit=+$('limit').value;const rows=FILTERED.slice().sort((a,b)=>{let x=a[by],y=b[by];if(by==='date')return dir==='asc'?safe(x).localeCompare(safe(y)):safe(y).localeCompare(safe(x));if(['engagement','er','followers'].includes(by))return dir==='asc'?(x||0)-(y||0):(y||0)-(x||0);return dir==='asc'?safe(x).localeCompare(safe(y)):safe(y).localeCompare(safe(x))}).slice(0,limit);$('feed').innerHTML=rows.length?rows.map(r=>`<div class="post" data-i="${r.idx}">${r.imageUrl?`<img class="thumb" src="${esc(r.imageUrl)}" loading="lazy" onerror="this.outerHTML='<div class=&quot;thumbEmpty&quot;>${esc((r.source||'?')[0]).toUpperCase()}</div>'">`:`<div class="thumbEmpty">${esc((r.source||'?')[0]).toUpperCase()}</div>`}<div><div class="postHead"><div style="min-width:0"><div class="account">${esc(r.account)}</div><div class="metaLine">${esc(r.date||r.postTime)} · <span style="color:${brandColor(r.category)}">${esc(r.category)}</span></div></div><span class="pill ${esc(r.sentiment)}">${esc(r.sentiment)}</span></div><div class="postMsg">${esc(r.message)}</div><div class="tags"><span class="pill source" style="background:${colorPlatform(r.source)}">${esc(r.source)}</span><span class="pill Neutral">Eng. ${fmt(r.engagement)}</span><span class="pill Neutral">ER ${pct(r.er)}</span>${(r.keywords&&r.keywords.length?r.keywords:[r.mainKeyword]).slice(0,2).map(k=>`<span class="pill Neutral">${esc(k)}</span>`).join('')}</div></div></div>`).join(''):'<div class="empty">No messages found</div>';$('feed').querySelectorAll('.post').forEach(p=>p.onclick=()=>openDetail(DATA.find(r=>r.idx==p.dataset.i)))}
 function openDetail(r){if(!r)return;$('dAccount').textContent=r.account;$('detail').innerHTML=`${r.imageUrl?`<img class="heroImg" src="${esc(r.imageUrl)}" onerror="this.remove()">`:''}<div class="detailMsg">${esc(r.message)}</div><div class="detailMeta"><b>Date</b><span>${esc(r.postTime||r.date)}</span><b>Platform</b><span>${esc(r.source)}</span><b>Brand</b><span>${esc(r.category)}</span><b>Sentiment</b><span>${esc(r.sentiment)}</span><b>Engagement</b><span>${fmt(r.engagement)}</span><b>Followers</b><span>${fmt(r.followers)}</span><b>Keyword</b><span>${esc((r.keywords&&r.keywords.length?r.keywords.join(', '):r.mainKeyword))}</span><b>URL</b><span>${r.url?`<a href="${esc(r.url)}" target="_blank" rel="noopener">Open post</a>`:'-'}</span></div>`;$('drawer').classList.add('open')}function closeDrawer(){$('drawer').classList.remove('open')}function showTip(e,html){const t=$('tip');t.innerHTML=html;t.style.display='block';t.style.left=Math.min(e.clientX+14,innerWidth-280)+'px';t.style.top=Math.min(e.clientY+14,innerHeight-120)+'px'}function hideTip(){$('tip').style.display='none'}window.addEventListener('scroll',hideTip,{passive:true});
 function downloadCSV(rows,name){if(!rows.length)return alert('No data to export');const flat=rows.map(r=>{const o={};Object.keys(r).forEach(k=>{if(!['raw','rows'].includes(k))o[k]=r[k]});return o});const keys=[...new Set(flat.flatMap(Object.keys))],csv=[keys.join(','),...flat.map(r=>keys.map(k=>'"'+safe(r[k]).replace(/"/g,'""')+'"').join(','))].join('\n'),a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
 function setTab(){document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===activeTab));document.querySelectorAll('.tabPanel').forEach(p=>p.classList.add('hidden'));$('tab-'+activeTab).classList.remove('hidden');closeDrawer();hideTip();setTimeout(()=>{if(DATA.length)render()},30)}
-function bind(){document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{activeTab=b.dataset.tab;setTab()});$('keywordBtn').onclick=e=>{e.stopPropagation();$('keywordPanel').classList.toggle('hidden')};document.addEventListener('click',e=>{if(!e.target.closest('#keywordMulti'))$('keywordPanel').classList.add('hidden')});$('chooseBtn').onclick=()=>$('fileInput').click();$('fileInput').onchange=e=>handleFile(e.target.files[0]);$('clearBtn').onclick=()=>{DATA=[];FILTERED=[];$('dash').classList.add('hidden');$('lastUpdated').textContent='No data loaded · V6.3'};['dragover','drop'].forEach(ev=>$('dropZone').addEventListener(ev,e=>{e.preventDefault();if(ev==='drop')handleFile(e.dataTransfer.files[0])}));['q','source','category','sentiment','from','to','metric','sortBy','sortDir','limit'].forEach(id=>['input','change'].forEach(ev=>$(id).addEventListener(ev,()=>{syncDateDisplay();closeDrawer();if(DATA.length)render()})));$('fromDisplay').onclick=()=>openNativeDate('from');$('toDisplay').onclick=()=>openNativeDate('to');$('resetBtn').onclick=()=>{['q','source','category','sentiment'].forEach(id=>$(id).value='');SELECTED_KEYWORDS.clear();updateKeywordUI();const dates=DATA.map(r=>r.date).filter(Boolean).sort();if(dates.length){$('from').value=dates[0];$('to').value=dates[dates.length-1]}syncDateDisplay();render()};$('exportBtn').onclick=()=>downloadCSV(FILTERED,'filtered_messages_v6_3.csv');$('closeBtn').onclick=closeDrawer;if($('trendClose'))$('trendClose').onclick=closeTrendDrilldown;if($('trendBackdrop'))$('trendBackdrop').onclick=closeTrendDrilldown;document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDrawer();closeTrendDrilldown()}});document.addEventListener('click',e=>{if($('drawer').classList.contains('open')&&!$('drawer').contains(e.target)&&!e.target.closest('.post'))closeDrawer()});let rt;window.addEventListener('resize',()=>{if(DATA.length){clearTimeout(rt);rt=setTimeout(render,180)}})}
+function bind(){document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{activeTab=b.dataset.tab;setTab()});$('keywordBtn').onclick=e=>{e.stopPropagation();$('keywordPanel').classList.toggle('hidden')};document.addEventListener('click',e=>{if(!e.target.closest('#keywordMulti'))$('keywordPanel').classList.add('hidden')});$('chooseBtn').onclick=()=>$('fileInput').click();$('fileInput').onchange=e=>handleFile(e.target.files[0]);$('clearBtn').onclick=()=>{DATA=[];FILTERED=[];$('dash').classList.add('hidden');$('lastUpdated').textContent='No data loaded · V6.3.1'};['dragover','drop'].forEach(ev=>$('dropZone').addEventListener(ev,e=>{e.preventDefault();if(ev==='drop')handleFile(e.dataTransfer.files[0])}));['q','source','category','sentiment','from','to','metric','sortBy','sortDir','limit'].forEach(id=>['input','change'].forEach(ev=>$(id).addEventListener(ev,()=>{syncDateDisplay();closeDrawer();if(DATA.length)render()})));$('fromDisplay').onclick=()=>openNativeDate('from');$('toDisplay').onclick=()=>openNativeDate('to');$('resetBtn').onclick=()=>{['q','source','category','sentiment'].forEach(id=>$(id).value='');SELECTED_KEYWORDS.clear();updateKeywordUI();const dates=DATA.map(r=>r.date).filter(Boolean).sort();if(dates.length){$('from').value=dates[0];$('to').value=dates[dates.length-1]}syncDateDisplay();render()};$('exportBtn').onclick=()=>downloadCSV(FILTERED,'filtered_messages_v6_3.csv');$('closeBtn').onclick=closeDrawer;if($('trendClose'))$('trendClose').onclick=closeTrendDrilldown;if($('trendBackdrop'))$('trendBackdrop').onclick=closeTrendDrilldown;document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDrawer();closeTrendDrilldown()}});document.addEventListener('click',e=>{if($('drawer').classList.contains('open')&&!$('drawer').contains(e.target)&&!e.target.closest('.post'))closeDrawer()});let rt;window.addEventListener('resize',()=>{if(DATA.length){clearTimeout(rt);rt=setTimeout(render,180)}})}
 bind();if(!window.XLSX){setTimeout(()=>{if(!window.XLSX)$('lastUpdated').textContent='Ready · XLSX parser may still be loading'},1200)}
 </script>
 </body>
