@@ -10,7 +10,7 @@
 .app{max-width:1440px;margin:auto;padding:22px}.top{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:16px}h1{font-size:30px;margin:0 0 8px;line-height:1.08;letter-spacing:-.8px}.sub,.note,.hint,.foot{color:var(--muted)}.sub{font-size:14px;line-height:1.45}.badge{border:1px solid var(--line);background:rgba(255,255,255,.05);border-radius:999px;padding:9px 12px;font-size:13px;color:#cbd5e1;white-space:nowrap}.card{background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.035));border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
 .import{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;padding:18px;margin-bottom:12px}.drop{border:1px dashed rgba(255,255,255,.28);border-radius:18px;padding:16px;background:rgba(255,255,255,.035)}.drop b{display:block;margin-bottom:5px}.drop span{font-size:13px;color:var(--muted)}button,input,select{width:100%;border:1px solid var(--line);background:rgba(8,13,26,.78);color:var(--ink);border-radius:14px;padding:12px 13px;font-size:14px;outline:none}button{cursor:pointer;border:0;font-weight:850;background:linear-gradient(135deg,var(--brand),#fb923c);color:#111827}.ghost{background:rgba(255,255,255,.055);border:1px solid var(--line);color:var(--ink)}.file{display:none}
 .hidden{display:none!important}.controls{display:grid;grid-template-columns:1.25fr repeat(5,1fr);gap:10px;margin:12px 0}.controls.two{grid-template-columns:repeat(6,1fr);margin-top:0}.filterPanel{padding:14px;margin-bottom:12px}.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}.chip{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--line);background:rgba(249,115,22,.13);color:#fed7aa;border-radius:999px;padding:6px 9px;font-size:12px}.chip button{width:auto;padding:0;background:none;color:#fed7aa;font-size:15px;line-height:1}.multi{position:relative}.multiBtn{display:flex;justify-content:space-between;gap:10px;cursor:pointer}.multiMenu{display:none;position:absolute;z-index:60;left:0;right:0;top:calc(100% + 6px);background:#0b1120;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:10px;max-height:330px;overflow:auto}.multi.open .multiMenu{display:block}.multiActions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}.check{display:flex;align-items:center;gap:9px;padding:9px;border-radius:10px;cursor:pointer}.check:hover{background:rgba(255,255,255,.06)}.check input{width:auto}
-.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin:14px 0}.kpi{padding:16px}.label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.75px}.value{font-size:28px;font-weight:950;margin-top:8px;letter-spacing:-.7px}.hint{font-size:12px;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:12px}.panel{padding:18px}.panel h2{margin:0 0 12px;font-size:16px}.chart{height:280px;position:relative}.small{height:235px}svg{width:100%;height:100%;overflow:visible}.axis{fill:#94a3b8;font-size:11px}.gridline{stroke:rgba(148,163,184,.14)}.bar{rx:7;cursor:pointer}.bar:hover{opacity:.75}.line{fill:none;stroke:var(--brand);stroke-width:3}.dot{fill:#fb923c;stroke:#111827;stroke-width:2}.empty{height:100%;display:grid;place-items:center;color:var(--muted);font-size:13px;text-align:center;padding:20px}.tip{position:fixed;display:none;z-index:90;background:#020617;border:1px solid var(--line);box-shadow:var(--shadow);border-radius:12px;padding:9px 11px;font-size:12px;color:#e5e7eb;pointer-events:none;max-width:280px}
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin:14px 0}.kpi{padding:16px}.label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.75px}.value{font-size:28px;font-weight:950;margin-top:8px;letter-spacing:-.7px}.hint{font-size:12px;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:12px}.panel{padding:18px}.panel h2{margin:0 0 12px;font-size:16px}.chart{height:280px;position:relative}.small{height:235px}svg{width:100%;height:100%;overflow:visible}.axis{fill:#94a3b8;font-size:11px}.gridline{stroke:rgba(148,163,184,.14)}.bar{rx:7;cursor:pointer}.bar:hover{opacity:.75}.line{fill:none;stroke:var(--brand);stroke-width:3}.dot{fill:#fb923c;stroke:#111827;stroke-width:2}.empty{height:100%;display:grid;place-items:center;color:var(--muted);font-size:13px;text-align:center;padding:20px}.tip{position:fixed;display:none;z-index:90;background:#020617;border:1px solid var(--line);box-shadow:var(--shadow);border-radius:12px;padding:9px 11px;font-size:12px;color:#e5e7eb;pointer-events:none;max-width:280px}.overlay{position:fixed;inset:0;background:rgba(2,6,23,.48);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:.22s ease;z-index:95}.overlay.open{opacity:1;pointer-events:auto}
 .wordTools{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:-4px 0 10px}.wordCloud{min-height:260px;display:flex;align-content:center;align-items:center;justify-content:center;flex-wrap:wrap;gap:9px;padding:12px}.word{border:1px solid transparent;background:rgba(255,255,255,.02);color:#e5e7eb;width:auto;padding:5px 7px;line-height:1.1;cursor:pointer;border-radius:10px}.word:hover{border-color:rgba(249,115,22,.45);background:rgba(249,115,22,.13);color:#fed7aa}.word .type{display:block;font-size:10px;color:#94a3b8;margin-top:3px}.activeTopic{margin-top:8px;color:#fed7aa;font-size:12px}.compareControls,.tableTools{display:grid;gap:10px;margin:4px 0 14px}.compareControls{grid-template-columns:1fr 1fr 1fr 1fr}.compareGrid{display:grid;grid-template-columns:1.05fr .95fr;gap:12px}.note{font-size:12px;margin:-5px 0 12px}.segbar{height:8px;border-radius:999px;background:rgba(148,163,184,.18);overflow:hidden}.segfill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--brand),var(--blue))}.rank{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:999px;background:rgba(249,115,22,.18);color:#fed7aa;font-weight:900}.pos{color:#86efac;font-weight:800}.neg{color:#fca5a5;font-weight:800}
 .tableTools{grid-template-columns:1fr 1fr 1fr auto}.tableWrap{overflow:auto;max-height:560px;border-radius:18px;border:1px solid var(--line)}table{width:100%;border-collapse:collapse;min-width:1080px;background:rgba(9,14,27,.55)}th,td{padding:11px 12px;border-bottom:1px solid var(--line);text-align:left;font-size:13px;vertical-align:top}th{position:sticky;top:0;background:#121b2e;color:#cbd5e1;z-index:1;cursor:pointer}th:hover{color:#fff}tbody tr{cursor:pointer}tbody tr:hover td{background:rgba(249,115,22,.08)}.pill{display:inline-flex;border-radius:999px;padding:4px 8px;font-size:12px;font-weight:850}.Positive{background:rgba(34,197,94,.18);color:#86efac}.Negative{background:rgba(239,68,68,.18);color:#fca5a5}.Neutral{background:rgba(148,163,184,.18);color:#cbd5e1}.Unknown{background:rgba(234,179,8,.18);color:#fde68a}.source{background:rgba(56,189,248,.14);color:#bae6fd}.drawer{position:fixed;right:0;top:0;height:100vh;width:min(540px,92vw);background:#0b1120;border-left:1px solid var(--line);box-shadow:-20px 0 60px rgba(0,0,0,.45);transform:translateX(105%);transition:.25s ease;z-index:100;overflow:auto;padding:22px}.drawer.open{transform:translateX(0)}.close{float:right;width:auto;padding:9px 12px}.meta{display:grid;grid-template-columns:130px 1fr;gap:8px;color:#cbd5e1;font-size:13px;margin-top:14px}.meta b{color:#94a3b8}.msg{font-size:15px;line-height:1.55;white-space:pre-wrap}.postImg{width:100%;border-radius:18px;margin:16px 0;border:1px solid var(--line);background:#111827}a{color:#7dd3fc}.foot{font-size:12px;margin:18px 0 4px}
 .light{--ink:#0f172a;--muted:#64748b;--line:rgba(15,23,42,.14);--shadow:0 18px 40px rgba(15,23,42,.1)}.light body,.light{background:#f8fafc}.light .card{background:white}.light th{background:#f1f5f9;color:#334155}.light table{background:white}.light input,.light select,.light .multiBtn{background:#fff;color:#0f172a}.light .ghost{background:#fff;color:#0f172a}.light .drawer,.light .multiMenu{background:#fff}.light .word{color:#0f172a;background:#fff}.light .tip{background:#fff;color:#0f172a}
@@ -42,10 +42,11 @@
     <div class="foot">For realtime refresh, import a new XLSX/CSV export. The file is read locally in the browser.</div>
   </div>
 </div>
-<div class="tip" id="tip"></div><div class="drawer" id="drawer"><button class="close ghost" id="closeBtn">Close</button><h2>Post detail</h2><div id="detail"></div></div>
+<div class="tip" id="tip"></div><div class="overlay" id="overlay"></div><div class="drawer" id="drawer"><button class="close ghost" id="closeBtn">Close</button><h2>Post detail</h2><div id="detail"></div></div>
 <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 <script>
 let RAW=[],DATA=[],FILTERED=[],COMPARE=[],TOPICS=[],SELECTED_KEYWORDS=[],ACTIVE_TOPIC=null,bound=false;
+let TOPIC_CACHE=new Map(),RENDER_SEQ=0,TOPIC_TIMER=null,LAST_FILTER_KEY='';
 const $=id=>document.getElementById(id), safe=v=>String(v??'').trim(), lower=v=>safe(v).toLowerCase(), num=v=>{const n=parseFloat(String(v??'').replace(/,/g,''));return Number.isFinite(n)?n:0}, fmt=n=>Intl.NumberFormat('en',{notation:Math.abs(n)>=10000?'compact':'standard',maximumFractionDigits:1}).format(n||0), pct=n=>((n||0)*100).toFixed((n||0)<.1?1:0)+'%';
 const esc=s=>safe(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 function pick(r,keys){for(const k of keys){if(r[k]!==undefined&&r[k]!==null&&safe(r[k])!=='')return r[k]} const map=Object.fromEntries(Object.keys(r).map(k=>[lower(k),k])); for(const k of keys){const hit=map[lower(k)]; if(hit&&safe(r[hit])!=='')return r[hit]} return ''}
@@ -54,34 +55,260 @@ function csvToRows(text){const rows=[], lines=text.split(/\r?\n/).filter(Boolean
 function splitKeywords(v){return safe(v).split(/[;,|]/).map(x=>x.trim()).filter(x=>x&&x!=='-')}
 function cleanSentiment(v){const s=lower(v); if(s.includes('pos')||s.includes('บวก'))return 'Positive'; if(s.includes('neg')||s.includes('ลบ'))return 'Negative'; if(s.includes('neu')||s.includes('กลาง'))return 'Neutral'; return safe(v)||'Unknown'}
 function normalize(rows){return rows.map((r,i)=>{const d=parseDate(pick(r,['postTime','Post Time','created_time','date','Date','published_at','created at','เวลาโพสต์','วันที่'])); const message=safe(pick(r,['message','Message','content','Content','text','Text','caption','Caption','ข้อความ'])); const main=safe(pick(r,['mainKeyword','Main Keyword','main keyword','keyword','Keyword','query','Query','คีย์เวิร์ด'])); const sub=safe(pick(r,['subKeyword','Sub Keyword','sub keyword'])); const followers=num(pick(r,['followers','Followers','audience','Audience','fans','subscriber','follower_count'])); const row={idx:i,account:safe(pick(r,['account','Account','author','Author','page_name','Page Name','username','User Name','user','ชื่อบัญชี']))||'Unknown',message,source:safe(pick(r,['source','Source','platform','Platform','channel','Channel']))||'Unknown',category:safe(pick(r,['category','Category','brand','Brand','brand/category','Brand/Category']))||'Unknown',mainKeyword:main||'-',subKeyword:sub||'-',sentiment:cleanSentiment(pick(r,['sentiment','Sentiment','tone','Tone'])),engagement:num(pick(r,['engagement','Engagement','total_engagement','Total Engagement','interactions','reaction_count','ยอด Engagement'])),followers,postTime:d?d.toISOString():safe(pick(r,['postTime','Post Time'])),date:isoDay(d),month:d?isoDay(d).slice(0,7):'',url:safe(pick(r,['url','URL','postUrl','Post URL','link','Link','permalink'])),imageUrl:safe(pick(r,['imageUrl','Image URL','image','Image','thumbnail','Thumbnail'])),namedEntity:safe(pick(r,['namedEntity','Named Entity','named entity','entity','Entity'])),raw:r}; row.keywordList=[...new Set([...splitKeywords(row.mainKeyword),...splitKeywords(row.subKeyword)])]; row.er=row.followers?row.engagement/row.followers:0; return row}).filter(r=>r.message||r.account||r.category!=='Unknown')}
-async function handleFile(file){try{if(!file)return; $('lastUpdated').textContent='Reading '+file.name+' ...'; const buf=await file.arrayBuffer(); let rows=[]; if(file.name.toLowerCase().endsWith('.csv')) rows=csvToRows(new TextDecoder().decode(buf)); else { if(!window.XLSX) throw new Error('XLSX library did not load. Please check internet connection or use CSV.'); const wb=XLSX.read(buf,{type:'array',cellDates:true}); const sheet=wb.SheetNames.find(n=>lower(n)==='all')||wb.SheetNames[0]; rows=XLSX.utils.sheet_to_json(wb.Sheets[sheet],{defval:''}); } RAW=rows; DATA=normalize(rows); if(!DATA.length) throw new Error('No usable records found.'); SELECTED_KEYWORDS=[]; ACTIVE_TOPIC=null; initDashboard(); $('dash').classList.remove('hidden'); $('lastUpdated').textContent=DATA.length.toLocaleString('en-US')+' records loaded · '+new Date().toLocaleString(); }catch(e){alert('Cannot read file: '+e.message); $('lastUpdated').textContent='Import failed'}}
+async function handleFile(file){try{if(!file)return; closeDetail(); TOPIC_CACHE.clear(); TOPICS=[]; $('lastUpdated').textContent='Reading '+file.name+' ...'; await nextFrame(); const buf=await file.arrayBuffer(); let rows=[]; if(file.name.toLowerCase().endsWith('.csv')) rows=csvToRows(new TextDecoder().decode(buf)); else { if(!window.XLSX) throw new Error('XLSX library did not load. Please check internet connection or use CSV.'); const wb=XLSX.read(buf,{type:'array',cellDates:true}); const sheet=wb.SheetNames.find(n=>lower(n)==='all')||wb.SheetNames[0]; rows=XLSX.utils.sheet_to_json(wb.Sheets[sheet],{defval:''}); } $('lastUpdated').textContent='Indexing '+file.name+' ...'; await nextFrame(); RAW=rows; DATA=normalize(rows); if(!DATA.length) throw new Error('No usable records found.'); SELECTED_KEYWORDS=[]; ACTIVE_TOPIC=null; initDashboard(); $('dash').classList.remove('hidden'); $('lastUpdated').textContent=DATA.length.toLocaleString('en-US')+' records loaded · '+new Date().toLocaleString(); }catch(e){alert('Cannot read file: '+e.message); $('lastUpdated').textContent='Import failed'}}
 function uniq(field){return [...new Set(DATA.map(r=>r[field]).filter(v=>v&&v!=='-'))].sort((a,b)=>String(a).localeCompare(String(b)))} function fillSelect(id,vals,label){const el=$(id); const cur=el.value; el.innerHTML=`<option value="">${label}</option>`+vals.map(v=>`<option>${esc(v)}</option>`).join(''); el.value=vals.includes(cur)?cur:''}
 function allKeywords(){return [...new Set(DATA.flatMap(r=>r.keywordList).filter(Boolean))].sort((a,b)=>String(a).localeCompare(String(b)))}
 function initDashboard(){fillSelect('source',uniq('source'),'All platforms'); fillSelect('category',uniq('category'),'All brands'); fillSelect('sentiment',uniq('sentiment'),'All sentiment'); renderKeywordMenu(); const dates=DATA.map(r=>r.date).filter(Boolean).sort(); if(dates.length){$('from').value=dates[0];$('to').value=dates.at(-1)} bindOnce(); render()}
-function bindOnce(){if(bound)return; bound=true; ['q','source','category','sentiment','from','to','metric','compareBy','compareMetric','compareLimit','sortBy','sortDir','rowLimit','keywordSearch','cloudType','cloudRank'].forEach(id=>$(id).addEventListener('input', id==='keywordSearch'?renderKeywordMenu:()=>{if(id==='q')ACTIVE_TOPIC=null; render()})); $('resetBtn').onclick=()=>{['q','source','category','sentiment'].forEach(id=>$(id).value=''); SELECTED_KEYWORDS=[]; ACTIVE_TOPIC=null; const dates=DATA.map(r=>r.date).filter(Boolean).sort(); if(dates.length){$('from').value=dates[0];$('to').value=dates.at(-1)} renderKeywordMenu(); render()}; $('exportBtn').onclick=()=>downloadCSV(FILTERED,'filtered_messages.csv'); $('exportCompareBtn').onclick=()=>downloadComparisonCSV(); $('themeBtn').onclick=()=>document.documentElement.classList.toggle('light'); $('sampleBtn').onclick=()=>{DATA=sampleData(); SELECTED_KEYWORDS=[]; ACTIVE_TOPIC=null; initDashboard(); $('dash').classList.remove('hidden'); $('lastUpdated').textContent='Sample data loaded'}; $('keywordBtn').onclick=()=>$('keywordBox').classList.toggle('open'); document.addEventListener('click',e=>{if(!$('keywordBox').contains(e.target))$('keywordBox').classList.remove('open')}); $('kwClear').onclick=()=>{SELECTED_KEYWORDS=[]; renderKeywordMenu(); render()}; $('kwAll').onclick=()=>{SELECTED_KEYWORDS=allKeywords(); renderKeywordMenu(); render()}; $('clearTopicBtn').onclick=()=>{ACTIVE_TOPIC=null; if($('q').value.startsWith('Topic: '))$('q').value=''; render()}; $('topEngBtn').onclick=()=>{$('sortBy').value='engagement';$('sortDir').value='desc';render()}; $('rows').closest('table').querySelectorAll('th[data-sort]').forEach(th=>th.onclick=()=>{const s=th.dataset.sort; $('sortDir').value=$('sortBy').value===s&&$('sortDir').value==='desc'?'asc':'desc'; $('sortBy').value=s; render()})}
-function renderKeywordMenu(){const list=$('keywordList'); const q=lower($('keywordSearch').value); const kws=allKeywords().filter(k=>!q||lower(k).includes(q)); list.innerHTML=kws.map(k=>`<label class="check"><input type="checkbox" ${SELECTED_KEYWORDS.includes(k)?'checked':''} data-kw="${esc(k)}"><span>${esc(k)}</span></label>`).join('') || '<div class="empty" style="height:80px">No keywords</div>'; list.querySelectorAll('input').forEach(ch=>ch.onchange=()=>{const kw=ch.dataset.kw; if(ch.checked&&!SELECTED_KEYWORDS.includes(kw))SELECTED_KEYWORDS.push(kw); if(!ch.checked)SELECTED_KEYWORDS=SELECTED_KEYWORDS.filter(x=>x!==kw); updateKeywordUi(); render()}); updateKeywordUi()}
-function updateKeywordUi(){ $('keywordLabel').textContent=SELECTED_KEYWORDS.length?SELECTED_KEYWORDS.length+' keywords selected':'All keywords'; $('keywordChips').innerHTML=SELECTED_KEYWORDS.map(k=>`<span class="chip">${esc(k)} <button data-kw="${esc(k)}">×</button></span>`).join(''); $('keywordChips').querySelectorAll('button').forEach(b=>b.onclick=()=>{SELECTED_KEYWORDS=SELECTED_KEYWORDS.filter(x=>x!==b.dataset.kw); renderKeywordMenu(); render()})}
+function bindOnce(){
+  if(bound)return; bound=true;
+  const heavyIds=['q','source','category','sentiment','from','to','metric','compareBy','compareMetric','compareLimit','sortBy','sortDir','rowLimit'];
+  heavyIds.forEach(id=>$(id).addEventListener('input',()=>{ if(id==='q')ACTIVE_TOPIC=null; render(true) }));
+  ['cloudType','cloudRank'].forEach(id=>$(id).addEventListener('input',()=>{ closeDetail(); drawWordCloudFromTopics(); }));
+  $('keywordSearch').addEventListener('input',renderKeywordMenu);
+  $('resetBtn').onclick=()=>{closeDetail(); ['q','source','category','sentiment'].forEach(id=>$(id).value=''); SELECTED_KEYWORDS=[]; ACTIVE_TOPIC=null; const dates=DATA.map(r=>r.date).filter(Boolean).sort(); if(dates.length){$('from').value=dates[0];$('to').value=dates.at(-1)} renderKeywordMenu(); render(true)};
+  $('exportBtn').onclick=()=>downloadCSV(FILTERED,'filtered_messages.csv');
+  $('exportCompareBtn').onclick=()=>downloadComparisonCSV();
+  $('themeBtn').onclick=()=>document.documentElement.classList.toggle('light');
+  $('sampleBtn').onclick=()=>{closeDetail(); TOPIC_CACHE.clear(); DATA=sampleData(); SELECTED_KEYWORDS=[]; ACTIVE_TOPIC=null; initDashboard(); $('dash').classList.remove('hidden'); $('lastUpdated').textContent='Sample data loaded'};
+  $('keywordBtn').onclick=()=>$('keywordBox').classList.toggle('open');
+  document.addEventListener('click',e=>{if(!$('keywordBox').contains(e.target))$('keywordBox').classList.remove('open'); if(!e.target.closest('.word')) hideTip();});
+  document.addEventListener('pointerdown',e=>{if(!e.target.closest('.word')) hideTip();},{passive:true});
+  document.addEventListener('touchstart',e=>{if(!e.target.closest('.word')) hideTip();},{passive:true});
+  window.addEventListener('scroll',hideTip,true);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDetail()});
+  $('overlay').onclick=closeDetail;
+  $('kwClear').onclick=()=>{closeDetail(); SELECTED_KEYWORDS=[]; renderKeywordMenu(); render(true)};
+  $('kwAll').onclick=()=>{closeDetail(); SELECTED_KEYWORDS=allKeywords(); renderKeywordMenu(); render(true)};
+  $('clearTopicBtn').onclick=()=>{closeDetail(); ACTIVE_TOPIC=null; if($('q').value.startsWith('Topic: '))$('q').value=''; render(true)};
+  $('topEngBtn').onclick=()=>{closeDetail(); $('sortBy').value='engagement';$('sortDir').value='desc';render(false)};
+  $('rows').closest('table').querySelectorAll('th[data-sort]').forEach(th=>th.onclick=()=>{closeDetail(); const s=th.dataset.sort; $('sortDir').value=$('sortBy').value===s&&$('sortDir').value==='desc'?'asc':'desc'; $('sortBy').value=s; render(false)})
+}
+function renderKeywordMenu(){const list=$('keywordList'); const q=lower($('keywordSearch').value); const kws=allKeywords().filter(k=>!q||lower(k).includes(q)); list.innerHTML=kws.map(k=>`<label class="check"><input type="checkbox" ${SELECTED_KEYWORDS.includes(k)?'checked':''} data-kw="${esc(k)}"><span>${esc(k)}</span></label>`).join('') || '<div class="empty" style="height:80px">No keywords</div>'; list.querySelectorAll('input').forEach(ch=>ch.onchange=()=>{closeDetail(); const kw=ch.dataset.kw; if(ch.checked&&!SELECTED_KEYWORDS.includes(kw))SELECTED_KEYWORDS.push(kw); if(!ch.checked)SELECTED_KEYWORDS=SELECTED_KEYWORDS.filter(x=>x!==kw); updateKeywordUi(); render(true)}); updateKeywordUi()}
+function updateKeywordUi(){ $('keywordLabel').textContent=SELECTED_KEYWORDS.length?SELECTED_KEYWORDS.length+' keywords selected':'All keywords'; $('keywordChips').innerHTML=SELECTED_KEYWORDS.map(k=>`<span class="chip">${esc(k)} <button data-kw="${esc(k)}">×</button></span>`).join(''); $('keywordChips').querySelectorAll('button').forEach(b=>b.onclick=()=>{closeDetail(); SELECTED_KEYWORDS=SELECTED_KEYWORDS.filter(x=>x!==b.dataset.kw); renderKeywordMenu(); render(true)})}
 function topicMatch(r){if(!ACTIVE_TOPIC)return true; const hay=normalTopic([r.message,r.mainKeyword,r.subKeyword,r.namedEntity,r.category].join(' ')); return ACTIVE_TOPIC.keys.some(k=>hay.includes(k))}
 function filtered(){const q=lower($('q').value),src=$('source').value,cat=$('category').value,sent=$('sentiment').value,from=$('from').value,to=$('to').value; return DATA.filter(r=>(!q||$('q').value.startsWith('Topic: ')||lower([r.message,r.account,r.mainKeyword,r.subKeyword,r.category,r.namedEntity].join(' ')).includes(q))&&topicMatch(r)&&(!src||r.source===src)&&(!cat||r.category===cat)&&(!SELECTED_KEYWORDS.length||SELECTED_KEYWORDS.some(k=>r.keywordList.includes(k)))&&(!sent||r.sentiment===sent)&&(!from||!r.date||r.date>=from)&&(!to||!r.date||r.date<=to))}
 function metricValue(o,m=$('metric').value){return m==='mentions'?(o.mentions??1):m==='followers'?(o.followers||0):m==='er'?(o.er||0):(o.engagement||0)} function sum(a,k){return a.reduce((s,x)=>s+(+x[k]||0),0)}
 function group(arr,key){const m=new Map(); arr.forEach(r=>{const keys=key==='keywordList'?r.keywordList:[r[key]||'Unknown']; (keys.length?keys:['Unknown']).forEach(k=>{if(!m.has(k))m.set(k,[]);m.get(k).push(r)})}); return [...m].map(([name,rows])=>({name,rows,mentions:rows.length,engagement:sum(rows,'engagement'),followers:sum(rows,'followers'),avgEngagement:rows.length?sum(rows,'engagement')/rows.length:0,er:sum(rows,'followers')?sum(rows,'engagement')/sum(rows,'followers'):0,positive:rows.filter(x=>x.sentiment==='Positive').length,negative:rows.filter(x=>x.sentiment==='Negative').length,neutral:rows.filter(x=>x.sentiment==='Neutral').length}))}
-function render(){FILTERED=filtered(); const metric=$('metric').value; renderKpis(metric); drawLine('trend',trendData(FILTERED,metric)); drawDonut('sentimentChart',group(FILTERED,'sentiment').map(x=>({name:x.name,value:x.mentions}))); drawBars('platformChart',group(FILTERED,'source').sort((a,b)=>metricValue(b,metric)-metricValue(a,metric)).slice(0,8).map(x=>({name:x.name,value:metricValue(x,metric)})),metric); renderWordCloud(); renderCompare(); renderTable();}
-function renderKpis(metric){const total=sum(FILTERED,'engagement'), known=FILTERED.filter(r=>r.sentiment!=='Unknown'), pos=known.filter(r=>r.sentiment==='Positive').length; $('kMentions').textContent=fmt(FILTERED.length); $('kEng').textContent=fmt(total); $('kAvgEng').textContent='Avg '+fmt(total/(FILTERED.length||1))+' per mention'; $('kPos').textContent=Math.round(pos/(known.length||1)*100)+'%'; const pf=group(FILTERED,'source').sort((a,b)=>metricValue(b,metric)-metricValue(a,metric))[0]; $('kPlatform').textContent=pf?pf.name:'-'; $('kPlatformHint').textContent=pf?fmt(metricValue(pf,metric))+' '+metric:'No data'; const br=group(FILTERED,'category').sort((a,b)=>metricValue(b,metric)-metricValue(a,metric))[0]; $('kBrand').textContent=br?br.name:'-'; $('kBrandHint').textContent=br?fmt(metricValue(br,metric))+' '+metric:'No data'; $('kTopics').textContent=fmt(TOPICS.length); $('activeTopic').innerHTML=ACTIVE_TOPIC?`Active topic: <b>${esc(ACTIVE_TOPIC.label)}</b> · ${fmt(ACTIVE_TOPIC.mentions)} mentions`:''}
+function render(rebuildTopics=true){
+  closeDetail();
+  const seq=++RENDER_SEQ;
+  FILTERED=filtered();
+  const metric=$('metric').value;
+  renderKpis(metric);
+  drawLine('trend',trendData(FILTERED,metric));
+  drawDonut('sentimentChart',group(FILTERED,'sentiment').map(x=>({name:x.name,value:x.mentions})));
+  drawBars('platformChart',group(FILTERED,'source').sort((a,b)=>metricValue(b,metric)-metricValue(a,metric)).slice(0,8).map(x=>({name:x.name,value:metricValue(x,metric)})),metric);
+  renderCompare();
+  renderTable();
+  if(rebuildTopics) scheduleTopicBuild(seq); else drawWordCloudFromTopics();
+}
+function renderKpis(metric){const total=sum(FILTERED,'engagement'), known=FILTERED.filter(r=>r.sentiment!=='Unknown'), pos=known.filter(r=>r.sentiment==='Positive').length; $('kMentions').textContent=fmt(FILTERED.length); $('kEng').textContent=fmt(total); $('kAvgEng').textContent='Avg '+fmt(total/(FILTERED.length||1))+' per mention'; $('kPos').textContent=Math.round(pos/(known.length||1)*100)+'%'; const pf=group(FILTERED,'source').sort((a,b)=>metricValue(b,metric)-metricValue(a,metric))[0]; $('kPlatform').textContent=pf?pf.name:'-'; $('kPlatformHint').textContent=pf?fmt(metricValue(pf,metric))+' '+metric:'No data'; const br=group(FILTERED,'category').sort((a,b)=>metricValue(b,metric)-metricValue(a,metric))[0]; $('kBrand').textContent=br?br.name:'-'; $('kBrandHint').textContent=br?fmt(metricValue(br,metric))+' '+metric:'No data'; $('kTopics').textContent=TOPICS.length?fmt(TOPICS.length):'…'; $('activeTopic').innerHTML=ACTIVE_TOPIC?`Active topic: <b>${esc(ACTIVE_TOPIC.label)}</b> · ${fmt(ACTIVE_TOPIC.mentions)} mentions`:''}
 function trendData(arr,metric){const m=new Map(); arr.forEach(r=>{if(!r.month)return; m.set(r.month,(m.get(r.month)||0)+metricValue(r,metric))}); return [...m].map(([name,value])=>({name,value})).sort((a,b)=>a.name.localeCompare(b.name))}
 const BASE_STOP=[
 'และ','หรือ','ที่','ใน','ของ','ให้','ได้','แล้ว','คือ','กับ','จาก','เป็น','มี','ไป','มา','ไว้','ครับ','ค่ะ','นะ','อะ','จ้า','จัง','เลย','มาก','น้อย','กว่า','แบบ','นี้','นั้น','นี่','โน่น','เรา','เขา','เธอ','คุณ','ผม','ฉัน','มัน','ก็','ไม่','ยัง','แต่','ถ้า','เอา','กัน','ออก','เข้า','อยู่','มาแล้ว','ทำไม','อะไร','ยังไง','บริโภค','ออกกำลังกาย','สุขภาพ',
 'a','an','the','and','or','for','with','without','this','that','these','those','you','your','are','is','was','were','be','been','to','of','in','on','at','by','from','as','it','its','we','our','they','their','i','me','my','new','official','page','post','video','photo','review','รีวิว','content','campaign','brand','product','http','https','www','com','co','th'
 ];
 const GENERIC_FIELD_KEYS=['message','mainKeyword','subKeyword','namedEntity','category','account','source'];
+const TOPIC_ROW_LIMIT=1800, TOPIC_CHUNK_SIZE=90, TOPIC_CANDIDATE_LIMIT=720, TOPIC_WORD_LIMIT=55;
 function normalTopic(s){return lower(s).replace(/https?:\/\/\S+/g,' ').replace(/&[a-z]+;/g,' ').replace(/[_\-–—]+/g,' ').replace(/[#@]/g,'').replace(/[!"$%&'()*+,./:;<=>?@[\\\]^`{|}~“”‘’…•\n\r\t]+/g,' ').replace(/\s+/g,' ').trim()}
 function stripEntityType(s){return safe(s).replace(/\s*\([^)]*\)\s*/g,'').replace(/\s+/g,' ').trim()}
 function tokenBase(w){return normalTopic(w).replace(/(ing|ed|es|s)$/,'')}
 function isThai(s){return /[\u0E00-\u0E7F]/.test(s)}
 function isStop(w,extra=new Set()){const n=normalTopic(w); if(!n||n.length<2||/^\d+$/.test(n)||/^\d+[kmb]?$/i.test(n))return true; if(BASE_STOP.includes(n)||extra.has(n))return true; if(n.includes('บริโภคแต่น้อย')||n.includes('ออกกำลังกายเพื่อสุขภาพ'))return true; return false}
 function segmentText(text){const clean=normalTopic(text); if(!clean)return []; try{const seg=new Intl.Segmenter(isThai(clean)?'th':'en',{granularity:'word'}); return [...seg.segment(clean)].filter(x=>x.isWordLike).map(x=>x.segment)}catch(e){return clean.split(/\s+/)}}
+function topicSampleRows(rows,limit=TOPIC_ROW_LIMIT){
+  if(rows.length<=limit)return rows;
+  const out=[], step=rows.length/limit;
+  for(let i=0;i<limit;i++) out.push(rows[Math.floor(i*step)]);
+  return out;
+}
 function getDynamicStop(rows){
-  const docs=rows.length||1, df=new Map();
-  rows.forEach(r=>{const seen=new Set(segmentText([r.message,r.account].join(' ')).map(tokenBase).filter(Boolean)); seen.forEach(w=>df.set(w,(df.get(w)||0)+1))});
+  const sample=topicSampleRows(rows,800), docs=sample.length||1, df=new Map();
+  sample.forEach(r=>{
+    const words=segmentText([r.message,r.account].join(' ')).slice(0,70).map(tokenBase).filter(Boolean);
+    const seen=new Set(words);
+    seen.forEach(w=>df.set(w,(df.get(w)||0)+1));
+  });
+  const extra=new Set();
+  df.forEach((c,w)=>{const share=c/docs; if(share>.62 || (docs>80&&c>45&&share>.38))extra.add(w)});
+  return extra;
+}
+function phraseQuality(words,extra){
+  if(words.length<2||words.length>4)return 0;
+  const clean=words.map(w=>normalTopic(w)).filter(w=>!isStop(w,extra));
+  if(clean.length<2)return 0;
+  const chars=clean.join('').length; if(chars<5)return 0;
+  const uniq=new Set(clean).size/clean.length;
+  const hasUseful=clean.some(w=>w.length>=3||isThai(w));
+  return hasUseful ? chars*uniq : 0;
+}
+function canonicalKey(label,type){
+  let k=normalTopic(stripEntityType(label));
+  if(type==='hashtag') k=k.replace(/\s+/g,'');
+  if(!isThai(k)) k=k.split(' ').map(tokenBase).join(' ');
+  return k;
+}
+function addTopic(map,label,type,row,weight=1,extra=new Set(),matchedTokens=[]){
+  label=safe(stripEntityType(label)); if(!label||label==='-')return;
+  const key=canonicalKey(label,type); if(isStop(key,extra))return;
+  if(!map.has(key))map.set(key,{key,label,type,variants:new Map(),rowIds:new Set(),mentions:0,engagement:0,score:0,tokens:new Set(),keys:[key]});
+  const o=map.get(key); o.variants.set(label,(o.variants.get(label)||0)+1);
+  normalTopic(label).split(/\s+/).filter(Boolean).forEach(t=>o.tokens.add(tokenBase(t)));
+  matchedTokens.forEach(t=>o.tokens.add(tokenBase(t)));
+  if(!o.rowIds.has(row.idx)){o.rowIds.add(row.idx); o.mentions++; o.engagement+=row.engagement||0}
+  o.score+=weight;
+}
+function extractCandidateTopics(row,extra){
+  const out=[]; const message=safe(row.message);
+  (message.match(/#[\w\u0E00-\u0E7F]+/g)||[]).slice(0,28).forEach(x=>out.push({label:x,type:'hashtag',weight:7}));
+  row.keywordList.slice(0,28).forEach(x=>out.push({label:x,type:'keyword',weight:8}));
+  splitKeywords(row.namedEntity).map(stripEntityType).filter(Boolean).slice(0,20).forEach(x=>out.push({label:x,type:'entity',weight:6}));
+  let rawWords=segmentText(message).map(w=>normalTopic(w)).filter(w=>!isStop(w,extra));
+  rawWords=rawWords.slice(0,TOPIC_WORD_LIMIT);
+  const seenSingles=new Set();
+  rawWords.forEach(w=>{
+    const k=tokenBase(w);
+    if(!seenSingles.has(k) && (w.length>=3 || isThai(w))){seenSingles.add(k); out.push({label:w,type:'phrase',weight:0.75,tokens:[w]})}
+  });
+  for(let n=2;n<=3;n++){
+    for(let i=0;i<=rawWords.length-n;i++){
+      const chunk=rawWords.slice(i,i+n); const q=phraseQuality(chunk,extra);
+      if(q>0)out.push({label:chunk.join(' '),type:'phrase',weight:2+n+(q/24),tokens:chunk});
+    }
+  }
+  return out;
+}
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Social Monitoring Dashboard</title>
+<style>
+:root{--bg:#0b1020;--card:#11182b;--ink:#eef2ff;--muted:#96a3b8;--line:rgba(150,163,184,.2);--brand:#f97316;--blue:#38bdf8;--green:#22c55e;--red:#ef4444;--yellow:#eab308;--shadow:0 18px 50px rgba(0,0,0,.28);--r:22px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;background:radial-gradient(circle at top left,#293957 0,#0b1020 36%,#070b14 100%);color:var(--ink)}
+.app{max-width:1440px;margin:auto;padding:22px}.top{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:16px}h1{font-size:30px;margin:0 0 8px;line-height:1.08;letter-spacing:-.8px}.sub,.note,.hint,.foot{color:var(--muted)}.sub{font-size:14px;line-height:1.45}.badge{border:1px solid var(--line);background:rgba(255,255,255,.05);border-radius:999px;padding:9px 12px;font-size:13px;color:#cbd5e1;white-space:nowrap}.card{background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.035));border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+.import{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;padding:18px;margin-bottom:12px}.drop{border:1px dashed rgba(255,255,255,.28);border-radius:18px;padding:16px;background:rgba(255,255,255,.035)}.drop b{display:block;margin-bottom:5px}.drop span{font-size:13px;color:var(--muted)}button,input,select{width:100%;border:1px solid var(--line);background:rgba(8,13,26,.78);color:var(--ink);border-radius:14px;padding:12px 13px;font-size:14px;outline:none}button{cursor:pointer;border:0;font-weight:850;background:linear-gradient(135deg,var(--brand),#fb923c);color:#111827}.ghost{background:rgba(255,255,255,.055);border:1px solid var(--line);color:var(--ink)}.file{display:none}
+.hidden{display:none!important}.controls{display:grid;grid-template-columns:1.25fr repeat(5,1fr);gap:10px;margin:12px 0}.controls.two{grid-template-columns:repeat(6,1fr);margin-top:0}.filterPanel{padding:14px;margin-bottom:12px}.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}.chip{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--line);background:rgba(249,115,22,.13);color:#fed7aa;border-radius:999px;padding:6px 9px;font-size:12px}.chip button{width:auto;padding:0;background:none;color:#fed7aa;font-size:15px;line-height:1}.multi{position:relative}.multiBtn{display:flex;justify-content:space-between;gap:10px;cursor:pointer}.multiMenu{display:none;position:absolute;z-index:60;left:0;right:0;top:calc(100% + 6px);background:#0b1120;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:10px;max-height:330px;overflow:auto}.multi.open .multiMenu{display:block}.multiActions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}.check{display:flex;align-items:center;gap:9px;padding:9px;border-radius:10px;cursor:pointer}.check:hover{background:rgba(255,255,255,.06)}.check input{width:auto}
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin:14px 0}.kpi{padding:16px}.label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.75px}.value{font-size:28px;font-weight:950;margin-top:8px;letter-spacing:-.7px}.hint{font-size:12px;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:12px}.panel{padding:18px}.panel h2{margin:0 0 12px;font-size:16px}.chart{height:280px;position:relative}.small{height:235px}svg{width:100%;height:100%;overflow:visible}.axis{fill:#94a3b8;font-size:11px}.gridline{stroke:rgba(148,163,184,.14)}.bar{rx:7;cursor:pointer}.bar:hover{opacity:.75}.line{fill:none;stroke:var(--brand);stroke-width:3}.dot{fill:#fb923c;stroke:#111827;stroke-width:2}.empty{height:100%;display:grid;place-items:center;color:var(--muted);font-size:13px;text-align:center;padding:20px}.tip{position:fixed;display:none;z-index:90;background:#020617;border:1px solid var(--line);box-shadow:var(--shadow);border-radius:12px;padding:9px 11px;font-size:12px;color:#e5e7eb;pointer-events:none;max-width:280px}.overlay{position:fixed;inset:0;background:rgba(2,6,23,.48);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:.22s ease;z-index:95}.overlay.open{opacity:1;pointer-events:auto}
+.wordTools{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:-4px 0 10px}.wordCloud{min-height:260px;display:flex;align-content:center;align-items:center;justify-content:center;flex-wrap:wrap;gap:9px;padding:12px}.word{border:1px solid transparent;background:rgba(255,255,255,.02);color:#e5e7eb;width:auto;padding:5px 7px;line-height:1.1;cursor:pointer;border-radius:10px}.word:hover{border-color:rgba(249,115,22,.45);background:rgba(249,115,22,.13);color:#fed7aa}.word .type{display:block;font-size:10px;color:#94a3b8;margin-top:3px}.activeTopic{margin-top:8px;color:#fed7aa;font-size:12px}.compareControls,.tableTools{display:grid;gap:10px;margin:4px 0 14px}.compareControls{grid-template-columns:1fr 1fr 1fr 1fr}.compareGrid{display:grid;grid-template-columns:1.05fr .95fr;gap:12px}.note{font-size:12px;margin:-5px 0 12px}.segbar{height:8px;border-radius:999px;background:rgba(148,163,184,.18);overflow:hidden}.segfill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--brand),var(--blue))}.rank{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:999px;background:rgba(249,115,22,.18);color:#fed7aa;font-weight:900}.pos{color:#86efac;font-weight:800}.neg{color:#fca5a5;font-weight:800}
+.tableTools{grid-template-columns:1fr 1fr 1fr auto}.tableWrap{overflow:auto;max-height:560px;border-radius:18px;border:1px solid var(--line)}table{width:100%;border-collapse:collapse;min-width:1080px;background:rgba(9,14,27,.55)}th,td{padding:11px 12px;border-bottom:1px solid var(--line);text-align:left;font-size:13px;vertical-align:top}th{position:sticky;top:0;background:#121b2e;color:#cbd5e1;z-index:1;cursor:pointer}th:hover{color:#fff}tbody tr{cursor:pointer}tbody tr:hover td{background:rgba(249,115,22,.08)}.pill{display:inline-flex;border-radius:999px;padding:4px 8px;font-size:12px;font-weight:850}.Positive{background:rgba(34,197,94,.18);color:#86efac}.Negative{background:rgba(239,68,68,.18);color:#fca5a5}.Neutral{background:rgba(148,163,184,.18);color:#cbd5e1}.Unknown{background:rgba(234,179,8,.18);color:#fde68a}.source{background:rgba(56,189,248,.14);color:#bae6fd}.drawer{position:fixed;right:0;top:0;height:100vh;width:min(540px,92vw);background:#0b1120;border-left:1px solid var(--line);box-shadow:-20px 0 60px rgba(0,0,0,.45);transform:translateX(105%);transition:.25s ease;z-index:100;overflow:auto;padding:22px}.drawer.open{transform:translateX(0)}.close{float:right;width:auto;padding:9px 12px}.meta{display:grid;grid-template-columns:130px 1fr;gap:8px;color:#cbd5e1;font-size:13px;margin-top:14px}.meta b{color:#94a3b8}.msg{font-size:15px;line-height:1.55;white-space:pre-wrap}.postImg{width:100%;border-radius:18px;margin:16px 0;border:1px solid var(--line);background:#111827}a{color:#7dd3fc}.foot{font-size:12px;margin:18px 0 4px}
+.light{--ink:#0f172a;--muted:#64748b;--line:rgba(15,23,42,.14);--shadow:0 18px 40px rgba(15,23,42,.1)}.light body,.light{background:#f8fafc}.light .card{background:white}.light th{background:#f1f5f9;color:#334155}.light table{background:white}.light input,.light select,.light .multiBtn{background:#fff;color:#0f172a}.light .ghost{background:#fff;color:#0f172a}.light .drawer,.light .multiMenu{background:#fff}.light .word{color:#0f172a;background:#fff}.light .tip{background:#fff;color:#0f172a}
+@media(max-width:980px){.top{display:block}.badge{display:inline-flex;margin-top:12px}.import{grid-template-columns:1fr}.controls,.controls.two{grid-template-columns:1fr 1fr}.kpis{grid-template-columns:1fr 1fr}.grid,.compareGrid{grid-template-columns:1fr}.compareControls,.wordTools{grid-template-columns:1fr 1fr}.tableTools{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.app{padding:14px}h1{font-size:24px}.controls,.controls.two,.compareControls,.tableTools,.wordTools{grid-template-columns:1fr}.kpis{grid-template-columns:1fr}.value{font-size:25px}.chart{height:250px}.panel{padding:14px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top"><div><h1>Social Monitoring Dashboard</h1><div class="sub">Import XLSX/CSV locally in your browser. Compare brands, keywords, platforms, topics, mentions and engagement.</div></div><div class="badge">● Local file only · <span id="lastUpdated">No data loaded</span></div></div>
+  <div class="card import"><div class="drop" id="dropZone"><b>Import your social monitoring export</b><span>Choose XLSX/CSV or drag & drop here. Data is processed in this browser only and is not uploaded.</span></div><div style="display:flex;gap:10px;min-width:260px"><button id="chooseBtn">Choose XLSX</button><button class="ghost" id="clearBtn">Clear</button></div><input id="fileInput" class="file" type="file" accept=".xlsx,.xls,.csv"></div>
+  <div id="dash" class="hidden">
+    <div class="card filterPanel">
+      <div class="controls" style="margin-top:0">
+        <input id="q" placeholder="Search message / account / keyword / topic">
+        <select id="source"><option value="">All platforms</option></select>
+        <select id="category"><option value="">All brands</option></select>
+        <div class="multi" id="keywordBox"><div class="multiBtn" id="keywordBtn"><span id="keywordLabel">All keywords</span><span>▾</span></div><div class="multiMenu"><input id="keywordSearch" placeholder="Search keywords"><div class="multiActions"><button class="ghost" id="kwAll">Select all</button><button class="ghost" id="kwClear">Clear</button></div><div id="keywordList"></div></div></div>
+        <select id="sentiment"><option value="">All sentiment</option></select>
+        <input id="from" type="date">
+      </div>
+      <div class="controls two"><input id="to" type="date"><select id="metric"><option value="engagement">Engagement</option><option value="mentions">Mentions</option><option value="followers">Followers</option><option value="er">Engagement rate</option></select><button class="ghost" id="resetBtn">Reset filters</button><button class="ghost" id="exportBtn">Export filtered CSV</button><button class="ghost" id="themeBtn">Toggle theme</button><button class="ghost" id="sampleBtn">Load sample</button></div>
+      <div class="chips" id="keywordChips"></div><div id="activeTopic" class="activeTopic"></div>
+    </div>
+    <div class="kpis"><div class="card kpi"><div class="label">Mentions</div><div class="value" id="kMentions">0</div><div class="hint">Total matched records</div></div><div class="card kpi"><div class="label">Engagement</div><div class="value" id="kEng">0</div><div class="hint" id="kAvgEng">Avg per mention</div></div><div class="card kpi"><div class="label">Positive share</div><div class="value" id="kPos">0%</div><div class="hint">Positive / known sentiment</div></div><div class="card kpi"><div class="label">Top platform</div><div class="value" id="kPlatform">-</div><div class="hint" id="kPlatformHint">By selected metric</div></div><div class="card kpi"><div class="label">Top brand</div><div class="value" id="kBrand">-</div><div class="hint" id="kBrandHint">By selected metric</div></div><div class="card kpi"><div class="label">Active topics</div><div class="value" id="kTopics">0</div><div class="hint">Grouped word cloud</div></div></div>
+    <div class="grid"><div class="card panel"><h2>Trend over time</h2><div class="chart" id="trend"></div></div><div class="card panel"><h2>Sentiment mix</h2><div class="chart small" id="sentimentChart"></div></div><div class="card panel"><h2>Platform performance</h2><div class="chart small" id="platformChart"></div></div><div class="card panel"><h2>Smart topic cloud</h2><div class="note">Generic topic extraction: hashtags, keywords, entities, noun-like phrases, dynamic stopwords and variant grouping. Click a topic to filter messages.</div><div class="wordTools"><select id="cloudType"><option value="all">All topic types</option><option value="hashtag">Hashtags</option><option value="keyword">Keywords</option><option value="entity">Entities</option><option value="phrase">Phrases</option></select><select id="cloudRank"><option value="smart">Rank by smart score</option><option value="mentions">Rank by mentions</option><option value="engagement">Rank by engagement</option></select><button class="ghost" id="clearTopicBtn">Clear topic</button></div><div class="wordCloud" id="wordCloud"></div></div></div>
+    <div class="card panel" style="margin-top:12px"><h2>Comparison Lab</h2><div class="note">เทียบ performance ระหว่าง Brand / Keyword / Platform / Account เพื่อดู mention, engagement, avg engagement, ER และ share of voice</div><div class="compareControls"><select id="compareBy"><option value="category">Compare by brand/category</option><option value="mainKeyword">Compare by main keyword</option><option value="source">Compare by platform</option><option value="account">Compare by account</option><option value="sentiment">Compare by sentiment</option></select><select id="compareMetric"><option value="engagement">Rank by engagement</option><option value="mentions">Rank by mentions</option><option value="avgEngagement">Rank by avg engagement</option><option value="positiveShare">Rank by positive share</option><option value="er">Rank by ER</option></select><select id="compareLimit"><option value="8">Top 8</option><option value="12">Top 12</option><option value="20">Top 20</option></select><button class="ghost" id="exportCompareBtn">Export comparison CSV</button></div><div class="compareGrid"><div><h2 id="compareTitle" style="margin-top:0">Performance ranking</h2><div class="chart" id="compareChart"></div></div><div><h2 style="margin-top:0">Share of voice</h2><div class="chart small" id="sovChart"></div></div></div><div class="tableWrap" style="max-height:420px;margin-top:14px"><table><thead><tr><th>#</th><th>Name</th><th>Mentions</th><th>Share</th><th>Engagement</th><th>Avg Eng.</th><th>ER</th><th>Positive</th><th>Negative</th><th>Best platform</th></tr></thead><tbody id="compareRows"></tbody></table></div></div>
+    <div class="card panel" style="margin-top:12px"><h2>Message explorer</h2><div class="tableTools"><select id="sortBy"><option value="date">Sort by date</option><option value="engagement">Sort by engagement</option><option value="account">Sort by account</option><option value="source">Sort by platform</option><option value="category">Sort by brand</option><option value="sentiment">Sort by sentiment</option></select><select id="sortDir"><option value="desc">High/New → Low/Old</option><option value="asc">Low/Old → High/New</option></select><select id="rowLimit"><option value="100">Show 100</option><option value="300">Show 300</option><option value="1000">Show 1000</option></select><button class="ghost" id="topEngBtn">Top engagement</button></div><div class="tableWrap"><table><thead><tr><th data-sort="date">Date</th><th data-sort="source">Platform</th><th data-sort="category">Brand</th><th data-sort="mainKeyword">Keyword</th><th data-sort="sentiment">Sentiment</th><th data-sort="account">Account</th><th data-sort="engagement">Engagement</th><th>Message</th></tr></thead><tbody id="rows"></tbody></table></div></div>
+    <div class="foot">For realtime refresh, import a new XLSX/CSV export. The file is read locally in the browser.</div>
+  </div>
+</div>
+<div class="tip" id="tip"></div><div class="overlay" id="overlay"></div><div class="drawer" id="drawer"><button class="close ghost" id="closeBtn">Close</button><h2>Post detail</h2><div id="detail"></div></div>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<script>
+let RAW=[],DATA=[],FILTERED=[],COMPARE=[],TOPICS=[],SELECTED_KEYWORDS=[],ACTIVE_TOPIC=null,bound=false;
+let TOPIC_CACHE=new Map(),RENDER_SEQ=0,TOPIC_TIMER=null,LAST_FILTER_KEY='';
+const $=id=>document.getElementById(id), safe=v=>String(v??'').trim(), lower=v=>safe(v).toLowerCase(), num=v=>{const n=parseFloat(String(v??'').replace(/,/g,''));return Number.isFinite(n)?n:0}, fmt=n=>Intl.NumberFormat('en',{notation:Math.abs(n)>=10000?'compact':'standard',maximumFractionDigits:1}).format(n||0), pct=n=>((n||0)*100).toFixed((n||0)<.1?1:0)+'%';
+const esc=s=>safe(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+function pick(r,keys){for(const k of keys){if(r[k]!==undefined&&r[k]!==null&&safe(r[k])!=='')return r[k]} const map=Object.fromEntries(Object.keys(r).map(k=>[lower(k),k])); for(const k of keys){const hit=map[lower(k)]; if(hit&&safe(r[hit])!=='')return r[hit]} return ''}
+function parseDate(v){if(v instanceof Date&&!isNaN(v))return v; const s=safe(v); if(!s)return null; const d=new Date(s); return isNaN(d)?null:d} function isoDay(d){return d?d.toISOString().slice(0,10):''}
+function csvToRows(text){const rows=[], lines=text.split(/\r?\n/).filter(Boolean); if(!lines.length)return rows; const parse=line=>{const out=[];let cur='',q=false; for(let i=0;i<line.length;i++){const ch=line[i]; if(ch==='"'&&line[i+1]==='"'){cur+='"';i++} else if(ch==='"')q=!q; else if(ch===','&&!q){out.push(cur);cur=''} else cur+=ch} out.push(cur); return out}; const head=parse(lines[0]); for(let i=1;i<lines.length;i++){const vals=parse(lines[i]); rows.push(Object.fromEntries(head.map((h,j)=>[h,vals[j]??''])))} return rows}
+function splitKeywords(v){return safe(v).split(/[;,|]/).map(x=>x.trim()).filter(x=>x&&x!=='-')}
+function cleanSentiment(v){const s=lower(v); if(s.includes('pos')||s.includes('บวก'))return 'Positive'; if(s.includes('neg')||s.includes('ลบ'))return 'Negative'; if(s.includes('neu')||s.includes('กลาง'))return 'Neutral'; return safe(v)||'Unknown'}
+function normalize(rows){return rows.map((r,i)=>{const d=parseDate(pick(r,['postTime','Post Time','created_time','date','Date','published_at','created at','เวลาโพสต์','วันที่'])); const message=safe(pick(r,['message','Message','content','Content','text','Text','caption','Caption','ข้อความ'])); const main=safe(pick(r,['mainKeyword','Main Keyword','main keyword','keyword','Keyword','query','Query','คีย์เวิร์ด'])); const sub=safe(pick(r,['subKeyword','Sub Keyword','sub keyword'])); const followers=num(pick(r,['followers','Followers','audience','Audience','fans','subscriber','follower_count'])); const row={idx:i,account:safe(pick(r,['account','Account','author','Author','page_name','Page Name','username','User Name','user','ชื่อบัญชี']))||'Unknown',message,source:safe(pick(r,['source','Source','platform','Platform','channel','Channel']))||'Unknown',category:safe(pick(r,['category','Category','brand','Brand','brand/category','Brand/Category']))||'Unknown',mainKeyword:main||'-',subKeyword:sub||'-',sentiment:cleanSentiment(pick(r,['sentiment','Sentiment','tone','Tone'])),engagement:num(pick(r,['engagement','Engagement','total_engagement','Total Engagement','interactions','reaction_count','ยอด Engagement'])),followers,postTime:d?d.toISOString():safe(pick(r,['postTime','Post Time'])),date:isoDay(d),month:d?isoDay(d).slice(0,7):'',url:safe(pick(r,['url','URL','postUrl','Post URL','link','Link','permalink'])),imageUrl:safe(pick(r,['imageUrl','Image URL','image','Image','thumbnail','Thumbnail'])),namedEntity:safe(pick(r,['namedEntity','Named Entity','named entity','entity','Entity'])),raw:r}; row.keywordList=[...new Set([...splitKeywords(row.mainKeyword),...splitKeywords(row.subKeyword)])]; row.er=row.followers?row.engagement/row.followers:0; return row}).filter(r=>r.message||r.account||r.category!=='Unknown')}
+async function handleFile(file){try{if(!file)return; closeDetail(); TOPIC_CACHE.clear(); TOPICS=[]; $('lastUpdated').textContent='Reading '+file.name+' ...'; await nextFrame(); const buf=await file.arrayBuffer(); let rows=[]; if(file.name.toLowerCase().endsWith('.csv')) rows=csvToRows(new TextDecoder().decode(buf)); else { if(!window.XLSX) throw new Error('XLSX library did not load. Please check internet connection or use CSV.'); const wb=XLSX.read(buf,{type:'array',cellDates:true}); const sheet=wb.SheetNames.find(n=>lower(n)==='all')||wb.SheetNames[0]; rows=XLSX.utils.sheet_to_json(wb.Sheets[sheet],{defval:''}); } $('lastUpdated').textContent='Indexing '+file.name+' ...'; await nextFrame(); RAW=rows; DATA=normalize(rows); if(!DATA.length) throw new Error('No usable records found.'); SELECTED_KEYWORDS=[]; ACTIVE_TOPIC=null; initDashboard(); $('dash').classList.remove('hidden'); $('lastUpdated').textContent=DATA.length.toLocaleString('en-US')+' records loaded · '+new Date().toLocaleString(); }catch(e){alert('Cannot read file: '+e.message); $('lastUpdated').textContent='Import failed'}}
+function uniq(field){return [...new Set(DATA.map(r=>r[field]).filter(v=>v&&v!=='-'))].sort((a,b)=>String(a).localeCompare(String(b)))} function fillSelect(id,vals,label){const el=$(id); const cur=el.value; el.innerHTML=`<option value="">${label}</option>`+vals.map(v=>`<option>${esc(v)}</option>`).join(''); el.value=vals.includes(cur)?cur:''}
+function allKeywords(){return [...new Set(DATA.flatMap(r=>r.keywordList).filter(Boolean))].sort((a,b)=>String(a).localeCompare(String(b)))}
+function initDashboard(){fillSelect('source',uniq('source'),'All platforms'); fillSelect('category',uniq('category'),'All brands'); fillSelect('sentiment',uniq('sentiment'),'All sentiment'); renderKeywordMenu(); const dates=DATA.map(r=>r.date).filter(Boolean).sort(); if(dates.length){$('from').value=dates[0];$('to').value=dates.at(-1)} bindOnce(); render()}
+function bindOnce(){
+  if(bound)return; bound=true;
+  const heavyIds=['q','source','category','sentiment','from','to','metric','compareBy','compareMetric','compareLimit','sortBy','sortDir','rowLimit'];
+  heavyIds.forEach(id=>$(id).addEventListener('input',()=>{ if(id==='q')ACTIVE_TOPIC=null; render(true) }));
+  ['cloudType','cloudRank'].forEach(id=>$(id).addEventListener('input',()=>{ closeDetail(); drawWordCloudFromTopics(); }));
+  $('keywordSearch').addEventListener('input',renderKeywordMenu);
+  $('resetBtn').onclick=()=>{closeDetail(); ['q','source','category','sentiment'].forEach(id=>$(id).value=''); SELECTED_KEYWORDS=[]; ACTIVE_TOPIC=null; const dates=DATA.map(r=>r.date).filter(Boolean).sort(); if(dates.length){$('from').value=dates[0];$('to').value=dates.at(-1)} renderKeywordMenu(); render(true)};
+  $('exportBtn').onclick=()=>downloadCSV(FILTERED,'filtered_messages.csv');
+  $('exportCompareBtn').onclick=()=>downloadComparisonCSV();
+  $('themeBtn').onclick=()=>document.documentElement.classList.toggle('light');
+  $('sampleBtn').onclick=()=>{closeDetail(); TOPIC_CACHE.clear(); DATA=sampleData(); SELECTED_KEYWORDS=[]; ACTIVE_TOPIC=null; initDashboard(); $('dash').classList.remove('hidden'); $('lastUpdated').textContent='Sample data loaded'};
+  $('keywordBtn').onclick=()=>$('keywordBox').classList.toggle('open');
+  document.addEventListener('click',e=>{if(!$('keywordBox').contains(e.target))$('keywordBox').classList.remove('open'); if(!e.target.closest('.word')) hideTip();});
+  document.addEventListener('pointerdown',e=>{if(!e.target.closest('.word')) hideTip();},{passive:true});
+  document.addEventListener('touchstart',e=>{if(!e.target.closest('.word')) hideTip();},{passive:true});
+  window.addEventListener('scroll',hideTip,true);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDetail()});
+  $('overlay').onclick=closeDetail;
+  $('kwClear').onclick=()=>{closeDetail(); SELECTED_KEYWORDS=[]; renderKeywordMenu(); render(true)};
+  $('kwAll').onclick=()=>{closeDetail(); SELECTED_KEYWORDS=allKeywords(); renderKeywordMenu(); render(true)};
+  $('clearTopicBtn').onclick=()=>{closeDetail(); ACTIVE_TOPIC=null; if($('q').value.startsWith('Topic: '))$('q').value=''; render(true)};
+  $('topEngBtn').onclick=()=>{closeDetail(); $('sortBy').value='engagement';$('sortDir').value='desc';render(false)};
+  $('rows').closest('table').querySelectorAll('th[data-sort]').forEach(th=>th.onclick=()=>{closeDetail(); const s=th.dataset.sort; $('sortDir').value=$('sortBy').value===s&&$('sortDir').value==='desc'?'asc':'desc'; $('sortBy').value=s; render(false)})
+}
+function renderKeywordMenu(){const list=$('keywordList'); const q=lower($('keywordSearch').value); const kws=allKeywords().filter(k=>!q||lower(k).includes(q)); list.innerHTML=kws.map(k=>`<label class="check"><input type="checkbox" ${SELECTED_KEYWORDS.includes(k)?'checked':''} data-kw="${esc(k)}"><span>${esc(k)}</span></label>`).join('') || '<div class="empty" style="height:80px">No keywords</div>'; list.querySelectorAll('input').forEach(ch=>ch.onchange=()=>{closeDetail(); const kw=ch.dataset.kw; if(ch.checked&&!SELECTED_KEYWORDS.includes(kw))SELECTED_KEYWORDS.push(kw); if(!ch.checked)SELECTED_KEYWORDS=SELECTED_KEYWORDS.filter(x=>x!==kw); updateKeywordUi(); render(true)}); updateKeywordUi()}
+function updateKeywordUi(){ $('keywordLabel').textContent=SELECTED_KEYWORDS.length?SELECTED_KEYWORDS.length+' keywords selected':'All keywords'; $('keywordChips').innerHTML=SELECTED_KEYWORDS.map(k=>`<span class="chip">${esc(k)} <button data-kw="${esc(k)}">×</button></span>`).join(''); $('keywordChips').querySelectorAll('button').forEach(b=>b.onclick=()=>{closeDetail(); SELECTED_KEYWORDS=SELECTED_KEYWORDS.filter(x=>x!==b.dataset.kw); renderKeywordMenu(); render(true)})}
+function topicMatch(r){if(!ACTIVE_TOPIC)return true; const hay=normalTopic([r.message,r.mainKeyword,r.subKeyword,r.namedEntity,r.category].join(' ')); return ACTIVE_TOPIC.keys.some(k=>hay.includes(k))}
+function filtered(){const q=lower($('q').value),src=$('source').value,cat=$('category').value,sent=$('sentiment').value,from=$('from').value,to=$('to').value; return DATA.filter(r=>(!q||$('q').value.startsWith('Topic: ')||lower([r.message,r.account,r.mainKeyword,r.subKeyword,r.category,r.namedEntity].join(' ')).includes(q))&&topicMatch(r)&&(!src||r.source===src)&&(!cat||r.category===cat)&&(!SELECTED_KEYWORDS.length||SELECTED_KEYWORDS.some(k=>r.keywordList.includes(k)))&&(!sent||r.sentiment===sent)&&(!from||!r.date||r.date>=from)&&(!to||!r.date||r.date<=to))}
+function metricValue(o,m=$('metric').value){return m==='mentions'?(o.mentions??1):m==='followers'?(o.followers||0):m==='er'?(o.er||0):(o.engagement||0)} function sum(a,k){return a.reduce((s,x)=>s+(+x[k]||0),0)}
+function group(arr,key){const m=new Map(); arr.forEach(r=>{const keys=key==='keywordList'?r.keywordList:[r[key]||'Unknown']; (keys.length?keys:['Unknown']).forEach(k=>{if(!m.has(k))m.set(k,[]);m.get(k).push(r)})}); return [...m].map(([name,rows])=>({name,rows,mentions:rows.length,engagement:sum(rows,'engagement'),followers:sum(rows,'followers'),avgEngagement:rows.length?sum(rows,'engagement')/rows.length:0,er:sum(rows,'followers')?sum(rows,'engagement')/sum(rows,'followers'):0,positive:rows.filter(x=>x.sentiment==='Positive').length,negative:rows.filter(x=>x.sentiment==='Negative').length,neutral:rows.filter(x=>x.sentiment==='Neutral').length}))}
+function render(rebuildTopics=true){
+  closeDetail();
+  const seq=++RENDER_SEQ;
+  FILTERED=filtered();
+  const metric=$('metric').value;
+  renderKpis(metric);
+  drawLine('trend',trendData(FILTERED,metric));
+  drawDonut('sentimentChart',group(FILTERED,'sentiment').map(x=>({name:x.name,value:x.mentions})));
+  drawBars('platformChart',group(FILTERED,'source').sort((a,b)=>metricValue(b,metric)-metricValue(a,metric)).slice(0,8).map(x=>({name:x.name,value:metricValue(x,metric)})),metric);
+  renderCompare();
+  renderTable();
+  if(rebuildTopics) scheduleTopicBuild(seq); else drawWordCloudFromTopics();
+}
+function renderKpis(metric){const total=sum(FILTERED,'engagement'), known=FILTERED.filter(r=>r.sentiment!=='Unknown'), pos=known.filter(r=>r.sentiment==='Positive').length; $('kMentions').textContent=fmt(FILTERED.length); $('kEng').textContent=fmt(total); $('kAvgEng').textContent='Avg '+fmt(total/(FILTERED.length||1))+' per mention'; $('kPos').textContent=Math.round(pos/(known.length||1)*100)+'%'; const pf=group(FILTERED,'source').sort((a,b)=>metricValue(b,metric)-metricValue(a,metric))[0]; $('kPlatform').textContent=pf?pf.name:'-'; $('kPlatformHint').textContent=pf?fmt(metricValue(pf,metric))+' '+metric:'No data'; const br=group(FILTERED,'category').sort((a,b)=>metricValue(b,metric)-metricValue(a,metric))[0]; $('kBrand').textContent=br?br.name:'-'; $('kBrandHint').textContent=br?fmt(metricValue(br,metric))+' '+metric:'No data'; $('kTopics').textContent=TOPICS.length?fmt(TOPICS.length):'…'; $('activeTopic').innerHTML=ACTIVE_TOPIC?`Active topic: <b>${esc(ACTIVE_TOPIC.label)}</b> · ${fmt(ACTIVE_TOPIC.mentions)} mentions`:''}
+function trendData(arr,metric){const m=new Map(); arr.forEach(r=>{if(!r.month)return; m.set(r.month,(m.get(r.month)||0)+metricValue(r,metric))}); return [...m].map(([name,value])=>({name,value})).sort((a,b)=>a.name.localeCompare(b.name))}
+const BASE_STOP=[
+'และ','หรือ','ที่','ใน','ของ','ให้','ได้','แล้ว','คือ','กับ','จาก','เป็น','มี','ไป','มา','ไว้','ครับ','ค่ะ','นะ','อะ','จ้า','จัง','เลย','มาก','น้อย','กว่า','แบบ','นี้','นั้น','นี่','โน่น','เรา','เขา','เธอ','คุณ','ผม','ฉัน','มัน','ก็','ไม่','ยัง','แต่','ถ้า','เอา','กัน','ออก','เข้า','อยู่','มาแล้ว','ทำไม','อะไร','ยังไง','บริโภค','ออกกำลังกาย','สุขภาพ',
+'a','an','the','and','or','for','with','without','this','that','these','those','you','your','are','is','was','were','be','been','to','of','in','on','at','by','from','as','it','its','we','our','they','their','i','me','my','new','official','page','post','video','photo','review','รีวิว','content','campaign','brand','product','http','https','www','com','co','th'
+];
+const GENERIC_FIELD_KEYS=['message','mainKeyword','subKeyword','namedEntity','category','account','source'];
+const TOPIC_ROW_LIMIT=1800, TOPIC_CHUNK_SIZE=90, TOPIC_CANDIDATE_LIMIT=720, TOPIC_WORD_LIMIT=55;
+function normalTopic(s){return lower(s).replace(/https?:\/\/\S+/g,' ').replace(/&[a-z]+;/g,' ').replace(/[_\-–—]+/g,' ').replace(/[#@]/g,'').replace(/[!"$%&'()*+,./:;<=>?@[\\\]^`{|}~“”‘’…•\n\r\t]+/g,' ').replace(/\s+/g,' ').trim()}
+function stripEntityType(s){return safe(s).replace(/\s*\([^)]*\)\s*/g,'').replace(/\s+/g,' ').trim()}
+function tokenBase(w){return normalTopic(w).replace(/(ing|ed|es|s)$/,'')}
+function isThai(s){return /[\u0E00-\u0E7F]/.test(s)}
+function isStop(w,extra=new Set()){const n=normalTopic(w); if(!n||n.length<2||/^\d+$/.test(n)||/^\d+[kmb]?$/i.test(n))return true; if(BASE_STOP.includes(n)||extra.has(n))return true; if(n.includes('บริโภคแต่น้อย')||n.includes('ออกกำลังกายเพื่อสุขภาพ'))return true; return false}
+function segmentText(text){const clean=normalTopic(text); if(!clean)return []; try{const seg=new Intl.Segmenter(isThai(clean)?'th':'en',{granularity:'word'}); return [...seg.segment(clean)].filter(x=>x.isWordLike).map(x=>x.segment)}catch(e){return clean.split(/\s+/)}}
+function topicSampleRows(rows,limit=TOPIC_ROW_LIMIT){
+  if(rows.length<=limit)return rows;
+  const out=[], step=rows.length/limit;
+  for(let i=0;i<limit;i++) out.push(rows[Math.floor(i*step)]);
+  return out;
+}
+function getDynamicStop(rows){
+  const sample=topicSampleRows(rows,800), docs=sample.length||1, df=new Map();
+  sample.forEach(r=>{
+    const words=segmentText([r.message,r.account].join(' ')).slice(0,70).map(tokenBase).filter(Boolean);
+    const seen=new Set(words);
+    seen.forEach(w=>df.set(w,(df.get(w)||0)+1));
+  });
   const extra=new Set();
   df.forEach((c,w)=>{const share=c/docs; if(share>.62 || (docs>80&&c>45&&share>.38))extra.add(w)});
   return extra;
@@ -148,43 +375,108 @@ function mergeRelatedTopics(arr){
   }
   return merged;
 }
-function buildTopics(rows){
-  const map=new Map(), extra=getDynamicStop(rows);
-  rows.forEach(r=>extractCandidateTopics(r,extra).forEach(c=>addTopic(map,c.label,c.type,r,c.weight,extra,c.tokens||[])));
-  let arr=mergeRelatedTopics([...map.values()]).map(o=>{
+function finalizeTopicMap(map,rowsLen){
+  let candidates=[...map.values()].sort((a,b)=>(b.score+b.mentions*2+b.engagement*.0002)-(a.score+a.mentions*2+a.engagement*.0002)).slice(0,TOPIC_CANDIDATE_LIMIT);
+  let arr=mergeRelatedTopics(candidates).map(o=>{
     const typeBoost=o.type==='keyword'?9:o.type==='hashtag'?8:o.type==='entity'?6:0;
-    const density=o.mentions/(rows.length||1);
+    const density=o.mentions/(rowsLen||1);
     const phraseBoost=o.tokens.size>=2?3:0;
     const broadPenalty=density>.55 && o.type==='phrase' ? 12 : 0;
     o.smart=o.mentions*2.2+Math.log10(o.engagement+10)*4+o.score*.35+typeBoost+phraseBoost-broadPenalty;
     return o;
   });
-  arr=arr.filter(o=>{
+  return arr.filter(o=>{
     if(o.type!=='phrase')return o.mentions>=1;
     if(o.tokens.size===1)return o.mentions>=3 && o.engagement>0;
     return o.mentions>=2 || o.engagement>=100;
   });
-  return arr;
 }
-function topicMatch(r){
-  if(!ACTIVE_TOPIC)return true;
-  const hay=normalTopic([r.message,r.mainKeyword,r.subKeyword,r.namedEntity,r.category,r.account].join(' '));
-  return ACTIVE_TOPIC.keys.some(k=>k&&hay.includes(k)) || [...ACTIVE_TOPIC.tokens].some(t=>t&&hay.includes(t));
+function buildTopics(rows){
+  const selected=topicSampleRows(rows), map=new Map(), extra=getDynamicStop(selected);
+  selected.forEach(r=>extractCandidateTopics(r,extra).forEach(c=>addTopic(map,c.label,c.type,r,c.weight,extra,c.tokens||[])));
+  return finalizeTopicMap(map,rows.length);
 }
-function renderWordCloud(){const type=$('cloudType').value, rank=$('cloudRank').value; TOPICS=buildTopics(FILTERED).filter(t=>type==='all'||t.type===type); const sorted=TOPICS.sort((a,b)=>(rank==='engagement'?b.engagement-a.engagement:rank==='mentions'?b.mentions-a.mentions:b.smart-a.smart)).slice(0,55); const max=Math.max(...sorted.map(x=>rank==='engagement'?x.engagement:rank==='mentions'?x.mentions:x.smart),1), min=Math.min(...sorted.map(x=>rank==='engagement'?x.engagement:rank==='mentions'?x.mentions:x.smart),1); $('wordCloud').innerHTML=sorted.length?sorted.map(t=>{const val=rank==='engagement'?t.engagement:rank==='mentions'?t.mentions:t.smart; const fs=13+(val-min)/(max-min||1)*24; const v=[...t.variants.keys()].slice(0,4).join(', '); return `<button class="word" style="font-size:${fs}px" data-key="${esc(t.key)}">${esc(t.label)}<span class="type">${t.type} · ${fmt(t.mentions)} · ${esc(v)}</span></button>`}).join(''):'<div class="empty">No topics</div>'; $('wordCloud').querySelectorAll('.word').forEach(el=>{const t=sorted.find(x=>x.key===el.dataset.key); el.onmousemove=e=>showTip(e,`<b>${esc(t.label)}</b><br>${t.type}<br>${fmt(t.mentions)} mentions<br>${fmt(t.engagement)} engagement<br>Grouped variants: ${esc([...t.variants.keys()].slice(0,8).join(', '))}<br>Match keys: ${esc(t.keys.slice(0,6).join(', '))}`); el.onmouseleave=hideTip; el.onclick=()=>{ACTIVE_TOPIC=t; $('q').value='Topic: '+t.label; render()}})}
+function buildTopicsAsync(rows,seq,done){
+  const selected=topicSampleRows(rows), map=new Map(), extra=getDynamicStop(selected);
+  let i=0;
+  function step(){
+    if(seq!==RENDER_SEQ)return;
+    const end=Math.min(i+TOPIC_CHUNK_SIZE,selected.length);
+    for(;i<end;i++){
+      const r=selected[i];
+      extractCandidateTopics(r,extra).forEach(c=>addTopic(map,c.label,c.type,r,c.weight,extra,c.tokens||[]));
+    }
+    if(i<selected.length){
+      $('wordCloud').innerHTML=`<div class="empty">Building smart topics… ${Math.round(i/selected.length*100)}%<br><span style="font-size:12px">Dashboard is usable while topics are loading.</span></div>`;
+      setTimeout(step,0);
+    }else{
+      done(finalizeTopicMap(map,rows.length));
+    }
+  }
+  setTimeout(step,0);
+}
+function topicCacheKey(){
+  return JSON.stringify({q:$('q').value,src:$('source').value,cat:$('category').value,sent:$('sentiment').value,from:$('from').value,to:$('to').value,kws:SELECTED_KEYWORDS.slice().sort(),topic:ACTIVE_TOPIC?ACTIVE_TOPIC.key:''});
+}
+function scheduleTopicBuild(seq){
+  const key=topicCacheKey(); LAST_FILTER_KEY=key;
+  if(TOPIC_CACHE.has(key)){TOPICS=TOPIC_CACHE.get(key); drawWordCloudFromTopics(); renderKpis($('metric').value); return;}
+  TOPICS=[]; $('kTopics').textContent='…';
+  $('wordCloud').innerHTML='<div class="empty">Preparing topic cloud…<br><span style="font-size:12px">Dashboard is ready. Topics load in the background.</span></div>';
+  clearTimeout(TOPIC_TIMER);
+  const rows=FILTERED.slice();
+  const start=()=>buildTopicsAsync(rows,seq,built=>{
+    if(seq!==RENDER_SEQ)return;
+    if(TOPIC_CACHE.size>12) TOPIC_CACHE.delete(TOPIC_CACHE.keys().next().value);
+    TOPIC_CACHE.set(key,built);
+    TOPICS=built;
+    drawWordCloudFromTopics();
+    renderKpis($('metric').value);
+  });
+  TOPIC_TIMER=setTimeout(start,80);
+}
+function drawWordCloudFromTopics(){
+  hideTip();
+  const type=$('cloudType').value, rank=$('cloudRank').value;
+  const limit=innerWidth<700?28:42;
+  const sorted=TOPICS.filter(t=>type==='all'||t.type===type).sort((a,b)=>(rank==='engagement'?b.engagement-a.engagement:rank==='mentions'?b.mentions-a.mentions:b.smart-a.smart)).slice(0,limit);
+  const values=sorted.map(x=>rank==='engagement'?x.engagement:rank==='mentions'?x.mentions:x.smart);
+  const max=Math.max(...values,1), min=Math.min(...values,1);
+  $('wordCloud').innerHTML=sorted.length?sorted.map(t=>{
+    const val=rank==='engagement'?t.engagement:rank==='mentions'?t.mentions:t.smart;
+    const fs=12+(val-min)/(max-min||1)*(innerWidth<700?20:24);
+    const v=[...t.variants.keys()].slice(0,2).join(', ');
+    return `<button class="word" style="font-size:${fs}px" data-key="${esc(t.key)}" title="${esc(t.label)} · ${fmt(t.mentions)} mentions · ${fmt(t.engagement)} engagement">${esc(t.label)}<span class="type">${t.type} · ${fmt(t.mentions)}${v?' · '+esc(v):''}</span></button>`
+  }).join(''):'<div class="empty">No topics</div>';
+  const canHover=matchMedia('(hover:hover)').matches;
+  $('wordCloud').querySelectorAll('.word').forEach(el=>{
+    const t=sorted.find(x=>x.key===el.dataset.key);
+    if(canHover){
+      el.onmouseenter=e=>showTip(e,`<b>${esc(t.label)}</b><br>${t.type}<br>${fmt(t.mentions)} mentions<br>${fmt(t.engagement)} engagement`);
+      el.onmousemove=e=>showTip(e,`<b>${esc(t.label)}</b><br>${t.type}<br>${fmt(t.mentions)} mentions<br>${fmt(t.engagement)} engagement`);
+      el.onmouseleave=hideTip;
+    }
+    el.onclick=()=>{hideTip(); closeDetail(); ACTIVE_TOPIC=t; $('q').value='Topic: '+t.label; render(true)};
+  });
+}
+
+
 
 function renderCompare(){const by=$('compareBy').value,m=$('compareMetric').value,limit=+$('compareLimit').value; const key=by==='mainKeyword'?'keywordList':by; const base=group(FILTERED,key).map(o=>{const best=group(o.rows,'source').sort((a,b)=>b.engagement-a.engagement)[0]; return {...o,share:FILTERED.length?o.mentions/FILTERED.length:0,positiveShare:(o.positive+o.negative+o.neutral)?o.positive/(o.positive+o.negative+o.neutral):0,bestPlatform:best?best.name:'-'} }); COMPARE=base.sort((a,b)=>metricValue(b,m)-metricValue(a,m)).slice(0,limit); $('compareTitle').textContent='Performance ranking · '+$('compareBy').selectedOptions[0].textContent; drawBars('compareChart',COMPARE.map(x=>({name:x.name,value:metricValue(x,m)})),m); drawBars('sovChart',COMPARE.map(x=>({name:x.name,value:x.share*100})),'share %'); $('compareRows').innerHTML=COMPARE.map((x,i)=>`<tr><td><span class="rank">${i+1}</span></td><td>${esc(x.name)}<div class="segbar"><div class="segfill" style="width:${Math.min(100,x.share*100)}%"></div></div></td><td>${fmt(x.mentions)}</td><td>${pct(x.share)}</td><td>${fmt(x.engagement)}</td><td>${fmt(x.avgEngagement)}</td><td>${pct(x.er)}</td><td class="pos">${pct(x.positiveShare)}</td><td class="neg">${fmt(x.negative)}</td><td>${esc(x.bestPlatform)}</td></tr>`).join('')}
 function sortRows(rows){const by=$('sortBy').value,dir=$('sortDir').value; return rows.slice().sort((a,b)=>{let x=a[by],y=b[by]; if(by==='engagement'){x=+x||0;y=+y||0} else {x=safe(x); y=safe(y)} const v=typeof x==='number'?x-y:String(x).localeCompare(String(y)); return dir==='asc'?v:-v})}
 function renderTable(){const rows=sortRows(FILTERED).slice(0,+$('rowLimit').value); $('rows').innerHTML=rows.map(r=>`<tr data-i="${r.idx}"><td>${esc(r.date)}</td><td><span class="pill source">${esc(r.source)}</span></td><td>${esc(r.category)}</td><td>${esc(r.mainKeyword)}</td><td><span class="pill ${esc(r.sentiment)}">${esc(r.sentiment)}</span></td><td>${esc(r.account)}</td><td>${fmt(r.engagement)}</td><td>${esc(r.message).slice(0,180)}</td></tr>`).join(''); $('rows').querySelectorAll('tr').forEach(tr=>tr.onclick=()=>openDetail(DATA.find(r=>r.idx==tr.dataset.i)))}
-function openDetail(r){if(!r)return; $('detail').innerHTML=`${r.imageUrl?`<img class="postImg" src="${esc(r.imageUrl)}" onerror="this.style.display='none'">`:''}<div class="msg">${esc(r.message)}</div><div class="meta"><b>Date</b><span>${esc(r.postTime||r.date)}</span><b>Platform</b><span>${esc(r.source)}</span><b>Brand</b><span>${esc(r.category)}</span><b>Keyword</b><span>${esc(r.mainKeyword)}</span><b>Sentiment</b><span>${esc(r.sentiment)}</span><b>Account</b><span>${esc(r.account)}</span><b>Engagement</b><span>${fmt(r.engagement)}</span><b>Followers</b><span>${fmt(r.followers)}</span><b>ER</b><span>${pct(r.er)}</span>${r.namedEntity?`<b>Entity</b><span>${esc(r.namedEntity)}</span>`:''}${r.url?`<b>URL</b><span><a href="${esc(r.url)}" target="_blank" rel="noopener">Open post</a></span>`:''}</div>`; $('drawer').classList.add('open')}
-function showTip(e,html){const t=$('tip'); t.innerHTML=html; t.style.display='block'; t.style.left=Math.min(e.clientX+12,innerWidth-300)+'px'; t.style.top=Math.min(e.clientY+12,innerHeight-120)+'px'} function hideTip(){$('tip').style.display='none'}
+function openDetail(r){if(!r)return; $('detail').innerHTML=`${r.imageUrl?`<img class="postImg" src="${esc(r.imageUrl)}" onerror="this.style.display='none'">`:''}<div class="msg">${esc(r.message)}</div><div class="meta"><b>Date</b><span>${esc(r.postTime||r.date)}</span><b>Platform</b><span>${esc(r.source)}</span><b>Brand</b><span>${esc(r.category)}</span><b>Keyword</b><span>${esc(r.mainKeyword)}</span><b>Sentiment</b><span>${esc(r.sentiment)}</span><b>Account</b><span>${esc(r.account)}</span><b>Engagement</b><span>${fmt(r.engagement)}</span><b>Followers</b><span>${fmt(r.followers)}</span><b>ER</b><span>${pct(r.er)}</span>${r.namedEntity?`<b>Entity</b><span>${esc(r.namedEntity)}</span>`:''}${r.url?`<b>URL</b><span><a href="${esc(r.url)}" target="_blank" rel="noopener">Open post</a></span>`:''}</div>`; $('drawer').classList.add('open'); $('overlay').classList.add('open')}
+
+function closeDetail(){hideTip(); const d=$('drawer'),o=$('overlay'); if(d)d.classList.remove('open'); if(o)o.classList.remove('open')}
+function nextFrame(){return new Promise(resolve=>requestAnimationFrame(()=>resolve()))}
+function showTip(e,html){const t=$('tip'); if(!t)return; t.innerHTML=html; t.style.display='block'; t.style.left=Math.max(8,Math.min(e.clientX+12,innerWidth-300))+'px'; t.style.top=Math.max(8,Math.min(e.clientY+12,innerHeight-120))+'px'} function hideTip(){const t=$('tip'); if(t){t.style.display='none'; t.innerHTML=''}}
 function drawBars(id,data,label){const el=$(id); if(!data.length){el.innerHTML='<div class="empty">No data</div>';return} const w=el.clientWidth||600,h=el.clientHeight||260,p={l:120,r:18,t:12,b:24}, max=Math.max(...data.map(d=>d.value),1), bh=(h-p.t-p.b)/data.length*.68, gap=(h-p.t-p.b)/data.length*.32; el.innerHTML=`<svg viewBox="0 0 ${w} ${h}">${data.map((d,i)=>{const y=p.t+i*(bh+gap), bw=(w-p.l-p.r)*(d.value/max); return `<text class="axis" x="0" y="${y+bh*.72}">${esc(String(d.name).slice(0,18))}</text><rect class="bar" x="${p.l}" y="${y}" width="${Math.max(2,bw)}" height="${bh}" fill="url(#g)"></rect><text class="axis" x="${p.l+bw+6}" y="${y+bh*.72}">${fmt(d.value)}</text>`}).join('')}<defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="#f97316"/><stop offset="1" stop-color="#38bdf8"/></linearGradient></defs></svg>`}
 function drawLine(id,data){const el=$(id); if(!data.length){el.innerHTML='<div class="empty">No data</div>';return} const w=el.clientWidth||700,h=el.clientHeight||280,p={l:42,r:18,t:18,b:38}, max=Math.max(...data.map(d=>d.value),1), xs=i=>p.l+(w-p.l-p.r)*(data.length===1?.5:i/(data.length-1)), ys=v=>h-p.b-(h-p.t-p.b)*(v/max), path=data.map((d,i)=>(i?'L':'M')+xs(i)+','+ys(d.value)).join(' '); el.innerHTML=`<svg viewBox="0 0 ${w} ${h}">${[0,.25,.5,.75,1].map(t=>`<line class="gridline" x1="${p.l}" x2="${w-p.r}" y1="${p.t+(h-p.t-p.b)*t}" y2="${p.t+(h-p.t-p.b)*t}"/>`).join('')}<path class="line" d="${path}"/>${data.map((d,i)=>`<circle class="dot" cx="${xs(i)}" cy="${ys(d.value)}" r="4"><title>${esc(d.name)}: ${fmt(d.value)}</title></circle>`).join('')}${data.map((d,i)=>i%Math.ceil(data.length/6)===0?`<text class="axis" x="${xs(i)-18}" y="${h-12}">${esc(d.name)}</text>`:'').join('')}</svg>`}
 function drawDonut(id,data){const el=$(id); if(!data.length){el.innerHTML='<div class="empty">No data</div>';return} const w=el.clientWidth||420,h=el.clientHeight||235,cx=w/2,cy=h/2,r=Math.min(w,h)*.32,total=data.reduce((s,d)=>s+d.value,0)||1; let a=-Math.PI/2; const colors=['#22c55e','#ef4444','#94a3b8','#eab308','#38bdf8','#a78bfa']; const slices=data.map((d,i)=>{const da=d.value/total*Math.PI*2, a2=a+da, x1=cx+r*Math.cos(a),y1=cy+r*Math.sin(a),x2=cx+r*Math.cos(a2),y2=cy+r*Math.sin(a2),large=da>Math.PI?1:0; a=a2; return `<path d="M${cx},${cy} L${x1},${y1} A${r},${r} 0 ${large},1 ${x2},${y2} Z" fill="${colors[i%colors.length]}"><title>${esc(d.name)} ${fmt(d.value)}</title></path>`}).join(''); el.innerHTML=`<svg viewBox="0 0 ${w} ${h}">${slices}<circle cx="${cx}" cy="${cy}" r="${r*.58}" fill="rgba(11,16,32,.92)"/><text class="axis" x="${cx-20}" y="${cy+4}">${fmt(total)}</text>${data.slice(0,6).map((d,i)=>`<text class="axis" x="12" y="${18+i*18}">● ${esc(d.name)} ${Math.round(d.value/total*100)}%</text>`).join('')}</svg>`}
 function downloadCSV(rows,name){const keys=['date','source','category','mainKeyword','sentiment','account','engagement','followers','er','message','url']; const csv=[keys.join(',')].concat(rows.map(r=>keys.map(k=>'"'+safe(r[k]).replaceAll('"','""')+'"').join(','))).join('\n'); const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'})); a.download=name; a.click()}
 function downloadComparisonCSV(){const keys=['name','mentions','share','engagement','avgEngagement','er','positiveShare','negative','bestPlatform']; const csv=[keys.join(',')].concat(COMPARE.map(r=>keys.map(k=>'"'+safe(r[k]).replaceAll('"','""')+'"').join(','))).join('\n'); const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'})); a.download='comparison.csv'; a.click()}
 function sampleData(){return normalize([{account:'Brand A',message:'Sample TikTok snack launch #sampleA crispy cheese new flavor',source:'tiktok',date:'2026-01-01',engagement:1200,followers:50000,category:'Brand A',mainKeyword:'#sampleA',sentiment:'Positive',namedEntity:'cheese (Product)'},{account:'Brand B',message:'Sample Facebook product review #sampleB spicy bbq complaint',source:'facebook',date:'2026-01-02',engagement:600,followers:80000,category:'Brand B',mainKeyword:'#sampleB',sentiment:'Neutral'},{account:'Creator C',message:'High engagement mention #sampleA viral crispy snack',source:'tiktok',date:'2026-01-03',engagement:5400,followers:120000,category:'Brand A',mainKeyword:'#sampleA',sentiment:'Positive'},{account:'News D',message:'Negative mention #sampleB spicy snack issue',source:'x',date:'2026-01-04',engagement:350,followers:30000,category:'Brand B',mainKeyword:'#sampleB',sentiment:'Negative'}])}
-$('chooseBtn').onclick=()=>$('fileInput').click(); $('fileInput').onchange=e=>handleFile(e.target.files[0]); $('clearBtn').onclick=()=>{RAW=[];DATA=[];FILTERED=[];TOPICS=[];ACTIVE_TOPIC=null;$('dash').classList.add('hidden');$('lastUpdated').textContent='No data loaded'}; $('closeBtn').onclick=()=>$('drawer').classList.remove('open'); ['dragover','drop'].forEach(ev=>$('dropZone').addEventListener(ev,e=>{e.preventDefault(); if(ev==='drop')handleFile(e.dataTransfer.files[0])})); window.addEventListener('resize',()=>{if(DATA.length)render()});
+$('chooseBtn').onclick=()=>$('fileInput').click(); $('fileInput').onchange=e=>handleFile(e.target.files[0]); $('clearBtn').onclick=()=>{closeDetail(); RAW=[];DATA=[];FILTERED=[];TOPICS=[];TOPIC_CACHE.clear();ACTIVE_TOPIC=null;$('dash').classList.add('hidden');$('lastUpdated').textContent='No data loaded'}; $('closeBtn').onclick=closeDetail; ['dragover','drop'].forEach(ev=>$('dropZone').addEventListener(ev,e=>{e.preventDefault(); if(ev==='drop')handleFile(e.dataTransfer.files[0])})); window.addEventListener('resize',()=>{if(DATA.length)render(false)});
 </script>
 </body>
 </html>
