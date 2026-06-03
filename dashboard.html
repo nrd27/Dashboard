@@ -1,0 +1,1107 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Social Monitoring Dashboard — Zocial Eye</title>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<style>
+/* ═══════════════════════════════════════════
+   CSS Variables & Theme
+   ═══════════════════════════════════════════ */
+:root{
+  --bg:#06101e;--bg2:#0b1a2d;--card:rgba(16,30,52,.82);--card2:#162540;
+  --line:rgba(180,210,255,.12);--text:#f0f4fa;--muted:#8898b0;--soft:#c8d6e8;
+  --accent:#ff7a1a;--accent2:#ff9d52;
+  --pos:#22c55e;--neg:#ef4444;--neu:#94a3b8;--unk:#f59e0b;
+  --fb:#1877f2;--ig:#e4405f;--x:#a0aec0;--tiktok:#25f4ee;--youtube:#ff0033;
+  --lemon8:#ffe135;--forum:#8b5cf6;--news:#f472b6;--other:#38bdf8;
+  --glass:rgba(255,255,255,.04);--blur:12px;
+  --radius:18px;--radius-sm:12px;
+}
+:root.light{
+  --bg:#f0f4f9;--bg2:#e4eaf3;--card:rgba(255,255,255,.88);--card2:#f5f8fc;
+  --line:rgba(50,80,120,.14);--text:#0f1729;--muted:#5a6a7e;--soft:#2d3d52;
+  --glass:rgba(255,255,255,.6);--x:#334155;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0}
+html{background:var(--bg);scroll-behavior:smooth}
+body{min-height:100dvh;background:linear-gradient(145deg,var(--bg) 0%,#0e2240 50%,var(--bg2) 100%);
+  color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,system-ui,sans-serif;
+  font-size:14px;line-height:1.5;overflow-x:hidden}
+:root.light body{background:linear-gradient(145deg,var(--bg),#dce6f2,var(--bg2))}
+button,input,select{font:inherit;border:0;outline:0}
+button{cursor:pointer}
+a{color:#7dd3fc;text-decoration:none}
+::selection{background:rgba(255,122,26,.3)}
+
+/* ═══════════════════════════════════════════
+   Layout
+   ═══════════════════════════════════════════ */
+.app{max-width:1240px;margin:0 auto;padding:20px 16px 100px}
+
+/* ═══════════════════════════════════════════
+   Cards & Glass
+   ═══════════════════════════════════════════ */
+.card{border:1px solid var(--line);border-radius:var(--radius);
+  background:var(--card);backdrop-filter:blur(var(--blur));-webkit-backdrop-filter:blur(var(--blur));
+  box-shadow:0 8px 32px rgba(0,0,0,.18);transition:transform .15s,box-shadow .15s}
+.card:hover{box-shadow:0 12px 40px rgba(0,0,0,.24)}
+
+/* ═══════════════════════════════════════════
+   Hero
+   ═══════════════════════════════════════════ */
+.hero{display:grid;grid-template-columns:1fr 340px;gap:16px;align-items:start;margin-bottom:16px}
+.hgroup{min-width:0}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;
+  background:rgba(255,122,26,.12);border:1px solid rgba(255,122,26,.25);
+  color:var(--accent2);font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+.eyebrow::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--accent);
+  animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+h1{font-size:32px;font-weight:900;letter-spacing:-.8px;margin:12px 0 6px;line-height:1.1}
+.lead{color:var(--muted);font-size:14px;max-width:560px}
+.toolbar{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;align-items:center}
+.status{display:inline-flex;padding:7px 12px;border:1px solid var(--line);background:var(--glass);
+  border-radius:999px;color:var(--soft);font-size:12px;max-width:100%;overflow-wrap:anywhere}
+.themeBtn{width:36px;height:36px;border-radius:10px;background:var(--glass);border:1px solid var(--line);
+  color:var(--text);font-size:16px;display:grid;place-items:center;flex-shrink:0}
+
+/* Upload */
+.upload{padding:18px}
+.drop{border:2px dashed rgba(180,210,255,.22);border-radius:14px;padding:20px;text-align:center;
+  transition:border-color .2s,background .2s}
+.drop.over{border-color:var(--accent);background:rgba(255,122,26,.06)}
+.drop b{font-size:15px}
+.drop span{display:block;color:var(--muted);font-size:12px;margin-top:4px}
+.btnrow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.btn{height:44px;border:0;border-radius:var(--radius-sm);background:var(--accent);
+  font-weight:800;color:#111;font-size:13px;transition:filter .15s}
+.btn:hover{filter:brightness(1.12)}
+.btn.secondary{background:var(--glass);border:1px solid var(--line);color:var(--text)}
+.btn.secondary:hover{background:rgba(255,255,255,.1)}
+.file{display:none}
+
+/* ═══════════════════════════════════════════
+   Filters (sticky)
+   ═══════════════════════════════════════════ */
+.filters{padding:14px;margin-bottom:16px;position:sticky;top:0;z-index:10}
+.filtergrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+input,select{width:100%;height:42px;border:1px solid var(--line);border-radius:var(--radius-sm);
+  background:rgba(6,16,30,.7);color:var(--text);padding:0 10px;font-size:13px;
+  transition:border-color .15s}
+:root.light input,:root.light select{background:rgba(255,255,255,.7)}
+input:focus,select:focus{border-color:var(--accent)}
+select{appearance:auto}
+.filterActions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.chip{display:inline-flex;gap:5px;align-items:center;padding:5px 10px;border-radius:999px;
+  background:rgba(255,122,26,.12);border:1px solid rgba(255,122,26,.2);font-size:11px;color:var(--accent2);font-weight:700}
+.chip button{border:0;background:0;color:var(--accent);font-weight:900;padding:0;font-size:14px}
+
+/* ═══════════════════════════════════════════
+   KPI Cards
+   ═══════════════════════════════════════════ */
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:16px}
+.kpi{padding:14px}
+.kpi .label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:800;color:var(--muted)}
+.kpi .value{font-size:28px;font-weight:900;letter-spacing:-.6px;margin-top:6px}
+.kpi .hint{font-size:11px;color:var(--muted);margin-top:4px}
+.delta{display:inline-flex;margin-top:6px;padding:3px 8px;border-radius:999px;font-size:11px;font-weight:800;
+  background:rgba(148,163,184,.1);color:var(--muted)}
+.delta.up{background:rgba(34,197,94,.14);color:#86efac}
+.delta.down{background:rgba(239,68,68,.14);color:#fca5a5}
+
+/* ═══════════════════════════════════════════
+   Panels & Charts
+   ═══════════════════════════════════════════ */
+.grid2{display:grid;grid-template-columns:1.15fr .85fr;gap:12px;margin-bottom:12px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px}
+.panel{padding:16px}
+.panel h2{font-size:16px;font-weight:800;margin-bottom:2px}
+.panel .sub{font-size:12px;color:var(--muted);margin-bottom:10px}
+.chart{width:100%;height:260px;min-width:0;position:relative}
+.mini{height:220px}
+.xmini{height:180px}
+svg{display:block;width:100%;height:100%;overflow:visible}
+.axis{fill:var(--muted);font-size:10px}
+.gridline{stroke:var(--line)}
+
+/* Bars */
+.bars{display:flex;flex-direction:column;gap:10px}
+.barrow{display:grid;grid-template-columns:90px 1fr 52px;gap:8px;align-items:center;font-size:12px}
+.barlabel{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--soft)}
+.bartrack{height:10px;background:rgba(148,163,184,.1);border-radius:999px;overflow:hidden}
+.barfill{height:100%;border-radius:999px;transition:width .4s ease}
+.barval{font-size:11px;color:var(--muted);text-align:right}
+
+/* Heatmap */
+.heatmap{display:grid;gap:2px;font-size:10px}
+.hm-cell{border-radius:3px;aspect-ratio:1;display:grid;place-items:center;color:transparent;
+  transition:background .2s}
+.hm-cell:hover{color:var(--text);z-index:1}
+.hm-label{color:var(--muted);display:grid;place-items:center;font-weight:700}
+
+/* Brand Battle Table */
+.tableWrap{width:100%;overflow-x:auto;border-radius:14px;border:1px solid var(--line)}
+.dataTable{width:100%;min-width:500px;border-collapse:collapse;font-size:12px}
+.dataTable th,.dataTable td{padding:8px;border-bottom:1px solid var(--line);text-align:left}
+.dataTable th{font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.dataTable tr:hover td{background:rgba(255,255,255,.03)}
+.brandDot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+
+/* Topics */
+.topics{display:flex;gap:8px;flex-wrap:wrap;min-height:80px;align-items:center}
+.topic{border:1px solid var(--line);border-radius:999px;padding:7px 12px;background:var(--glass);
+  color:var(--text);font-weight:800;cursor:pointer;transition:background .15s,border-color .15s}
+.topic:hover{border-color:var(--accent);background:rgba(255,122,26,.08)}
+.topic small{display:block;color:var(--muted);font-size:10px;font-weight:600}
+
+/* Cross-tab matrix */
+.matrix{width:100%;overflow-x:auto}
+.matrix table{border-collapse:collapse;font-size:11px;width:100%}
+.matrix th,.matrix td{padding:6px 8px;border:1px solid var(--line);text-align:center}
+.matrix th{background:var(--glass);color:var(--muted);font-weight:700}
+.matrix td{font-weight:600}
+
+/* ═══════════════════════════════════════════
+   Feed
+   ═══════════════════════════════════════════ */
+.feedTools{display:grid;grid-template-columns:1fr 1fr 80px auto;gap:8px;margin-bottom:10px}
+.feed{display:grid;gap:10px}
+.post{display:grid;grid-template-columns:48px 1fr auto;gap:10px;align-items:start;padding:14px;cursor:pointer;
+  transition:background .12s}
+.post:hover{background:rgba(255,255,255,.03)}
+.avatar{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;
+  color:#001018;font-weight:900;font-size:16px;flex-shrink:0}
+.postMain{min-width:0}
+.postTop{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.account{font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:200px}
+.meta{font-size:11px;color:var(--muted)}
+.brand{font-size:11px;font-weight:800}
+.msg{margin-top:6px;color:var(--soft);font-size:13px;line-height:1.4;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  overflow-wrap:anywhere;word-break:break-word}
+.postThumb{width:48px;height:48px;border-radius:8px;object-fit:cover;border:1px solid var(--line);margin-top:4px}
+.tagrow{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+.tag{border-radius:999px;padding:3px 8px;font-size:10px;font-weight:700;
+  background:rgba(148,163,184,.1);color:var(--soft);max-width:160px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sent{border-radius:999px;padding:5px 9px;font-size:10px;font-weight:900;white-space:nowrap;flex-shrink:0}
+.Positive{background:rgba(34,197,94,.14);color:#86efac}
+.Negative{background:rgba(239,68,68,.14);color:#fca5a5}
+.Neutral{background:rgba(148,163,184,.14);color:#d1d5db}
+.Unknown{background:rgba(245,158,11,.14);color:#fde68a}
+
+/* Pagination */
+.pagination{display:flex;gap:6px;justify-content:center;margin-top:12px;flex-wrap:wrap}
+.pgbtn{padding:6px 12px;border-radius:8px;background:var(--glass);border:1px solid var(--line);
+  color:var(--text);font-size:12px;font-weight:700}
+.pgbtn.active{background:var(--accent);color:#111;border-color:var(--accent)}
+
+/* Drawer */
+.drawerBackdrop{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:20;opacity:0;pointer-events:none;transition:opacity .2s}
+.drawerBackdrop.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;width:min(540px,95vw);height:100dvh;z-index:21;
+  transform:translateX(105%);transition:transform .25s ease;
+  background:var(--bg2);border-left:1px solid var(--line);overflow-y:auto;padding:20px;
+  box-shadow:-12px 0 48px rgba(0,0,0,.3)}
+.drawer.open{transform:translateX(0)}
+.drawer img{width:100%;border-radius:14px;border:1px solid var(--line);margin:10px 0}
+.close{float:right;width:auto;padding:0 14px}
+.kv{display:grid;grid-template-columns:100px 1fr;gap:6px;font-size:12px;margin-top:10px}
+.kv b{color:var(--muted)}
+
+/* Utilities */
+.hidden{display:none!important}
+.empty{padding:20px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:14px;font-size:13px}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:40;
+  background:#0a1628;color:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 16px;
+  font-size:13px;font-weight:600;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw}
+.toast.show{opacity:1}
+.fadeIn{animation:fadeIn .35s ease both}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.tabbar{display:flex;gap:4px;margin-bottom:10px;overflow-x:auto;padding-bottom:4px}
+.tabbtn{padding:6px 14px;border-radius:8px;background:var(--glass);border:1px solid var(--line);
+  color:var(--muted);font-size:11px;font-weight:700;white-space:nowrap;transition:all .12s}
+.tabbtn.active{background:var(--accent);color:#111;border-color:var(--accent)}
+
+/* ═══════════════════════════════════════════
+   Responsive
+   ═══════════════════════════════════════════ */
+@media(max-width:1050px){
+  .hero{grid-template-columns:1fr}
+  .kpis{grid-template-columns:repeat(3,1fr)}
+  .grid2{grid-template-columns:1fr}
+  .grid3{grid-template-columns:1fr}
+  .filtergrid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:720px){
+  .app{padding:14px 10px 80px}
+  h1{font-size:26px}
+  .filtergrid,.filterActions,.feedTools{grid-template-columns:1fr}
+  .kpis{grid-template-columns:1fr 1fr}
+  .kpi .value{font-size:24px}
+  .btnrow{grid-template-columns:1fr}
+  .post{grid-template-columns:40px 1fr}
+  .post>.sent{grid-column:2;justify-self:start}
+  .barrow{grid-template-columns:70px 1fr 44px}
+}
+@media(max-width:420px){
+  .kpis{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hgroup">
+      <div class="eyebrow">Zocial Eye Intelligence</div>
+      <h1>Social Monitoring Dashboard</h1>
+      <p class="lead">Upload Zocial Eye XLSX/CSV exports. Analyze brands, platforms, sentiment, audience tiers, engagement rate, and content topics — all processed locally in your browser.</p>
+      <div class="toolbar">
+        <div class="status" id="lastUpdated">No data loaded</div>
+        <button class="themeBtn" id="themeBtn" title="Toggle light/dark">&#127769;</button>
+      </div>
+    </div>
+    <div class="card upload" id="dropZone">
+      <div class="drop" id="dropArea">
+        <b>Import Zocial Eye export</b>
+        <span>XLSX or CSV &middot; Drag &amp; drop or click below &middot; 100% local</span>
+      </div>
+      <div class="btnrow">
+        <button class="btn" id="chooseBtn">Choose File</button>
+        <button class="btn secondary" id="clearBtn">Clear Data</button>
+      </div>
+      <input class="file" id="fileInput" type="file" accept=".xlsx,.xls,.csv">
+    </div>
+  </section>
+
+  <!-- Filters -->
+  <section class="card filters" id="filterBar">
+    <div class="filtergrid">
+      <input id="q" placeholder="Search messages, accounts, topics...">
+      <select id="fSource"><option value="">All Platforms</option></select>
+      <select id="fBrand"><option value="">All Brands</option></select>
+      <select id="fKeyword"><option value="">All Keywords</option></select>
+      <select id="fSentiment"><option value="">All Sentiment</option></select>
+      <select id="fAudience"><option value="">All Audience Tiers</option></select>
+      <input id="fFrom" type="date">
+      <input id="fTo" type="date">
+    </div>
+    <div class="filterActions">
+      <button class="btn secondary" id="resetBtn">Reset Filters</button>
+      <button class="btn secondary" id="exportBtn">Export CSV</button>
+    </div>
+    <div class="chips" id="chips"></div>
+  </section>
+
+  <!-- Dashboard -->
+  <section id="dash" class="hidden">
+    <div class="kpis" id="kpis"></div>
+
+    <!-- Row 1: Trend + Sentiment -->
+    <div class="grid2">
+      <div class="card panel fadeIn">
+        <h2>Trend Over Time</h2>
+        <div class="tabbar" id="trendTabs"></div>
+        <div class="sub">Daily volume or engagement across the selected period</div>
+        <div class="chart" id="trend"></div>
+      </div>
+      <div class="card panel fadeIn">
+        <h2>Sentiment Distribution</h2>
+        <div class="sub">Positive / Negative / Neutral breakdown</div>
+        <div class="chart mini" id="sentChart"></div>
+      </div>
+    </div>
+
+    <!-- Row 2: Platform + Brand Battle -->
+    <div class="grid2">
+      <div class="card panel fadeIn">
+        <h2>Platform Performance</h2>
+        <div class="tabbar" id="platTabs"></div>
+        <div class="sub">Metrics by social platform</div>
+        <div class="chart mini" id="platChart"></div>
+      </div>
+      <div class="card panel fadeIn">
+        <h2>Brand Battle &mdash; Share of Voice</h2>
+        <div class="sub">Mentions, engagement and sentiment by brand</div>
+        <div class="tableWrap"><table class="dataTable">
+          <thead><tr><th>#</th><th>Brand</th><th>Mentions</th><th>Engagement</th><th>Avg ER</th><th>Positive</th><th>SOV</th></tr></thead>
+          <tbody id="brandRows"></tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- Row 3: Audience Tier + Account Type + Sentiment Over Time -->
+    <div class="grid3">
+      <div class="card panel fadeIn">
+        <h2>Audience Tier</h2>
+        <div class="sub">Account size distribution (Zocial Eye labels)</div>
+        <div class="chart xmini" id="tierChart"></div>
+      </div>
+      <div class="card panel fadeIn">
+        <h2>Account Type</h2>
+        <div class="sub">Brand / Public Figure / Organic</div>
+        <div class="chart xmini" id="typeChart"></div>
+      </div>
+      <div class="card panel fadeIn">
+        <h2>Sentiment Over Time</h2>
+        <div class="sub">Stacked daily sentiment trend</div>
+        <div class="chart xmini" id="sentTimeline"></div>
+      </div>
+    </div>
+
+    <!-- Row 4: Heatmap + Cross-tab -->
+    <div class="grid2">
+      <div class="card panel fadeIn">
+        <h2>Posting Heatmap</h2>
+        <div class="sub">Day of week x hour &mdash; when are posts published?</div>
+        <div id="heatmap" style="overflow-x:auto"></div>
+      </div>
+      <div class="card panel fadeIn">
+        <h2>Platform x Brand Matrix</h2>
+        <div class="sub">Cross-tabulation of mentions by platform and brand</div>
+        <div class="matrix" id="crossTab"></div>
+      </div>
+    </div>
+
+    <!-- Row 5: Topics + Top Accounts + Named Entities -->
+    <div class="grid3">
+      <div class="card panel fadeIn">
+        <h2>Topic Bubbles</h2>
+        <div class="sub">Keywords, hashtags &amp; phrases from messages</div>
+        <div class="topics" id="topics"></div>
+      </div>
+      <div class="card panel fadeIn">
+        <h2>Top Accounts</h2>
+        <div class="sub">Highest engagement creators/pages</div>
+        <div class="chart xmini" id="accountChart"></div>
+      </div>
+      <div class="card panel fadeIn">
+        <h2>Named Entities</h2>
+        <div class="sub">Auto-detected entities from Zocial Eye NER</div>
+        <div class="chart xmini" id="nerChart"></div>
+      </div>
+    </div>
+
+    <!-- Feed -->
+    <div class="card panel fadeIn" style="margin-top:12px">
+      <h2>Message Feed</h2>
+      <div class="sub">Browse and explore individual posts</div>
+      <div class="feedTools">
+        <select id="sortBy">
+          <option value="engagement">Sort: Engagement</option>
+          <option value="date">Sort: Date</option>
+          <option value="account">Sort: Account</option>
+          <option value="source">Sort: Platform</option>
+          <option value="category">Sort: Brand</option>
+          <option value="sentiment">Sort: Sentiment</option>
+          <option value="er">Sort: ER%</option>
+        </select>
+        <select id="sortDir">
+          <option value="desc">Descending</option>
+          <option value="asc">Ascending</option>
+        </select>
+        <select id="perPage">
+          <option value="30">30</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+        <button class="btn secondary" id="topBtn">Top</button>
+      </div>
+      <div class="feed" id="feed"></div>
+      <div class="pagination" id="pagination"></div>
+    </div>
+  </section>
+</div>
+
+<!-- Drawer -->
+<div class="drawerBackdrop" id="backdrop"></div>
+<aside class="drawer" id="drawer">
+  <button class="btn secondary close" id="closeBtn">Close</button>
+  <h2 id="dTitle">Post Detail</h2>
+  <div id="dBody"></div>
+</aside>
+<div class="toast" id="toast"></div>
+
+<script>
+'use strict';
+/* ═══════════════════════════════════════════
+   Utilities
+   ═══════════════════════════════════════════ */
+const $=id=>document.getElementById(id);
+const esc=v=>String(v!=null?v:'').replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[m]);
+const safe=v=>v==null?'':String(v);
+const lower=v=>safe(v).toLowerCase().trim();
+function num(v){if(typeof v==='number')return isFinite(v)?v:0;const n=parseFloat(safe(v).replace(/,/g,''));return isFinite(n)?n:0}
+function fmt(n){n=num(n);if(n>=1e6)return(n/1e6).toFixed(n>=1e7?0:1)+'M';if(n>=1e3)return(n/1e3).toFixed(n>=1e4?0:1)+'K';return Math.round(n).toLocaleString()}
+function pct(n){return(isFinite(n)?n:0).toFixed(1)+'%'}
+function toast(msg){var t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('show')},2500)}
+
+/* ═══════════════════════════════════════════
+   State
+   ═══════════════════════════════════════════ */
+var DATA=[],FILTERED=[],TOPICS=[],PAGE=0;
+var BRAND_COLORS=new Map();
+var TIER_ORDER=['pico','nano','micro','mid-tier','macro','mega','elite'];
+var TIER_COLORS={pico:'#64748b',nano:'#8b5cf6',micro:'#38bdf8','mid-tier':'#22c55e',macro:'#f59e0b',mega:'#ef4444',elite:'#ec4899'};
+var SENT_COLORS={Positive:'var(--pos)',Negative:'var(--neg)',Neutral:'var(--neu)',Unknown:'var(--unk)'};
+var PLAT_COLORS={facebook:'var(--fb)',instagram:'var(--ig)',x:'var(--x)',twitter:'var(--x)',tiktok:'var(--tiktok)',youtube:'var(--youtube)',lemon8:'var(--lemon8)',forum:'var(--forum)',news:'var(--news)',other:'var(--other)'};
+var PALETTE=['#ff7a1a','#3b82f6','#22c55e','#f59e0b','#ef4444','#8b5cf6','#ec4899','#14b8a6','#eab308','#64748b','#38bdf8','#f472b6'];
+var trendMetric='engagement';
+var platMetric='engagement';
+
+/* ═══════════════════════════════════════════
+   Column Picker
+   ═══════════════════════════════════════════ */
+function pick(row,names){
+  var keys=Object.keys(row);
+  var map=new Map(keys.map(function(k){return[lower(k),k]}));
+  for(var i=0;i<names.length;i++){var k=map.get(lower(names[i]));if(k!==undefined)return row[k]}
+  for(var j=0;j<keys.length;j++){var lk=lower(keys[j]);for(var n=0;n<names.length;n++){if(lk.indexOf(lower(names[n]))>=0)return row[keys[j]]}}
+  return '';
+}
+
+function normSent(v){
+  var s=lower(v);
+  if(s.indexOf('pos')>=0||s.indexOf('\u0e1a\u0e27\u0e01')>=0)return'Positive';
+  if(s.indexOf('neg')>=0||s.indexOf('\u0e25\u0e1a')>=0)return'Negative';
+  if(s.indexOf('neu')>=0||s.indexOf('\u0e01\u0e25\u0e32\u0e07')>=0)return'Neutral';
+  return safe(v)||'Unknown';
+}
+
+/* ═══════════════════════════════════════════
+   Normalize rows
+   ═══════════════════════════════════════════ */
+function normalize(rows){
+  return rows.map(function(r,i){
+    var pt=pick(r,['post time','postTime','date','published','time','created_time']);
+    var dateStr='',hour=-1,fullTime='';
+    if(pt instanceof Date){dateStr=pt.toISOString().slice(0,10);hour=pt.getHours();fullTime=pt.toISOString().slice(0,19).replace('T',' ')}
+    else{var s=safe(pt);dateStr=s.slice(0,10);var hm=s.match(/(\d{2}):(\d{2})/);if(hm)hour=parseInt(hm[1],10);fullTime=s.slice(0,19)}
+    var eng=num(pick(r,['engagement','total engagement','interactions']));
+    var fol=num(pick(r,['follower count','followers','fans','page fans']));
+    return{
+      raw:r,id:safe(pick(r,['_id','id','post id']))||String(i),
+      account:safe(pick(r,['account','author','page','username']))||'Unknown',
+      message:safe(pick(r,['message','text','content','caption','body'])),
+      directUrl:safe(pick(r,['direct url','url','postUrl','link','permalink'])),
+      postUrl:safe(pick(r,['post url','postUrl'])),
+      imageUrl:safe(pick(r,['image url','imageUrl','image','thumbnail','picture'])),
+      source:lower(pick(r,['source','platform','channel']))||'other',
+      date:dateStr,hour:hour,fullTime:fullTime,
+      engagement:eng,followers:fol,
+      er:fol>0?eng/fol*100:0,
+      category:safe(pick(r,['category','brand','keyword group']))||'Unknown',
+      mainKeyword:safe(pick(r,['main keyword','mainKeyword','keyword'])),
+      subKeyword:safe(pick(r,['sub keyword','subKeyword'])),
+      sentiment:normSent(pick(r,['sentiment','sentiment label','tone'])),
+      audienceSize:lower(pick(r,['account label audience size'])),
+      accountType:safe(pick(r,['account label type']))||'Organic',
+      accountCategories:safe(pick(r,['account label categories'])),
+      imageLabels:safe(pick(r,['image labels'])),
+      logoRecognition:safe(pick(r,['logo recognition'])),
+      sceneRecognition:safe(pick(r,['scene recognition'])),
+      ner:safe(pick(r,['named entity recognition']))
+    };
+  });
+}
+
+/* ═══════════════════════════════════════════
+   Helpers
+   ═══════════════════════════════════════════ */
+function sumArr(arr,fn){var t=0;for(var i=0;i<arr.length;i++)t+=(typeof fn==='function'?fn(arr[i]):num(arr[i][fn]));return t}
+function unique(key){var s=new Set();DATA.forEach(function(r){var v=safe(r[key]);if(v&&v!=='-')s.add(v)});return Array.from(s).sort()}
+function fillSel(id,vals,label){$(id).innerHTML='<option value="">'+label+'</option>'+vals.map(function(v){return'<option value="'+esc(v)+'">'+esc(v)+'</option>'}).join('')}
+function group(arr,key){
+  var m=new Map();
+  arr.forEach(function(r){
+    var k=r[key]||'Unknown';
+    if(!m.has(k))m.set(k,{name:k,rows:[],mentions:0,engagement:0,followers:0,positive:0,negative:0,neutral:0});
+    var o=m.get(k);o.rows.push(r);o.mentions++;o.engagement+=r.engagement;o.followers+=r.followers;
+    if(r.sentiment==='Positive')o.positive++;else if(r.sentiment==='Negative')o.negative++;else o.neutral++;
+  });
+  return Array.from(m.values());
+}
+function pColor(p){return PLAT_COLORS[lower(p)]||PLAT_COLORS.other}
+function bColor(b){return BRAND_COLORS.get(b)||PALETTE[0]}
+function setColors(){BRAND_COLORS=new Map();unique('category').forEach(function(b,i){BRAND_COLORS.set(b,PALETTE[i%PALETTE.length])})}
+
+/* ═══════════════════════════════════════════
+   Theme Toggle
+   ═══════════════════════════════════════════ */
+$('themeBtn').onclick=function(){
+  document.documentElement.classList.toggle('light');
+  $('themeBtn').innerHTML=document.documentElement.classList.contains('light')?'&#9728;&#65039;':'&#127769;';
+  if(DATA.length)requestAnimationFrame(render);
+};
+
+/* ═══════════════════════════════════════════
+   Init Filters
+   ═══════════════════════════════════════════ */
+function initFilters(){
+  fillSel('fSource',unique('source'),'All Platforms');
+  fillSel('fBrand',unique('category'),'All Brands');
+  fillSel('fKeyword',unique('mainKeyword').filter(function(x){return x!=='-'}),'All Keywords');
+  fillSel('fSentiment',['Positive','Negative','Neutral','Unknown'],'All Sentiment');
+  var tiers=TIER_ORDER.filter(function(t){return DATA.some(function(r){return r.audienceSize===t})});
+  fillSel('fAudience',tiers,'All Audience Tiers');
+  var dates=DATA.map(function(r){return r.date}).filter(Boolean).sort();
+  $('fFrom').value=dates[0]||'';$('fTo').value=dates[dates.length-1]||'';
+}
+
+/* ═══════════════════════════════════════════
+   Apply Filters (debounced)
+   ═══════════════════════════════════════════ */
+var _ft;
+function scheduleFilter(){clearTimeout(_ft);_ft=setTimeout(applyFilters,80)}
+function applyFilters(){
+  var q=lower($('q').value),src=$('fSource').value,cat=$('fBrand').value,
+    kw=$('fKeyword').value,sent=$('fSentiment').value,aud=$('fAudience').value,
+    from=$('fFrom').value,to=$('fTo').value;
+  FILTERED=DATA.filter(function(r){
+    return(!q||lower(r.message+' '+r.account+' '+r.mainKeyword+' '+r.subKeyword+' '+r.category+' '+r.ner).indexOf(q)>=0)&&
+    (!src||r.source===src)&&(!cat||r.category===cat)&&(!kw||r.mainKeyword===kw)&&
+    (!sent||r.sentiment===sent)&&(!aud||r.audienceSize===aud)&&
+    (!from||r.date>=from)&&(!to||r.date<=to);
+  });
+  PAGE=0;render();
+}
+
+/* ═══════════════════════════════════════════
+   Filter Event Binding
+   ═══════════════════════════════════════════ */
+['q','fSource','fBrand','fKeyword','fSentiment','fAudience','fFrom','fTo'].forEach(function(id){
+  $(id).addEventListener('input',scheduleFilter)});
+['sortBy','sortDir','perPage'].forEach(function(id){$(id).addEventListener('input',function(){PAGE=0;renderFeed()})});
+
+/* ═══════════════════════════════════════════
+   Render All
+   ═══════════════════════════════════════════ */
+function render(){
+  closeDrawer();
+  $('dash').classList.toggle('hidden',!DATA.length);
+  renderChips();renderKpis();
+  drawTrend();drawSentiment();drawPlatforms();renderBrandBattle();
+  drawAudienceTier();drawAccountType();drawSentTimeline();
+  drawHeatmap();drawCrossTab();
+  scheduleTopics();drawAccounts();drawNER();
+  renderFeed();
+}
+
+/* ═══════════════════════════════════════════
+   Chips
+   ═══════════════════════════════════════════ */
+function renderChips(){
+  var pairs=[['Platform','fSource'],['Brand','fBrand'],['Keyword','fKeyword'],
+    ['Sentiment','fSentiment'],['Tier','fAudience']];
+  var html='';
+  pairs.forEach(function(p){var v=$(p[1]).value;if(v)html+='<div class="chip">'+p[0]+': '+esc(v)+' <button data-c="'+p[1]+'">x</button></div>'});
+  $('chips').innerHTML=html;
+  $('chips').querySelectorAll('button').forEach(function(b){b.onclick=function(){$(b.dataset.c).value='';applyFilters()}});
+}
+
+/* ═══════════════════════════════════════════
+   KPIs
+   ═══════════════════════════════════════════ */
+function renderKpis(){
+  var r=FILTERED,tot=r.length,eng=sumArr(r,'engagement'),
+    fol=r.filter(function(x){return x.followers>0}),
+    avgER=fol.length?sumArr(fol,function(x){return x.er})/fol.length:0,
+    known=r.filter(function(x){return x.sentiment==='Positive'||x.sentiment==='Negative'||x.sentiment==='Neutral'}),
+    posR=known.length?known.filter(function(x){return x.sentiment==='Positive'}).length/known.length*100:0,
+    negR=known.length?known.filter(function(x){return x.sentiment==='Negative'}).length/known.length*100:0,
+    uniqAcc=new Set(r.map(function(x){return x.account})).size;
+  var k=[
+    ['Mentions',fmt(tot),'Total matched posts'],
+    ['Engagement',fmt(eng),'Total engagement'],
+    ['Avg ER',pct(avgER),'Engagement / Followers'],
+    ['Positive',pct(posR),'Of known sentiment'],
+    ['Negative',pct(negR),'Of known sentiment'],
+    ['Accounts',fmt(uniqAcc),'Unique accounts']
+  ];
+  $('kpis').innerHTML=k.map(function(x){return'<div class="card kpi fadeIn"><div class="label">'+x[0]+'</div><div class="value">'+x[1]+'</div><div class="hint">'+x[2]+'</div></div>'}).join('');
+}
+
+/* ═══════════════════════════════════════════
+   SVG Chart Primitives
+   ═══════════════════════════════════════════ */
+function emptyEl(el){el.innerHTML='<div class="empty">No data</div>'}
+
+function drawLineChart(elId,series){
+  var el=$(elId);if(!series.length||!series[0].data.length)return emptyEl(el);
+  var w=el.clientWidth||400,h=el.clientHeight||220;
+  var p={l:44,r:14,t:14,b:32};
+  var allY=[];series.forEach(function(s){s.data.forEach(function(d){allY.push(d.y)})});
+  var maxY=Math.max.apply(null,allY.concat([1]));
+  var labels=series[0].data.map(function(d){return d.x});
+  var xScale=function(i){return p.l+(w-p.l-p.r)*(labels.length===1?.5:i/(labels.length-1))};
+  var yScale=function(v){return p.t+(h-p.t-p.b)*(1-v/maxY)};
+  var svg='<svg viewBox="0 0 '+w+' '+h+'">';
+  for(var t=0;t<=4;t++){
+    var yy=p.t+(h-p.t-p.b)*t/4;
+    svg+='<line class="gridline" x1="'+p.l+'" x2="'+(w-p.r)+'" y1="'+yy+'" y2="'+yy+'"/>';
+    svg+='<text class="axis" x="'+(p.l-4)+'" y="'+(yy+3)+'" text-anchor="end">'+fmt(maxY*(1-t/4))+'</text>';
+  }
+  var step=Math.max(1,Math.floor(labels.length/6));
+  labels.forEach(function(l,i){if(i%step===0||i===labels.length-1)
+    svg+='<text class="axis" x="'+xScale(i)+'" y="'+(h-6)+'" text-anchor="middle">'+esc(l.slice(5))+'</text>'});
+  series.forEach(function(s){
+    var pts=s.data.map(function(d,i){return xScale(i)+','+yScale(d.y)}).join(' ');
+    svg+='<polyline points="'+pts+'" fill="none" stroke="'+s.color+'" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity=".85"/>';
+    s.data.forEach(function(d,i){
+      svg+='<circle cx="'+xScale(i)+'" cy="'+yScale(d.y)+'" r="3.5" fill="'+s.color+'" opacity="0"><title>'+esc(s.name)+' '+esc(d.x)+': '+fmt(d.y)+'</title><set attributeName="opacity" to="1" begin="mouseover" end="mouseout"/></circle>';
+    });
+  });
+  svg+='</svg>';el.innerHTML=svg;
+}
+
+function drawDonut(elId,data){
+  var el=$(elId);data=data.filter(function(d){return d.value>0});
+  if(!data.length)return emptyEl(el);
+  var w=el.clientWidth||280,h=el.clientHeight||180,cx=w/2,cy=h/2;
+  var r=Math.min(w,h)*.34,ir=r*.56;
+  var total=0;data.forEach(function(d){total+=d.value});
+  var angle=-90,svg='<svg viewBox="0 0 '+w+' '+h+'">';
+  var rad=Math.PI/180;
+  data.forEach(function(d){
+    var da=d.value/total*360,a2=angle+da;
+    var large=da>180?1:0;
+    var x1=cx+r*Math.cos(angle*rad),y1=cy+r*Math.sin(angle*rad);
+    var x2=cx+r*Math.cos(a2*rad),y2=cy+r*Math.sin(a2*rad);
+    var ix1=cx+ir*Math.cos(a2*rad),iy1=cy+ir*Math.sin(a2*rad);
+    var ix2=cx+ir*Math.cos(angle*rad),iy2=cy+ir*Math.sin(angle*rad);
+    svg+='<path d="M '+x1+' '+y1+' A '+r+' '+r+' 0 '+large+' 1 '+x2+' '+y2+' L '+ix1+' '+iy1+' A '+ir+' '+ir+' 0 '+large+' 0 '+ix2+' '+iy2+' Z" fill="'+d.color+'" opacity=".85"><title>'+esc(d.name)+': '+fmt(d.value)+' ('+pct(d.value/total*100)+')</title></path>';
+    var mid=(angle+a2)/2*rad;
+    var lx=cx+(r+16)*Math.cos(mid),ly=cy+(r+16)*Math.sin(mid);
+    if(da>18)svg+='<text x="'+lx+'" y="'+ly+'" text-anchor="middle" dominant-baseline="middle" fill="var(--soft)" font-size="10" font-weight="700">'+esc(d.name)+'</text>';
+    angle=a2;
+  });
+  svg+='<text x="'+cx+'" y="'+cy+'" text-anchor="middle" dominant-baseline="middle" fill="var(--text)" font-weight="900" font-size="18">'+fmt(total)+'</text></svg>';
+  el.innerHTML=svg;
+}
+
+function drawBars(elId,data,colorFn,maxN){
+  maxN=maxN||8;
+  var el=$(elId);data=data.filter(function(d){return d.value>0}).sort(function(a,b){return b.value-a.value}).slice(0,maxN);
+  if(!data.length)return emptyEl(el);
+  var max=Math.max.apply(null,data.map(function(d){return d.value}).concat([1]));
+  el.innerHTML='<div class="bars">'+data.map(function(d){
+    var w=Math.max(3,d.value/max*100);
+    return'<div class="barrow"><div class="barlabel" title="'+esc(d.name)+'">'+esc(d.name)+'</div><div class="bartrack"><div class="barfill" style="width:'+w+'%;background:'+colorFn(d.name)+'"></div></div><div class="barval">'+fmt(d.value)+'</div></div>';
+  }).join('')+'</div>';
+}
+
+/* ═══════════════════════════════════════════
+   Trend
+   ═══════════════════════════════════════════ */
+function buildTrendTabs(){
+  $('trendTabs').innerHTML=['engagement','mentions','followers'].map(function(m){
+    return'<button class="tabbtn'+(trendMetric===m?' active':'')+'" data-m="'+m+'">'+m[0].toUpperCase()+m.slice(1)+'</button>'
+  }).join('');
+  $('trendTabs').querySelectorAll('.tabbtn').forEach(function(b){b.onclick=function(){trendMetric=b.dataset.m;buildTrendTabs();drawTrend()}});
+}
+function drawTrend(){
+  buildTrendTabs();
+  var byDate=new Map(),brands=unique('category');
+  FILTERED.forEach(function(r){
+    if(!r.date)return;
+    if(!byDate.has(r.date))byDate.set(r.date,new Map());
+    var dm=byDate.get(r.date);
+    var v=trendMetric==='mentions'?1:trendMetric==='followers'?r.followers:r.engagement;
+    dm.set(r.category,(dm.get(r.category)||0)+v);
+  });
+  var dates=Array.from(byDate.keys()).sort();
+  if(brands.length<=5&&brands.length>1){
+    var series=brands.map(function(b){
+      return{name:b,color:bColor(b),data:dates.map(function(d){return{x:d,y:byDate.get(d).get(b)||0}})};
+    });
+    drawLineChart('trend',series);
+  }else{
+    var totals=dates.map(function(d){var t=0;byDate.get(d).forEach(function(v){t+=v});return{x:d,y:t}});
+    drawLineChart('trend',[{name:'Total',color:'var(--accent)',data:totals}]);
+  }
+}
+
+/* ═══════════════════════════════════════════
+   Platform
+   ═══════════════════════════════════════════ */
+function buildPlatTabs(){
+  $('platTabs').innerHTML=['engagement','mentions','avgER'].map(function(m){
+    return'<button class="tabbtn'+(platMetric===m?' active':'')+'" data-m="'+m+'">'+(m==='avgER'?'Avg ER':m[0].toUpperCase()+m.slice(1))+'</button>'
+  }).join('');
+  $('platTabs').querySelectorAll('.tabbtn').forEach(function(b){b.onclick=function(){platMetric=b.dataset.m;buildPlatTabs();drawPlatforms()}});
+}
+function drawPlatforms(){
+  buildPlatTabs();
+  var g=group(FILTERED,'source');
+  var data=g.map(function(o){
+    var val;
+    if(platMetric==='mentions')val=o.mentions;
+    else if(platMetric==='avgER'){var f=o.rows.filter(function(r){return r.followers>0});val=f.length?sumArr(f,function(r){return r.er})/f.length:0}
+    else val=o.engagement;
+    return{name:o.name,value:val};
+  });
+  drawBars('platChart',data,pColor);
+}
+
+/* ═══════════════════════════════════════════
+   Sentiment Donut
+   ═══════════════════════════════════════════ */
+function drawSentiment(){
+  drawDonut('sentChart',group(FILTERED,'sentiment').map(function(o){return{name:o.name,value:o.mentions,color:SENT_COLORS[o.name]||SENT_COLORS.Unknown}}));
+}
+
+/* ═══════════════════════════════════════════
+   Brand Battle
+   ═══════════════════════════════════════════ */
+function renderBrandBattle(){
+  var total=FILTERED.length||1;
+  var g=group(FILTERED,'category').sort(function(a,b){return b.mentions-a.mentions});
+  $('brandRows').innerHTML=g.slice(0,15).map(function(o,i){
+    var fol=o.rows.filter(function(r){return r.followers>0});
+    var avgER=fol.length?sumArr(fol,function(r){return r.er})/fol.length:0;
+    var posRate=o.mentions?o.positive/o.mentions*100:0;
+    return'<tr><td>'+(i+1)+'</td><td><span class="brandDot" style="background:'+bColor(o.name)+'"></span>'+esc(o.name)+'</td><td>'+fmt(o.mentions)+'</td><td>'+fmt(o.engagement)+'</td><td>'+pct(avgER)+'</td><td>'+pct(posRate)+'</td><td>'+pct(o.mentions/total*100)+'</td></tr>';
+  }).join('')||'<tr><td colspan="7">No data</td></tr>';
+}
+
+/* ═══════════════════════════════════════════
+   Audience Tier
+   ═══════════════════════════════════════════ */
+function drawAudienceTier(){
+  var counts=new Map();
+  FILTERED.forEach(function(r){if(r.audienceSize&&r.audienceSize!=='-')counts.set(r.audienceSize,(counts.get(r.audienceSize)||0)+1)});
+  var data=TIER_ORDER.filter(function(t){return counts.has(t)}).map(function(t){return{name:t,value:counts.get(t),color:TIER_COLORS[t]||'#64748b'}});
+  drawDonut('tierChart',data);
+}
+
+/* ═══════════════════════════════════════════
+   Account Type
+   ═══════════════════════════════════════════ */
+function drawAccountType(){
+  var typeColors={'Brand':'#3b82f6','Public Figure':'#f59e0b','Organic':'#64748b'};
+  var data=group(FILTERED,'accountType').map(function(o){return{name:o.name||'Organic',value:o.mentions,color:typeColors[o.name]||'#64748b'}});
+  drawDonut('typeChart',data);
+}
+
+/* ═══════════════════════════════════════════
+   Sentiment Over Time
+   ═══════════════════════════════════════════ */
+function drawSentTimeline(){
+  var el=$('sentTimeline');
+  var byDate=new Map();
+  FILTERED.forEach(function(r){
+    if(!r.date)return;
+    if(!byDate.has(r.date))byDate.set(r.date,{Positive:0,Negative:0,Neutral:0,Unknown:0});
+    var d=byDate.get(r.date);d[r.sentiment]=(d[r.sentiment]||0)+1;
+  });
+  var dates=Array.from(byDate.keys()).sort();
+  if(!dates.length)return emptyEl(el);
+  var w=el.clientWidth||400,h=el.clientHeight||180;
+  var p={l:36,r:10,t:10,b:28};
+  var maxY=Math.max.apply(null,dates.map(function(d){var o=byDate.get(d);return o.Positive+o.Negative+o.Neutral+o.Unknown}).concat([1]));
+  var bw=Math.max(2,Math.min(12,(w-p.l-p.r)/dates.length-1));
+  var xScale=function(i){return p.l+(w-p.l-p.r)*(i+.5)/dates.length};
+  var yScale=function(v){return(h-p.t-p.b)*v/maxY};
+  var svg='<svg viewBox="0 0 '+w+' '+h+'">';
+  for(var t=0;t<=3;t++){var yy=p.t+(h-p.t-p.b)*t/3;svg+='<line class="gridline" x1="'+p.l+'" x2="'+(w-p.r)+'" y1="'+yy+'" y2="'+yy+'"/>';}
+  var sents=['Positive','Neutral','Negative','Unknown'];
+  var cols={Positive:'#22c55e',Neutral:'#94a3b8',Negative:'#ef4444',Unknown:'#f59e0b'};
+  dates.forEach(function(d,i){
+    var o=byDate.get(d);var cy=h-p.b;
+    sents.forEach(function(s){
+      var val=o[s]||0;if(!val)return;
+      var bh=yScale(val);
+      svg+='<rect x="'+(xScale(i)-bw/2)+'" y="'+(cy-bh)+'" width="'+bw+'" height="'+bh+'" rx="1" fill="'+cols[s]+'" opacity=".75"><title>'+d+' '+s+': '+val+'</title></rect>';
+      cy-=bh;
+    });
+  });
+  var stp=Math.max(1,Math.floor(dates.length/5));
+  dates.forEach(function(d,i){if(i%stp===0)svg+='<text class="axis" x="'+xScale(i)+'" y="'+(h-4)+'" text-anchor="middle">'+d.slice(5)+'</text>'});
+  svg+='</svg>';el.innerHTML=svg;
+}
+
+/* ═══════════════════════════════════════════
+   Heatmap
+   ═══════════════════════════════════════════ */
+function drawHeatmap(){
+  var el=$('heatmap');
+  var grid=[];for(var d=0;d<7;d++){grid[d]=[];for(var hh=0;hh<24;hh++)grid[d][hh]=0}
+  FILTERED.forEach(function(r){
+    if(r.hour<0||!r.date)return;
+    var dt=new Date(r.date+'T12:00:00');var dow=dt.getDay();
+    grid[dow][r.hour]+=r.engagement||1;
+  });
+  var max=1;grid.forEach(function(row){row.forEach(function(v){if(v>max)max=v})});
+  var days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  var html='<div class="heatmap" style="grid-template-columns:40px repeat(24,1fr)">';
+  html+='<div class="hm-label"></div>';
+  for(var h2=0;h2<24;h2++)html+='<div class="hm-label">'+(h2<10?'0':'')+h2+'</div>';
+  for(var dd=0;dd<7;dd++){
+    html+='<div class="hm-label">'+days[dd]+'</div>';
+    for(var hh2=0;hh2<24;hh2++){
+      var v=grid[dd][hh2],intensity=v/max;
+      var bg=intensity===0?'rgba(148,163,184,.06)':'rgba(255,122,26,'+(0.15+intensity*0.75)+')';
+      html+='<div class="hm-cell" style="background:'+bg+'" title="'+days[dd]+' '+hh2+':00 = '+fmt(v)+'">'+fmt(v)+'</div>';
+    }
+  }
+  html+='</div>';el.innerHTML=html;
+}
+
+/* ═══════════════════════════════════════════
+   Cross-tab
+   ═══════════════════════════════════════════ */
+function drawCrossTab(){
+  var el=$('crossTab');
+  var brands=Array.from(new Set(FILTERED.map(function(r){return r.category}))).sort();
+  var platforms=Array.from(new Set(FILTERED.map(function(r){return r.source}))).sort();
+  if(!brands.length||!platforms.length)return el.innerHTML='<div class="empty">No data</div>';
+  var matrix=new Map();
+  FILTERED.forEach(function(r){var key=r.source+'|||'+r.category;matrix.set(key,(matrix.get(key)||0)+1)});
+  var html='<table><thead><tr><th></th>'+brands.map(function(b){return'<th style="color:'+bColor(b)+'">'+esc(b)+'</th>'}).join('')+'<th>Total</th></tr></thead><tbody>';
+  platforms.forEach(function(p2){
+    var rowTotal=0;html+='<tr><th>'+esc(p2)+'</th>';
+    brands.forEach(function(b){var v=matrix.get(p2+'|||'+b)||0;rowTotal+=v;
+      var bg=v>0?'rgba(255,122,26,'+(Math.min(.4,v/50))+')':'transparent';
+      html+='<td style="background:'+bg+'">'+fmt(v)+'</td>';
+    });
+    html+='<td><b>'+fmt(rowTotal)+'</b></td></tr>';
+  });
+  html+='<tr><th><b>Total</b></th>';var gt=0;
+  brands.forEach(function(b){var v=FILTERED.filter(function(r){return r.category===b}).length;gt+=v;html+='<td><b>'+fmt(v)+'</b></td>'});
+  html+='<td><b>'+fmt(gt)+'</b></td></tr></tbody></table>';
+  el.innerHTML=html;
+}
+
+/* ═══════════════════════════════════════════
+   Top Accounts
+   ═══════════════════════════════════════════ */
+function drawAccounts(){
+  drawBars('accountChart',group(FILTERED,'account').map(function(o){return{name:o.name,value:o.engagement}}),function(){return'var(--accent)'},8);
+}
+
+/* ═══════════════════════════════════════════
+   Named Entity Recognition
+   ═══════════════════════════════════════════ */
+function drawNER(){
+  var counts=new Map();
+  FILTERED.forEach(function(r){
+    if(!r.ner||r.ner==='-')return;
+    r.ner.split(/[,;]/).forEach(function(chunk){
+      var m=chunk.trim().match(/^(.+?)\s*\(([^)]+)\)\s*$/);
+      var name=m?m[1].trim():chunk.trim();
+      if(name.length>1&&name!=='-')counts.set(name,(counts.get(name)||0)+1);
+    });
+  });
+  var data=Array.from(counts.entries()).map(function(e){return{name:e[0],value:e[1]}}).sort(function(a,b){return b.value-a.value}).slice(0,10);
+  drawBars('nerChart',data,function(){return'#8b5cf6'},8);
+}
+
+/* ═══════════════════════════════════════════
+   Topics
+   ═══════════════════════════════════════════ */
+var STOP=new Set('และ หรือ ที่ ใน กับ ของ จาก เป็น มี ให้ ได้ ไม่ มา ไป นี้ นั้น แล้ว แบบ มาก น้อย กว่า เรา เขา คุณ ผม ฉัน มัน ก็ จะ อยู่ ค่ะ ครับ นะ จ้า ด้วย กัน เลย ดี ว่า คือ อัน ตอน ทำ อีก แต่ เหมือน the a an and or to of for in on with from is are this that you we they our your com https http www review video photo post like comment share follow'.split(/\s+/));
+
+function buildTopics(rows){
+  var m=new Map();
+  function add(label,type,eng){
+    label=safe(label).trim();if(!label||label==='-'||label.length<2)return;
+    var key=lower(label.replace(/^#/,'')).replace(/\s+/g,' ');
+    if(STOP.has(key)||key.length<2)return;
+    if(!m.has(key))m.set(key,{label:label,type:type,mentions:0,engagement:0});
+    var o=m.get(key);o.mentions++;o.engagement+=eng;
+    if(label.length>o.label.length)o.label=label;
+  }
+  rows.forEach(function(r){
+    safe(r.mainKeyword).split(/[,|;]+/).map(function(x){return x.trim()}).filter(Boolean).forEach(function(x){add(x,'keyword',r.engagement)});
+    safe(r.subKeyword).split(/[,|;]+/).map(function(x){return x.trim()}).filter(Boolean).forEach(function(x){add(x,'keyword',r.engagement)});
+    (r.message.match(/#[\u0E00-\u0E7F\w]+/g)||[]).forEach(function(x){add(x,'hashtag',r.engagement)});
+    var text=lower(r.message).replace(/https?:\/\/\S+/g,' ').replace(/[^\u0E00-\u0E7F\w\s]+/g,' ');
+    var words=text.split(/\s+/).filter(function(w){return w.length>2&&!STOP.has(w)});
+    words.slice(0,30).forEach(function(w){add(w,'word',r.engagement)});
+  });
+  return Array.from(m.values()).filter(function(t){return t.mentions>1}).sort(function(a,b){return b.engagement-a.engagement}).slice(0,35);
+}
+var _tt;
+function scheduleTopics(){
+  clearTimeout(_tt);$('topics').innerHTML='<div class="empty">Analyzing topics...</div>';
+  _tt=setTimeout(function(){TOPICS=buildTopics(FILTERED);renderTopics()},30);
+}
+function renderTopics(){
+  if(!TOPICS.length)return $('topics').innerHTML='<div class="empty">No topics found</div>';
+  var max=Math.max.apply(null,TOPICS.map(function(t){return t.engagement}).concat([1]));
+  $('topics').innerHTML=TOPICS.map(function(t){
+    var sz=12+Math.min(10,t.engagement/max*10);
+    return'<button class="topic" style="font-size:'+sz+'px" data-t="'+esc(t.label)+'">'+esc(t.label)+' <small>'+t.type+' &middot; '+fmt(t.mentions)+'</small></button>';
+  }).join('');
+  $('topics').querySelectorAll('.topic').forEach(function(b){b.onclick=function(){$('q').value=b.dataset.t;applyFilters()}});
+}
+
+/* ═══════════════════════════════════════════
+   Feed with Pagination
+   ═══════════════════════════════════════════ */
+function renderFeed(){
+  var rows=FILTERED.slice();
+  var by=$('sortBy').value,dir=$('sortDir').value,pp=parseInt($('perPage').value,10);
+  rows.sort(function(a,b){
+    var x,y;
+    if(by==='engagement'){x=a.engagement;y=b.engagement}
+    else if(by==='date'){x=a.fullTime||a.date;y=b.fullTime||b.date}
+    else if(by==='er'){x=a.er;y=b.er}
+    else{x=safe(a[by]);y=safe(b[by])}
+    var r=typeof x==='number'?x-y:String(x).localeCompare(String(y));
+    return dir==='desc'?-r:r;
+  });
+  var totalPages=Math.ceil(rows.length/pp);
+  if(PAGE>=totalPages)PAGE=Math.max(0,totalPages-1);
+  var start=PAGE*pp;var pageRows=rows.slice(start,start+pp);
+
+  $('feed').innerHTML=pageRows.length?pageRows.map(function(r){
+    var thumb=r.imageUrl&&r.imageUrl!=='-'?'<img class="postThumb" loading="lazy" src="'+esc(r.imageUrl)+'" onerror="this.style.display=\'none\'">':'';
+    return'<article class="card post" data-id="'+esc(r.id)+'">'+
+      '<div class="avatar" style="background:'+pColor(r.source)+'">'+esc((r.source||'?')[0].toUpperCase())+'</div>'+
+      '<div class="postMain"><div class="postTop">'+
+        '<span class="account">'+esc(r.account)+'</span>'+
+        '<span class="meta">'+esc(r.fullTime||r.date)+'</span>'+
+        '<span class="brand" style="color:'+bColor(r.category)+'">'+esc(r.category)+'</span>'+
+      '</div>'+
+      '<div class="msg">'+esc(r.message||'(No message)')+'</div>'+
+      '<div class="tagrow">'+
+        '<span class="tag" style="background:'+pColor(r.source)+';color:#001018">'+esc(r.source)+'</span>'+
+        '<span class="tag">Eng '+fmt(r.engagement)+'</span>'+
+        '<span class="tag">ER '+pct(r.er)+'</span>'+
+        (r.audienceSize&&r.audienceSize!=='-'?'<span class="tag" style="background:'+(TIER_COLORS[r.audienceSize]||'#64748b')+';color:#001018">'+esc(r.audienceSize)+'</span>':'')+
+        (r.mainKeyword&&r.mainKeyword!=='-'?'<span class="tag">'+esc(r.mainKeyword.slice(0,30))+'</span>':'')+
+      '</div>'+thumb+
+      '</div>'+
+      '<div class="sent '+esc(r.sentiment)+'">'+esc(r.sentiment)+'</div>'+
+    '</article>';
+  }).join(''):'<div class="empty">No results. Try adjusting filters.</div>';
+
+  // Pagination
+  if(totalPages>1){
+    var pgHtml='';var maxBtns=7;
+    var s=Math.max(0,PAGE-Math.floor(maxBtns/2)),e=Math.min(totalPages,s+maxBtns);
+    if(e-s<maxBtns)s=Math.max(0,e-maxBtns);
+    if(PAGE>0)pgHtml+='<button class="pgbtn" data-p="'+(PAGE-1)+'">&#8249;</button>';
+    for(var i=s;i<e;i++)pgHtml+='<button class="pgbtn'+(i===PAGE?' active':'')+'" data-p="'+i+'">'+(i+1)+'</button>';
+    if(PAGE<totalPages-1)pgHtml+='<button class="pgbtn" data-p="'+(PAGE+1)+'">&#8250;</button>';
+    $('pagination').innerHTML=pgHtml;
+    $('pagination').querySelectorAll('.pgbtn').forEach(function(b){b.onclick=function(){PAGE=parseInt(b.dataset.p,10);renderFeed();$('feed').scrollIntoView({behavior:'smooth',block:'start'})}});
+  }else{$('pagination').innerHTML=''}
+
+  $('feed').querySelectorAll('.post').forEach(function(p2){p2.onclick=function(){openPost(p2.dataset.id)}});
+}
+
+/* ═══════════════════════════════════════════
+   Post Detail Drawer
+   ═══════════════════════════════════════════ */
+function openPost(id){
+  var r=FILTERED.find(function(x){return x.id===id})||DATA.find(function(x){return x.id===id});
+  if(!r)return;
+  $('dTitle').textContent=r.account;
+  var img=r.imageUrl&&r.imageUrl!=='-'?'<img src="'+esc(r.imageUrl)+'" onerror="this.remove()">':'';
+  var logos=(r.logoRecognition&&r.logoRecognition!=='-')?'<b>Logos</b><span>'+esc(r.logoRecognition)+'</span>':'';
+  var scenes=(r.sceneRecognition&&r.sceneRecognition!=='-')?'<b>Scenes</b><span>'+esc(r.sceneRecognition)+'</span>':'';
+  var imgLabels=(r.imageLabels&&r.imageLabels!=='-')?'<b>Image</b><span>'+esc(r.imageLabels)+'</span>':'';
+  var nerInfo=(r.ner&&r.ner!=='-')?'<b>Entities</b><span>'+esc(r.ner)+'</span>':'';
+  $('dBody').innerHTML=img+
+    '<div class="sent '+esc(r.sentiment)+'" style="display:inline-flex;margin:8px 0">'+esc(r.sentiment)+'</div>'+
+    '<div class="msg" style="display:block;-webkit-line-clamp:unset;margin:10px 0">'+esc(r.message)+'</div>'+
+    '<div class="kv">'+
+      '<b>Date</b><span>'+esc(r.fullTime||r.date)+'</span>'+
+      '<b>Platform</b><span>'+esc(r.source)+'</span>'+
+      '<b>Brand</b><span style="color:'+bColor(r.category)+'">'+esc(r.category)+'</span>'+
+      '<b>Engagement</b><span>'+fmt(r.engagement)+'</span>'+
+      '<b>Followers</b><span>'+fmt(r.followers)+'</span>'+
+      '<b>ER</b><span>'+pct(r.er)+'</span>'+
+      '<b>Tier</b><span>'+esc(r.audienceSize||'-')+'</span>'+
+      '<b>Type</b><span>'+esc(r.accountType)+'</span>'+
+      '<b>Keyword</b><span>'+esc(r.mainKeyword)+'</span>'+
+      '<b>Sub KW</b><span>'+esc(r.subKeyword)+'</span>'+
+      logos+scenes+imgLabels+nerInfo+
+      (r.directUrl&&r.directUrl!=='-'?'<b>URL</b><span><a href="'+esc(r.directUrl)+'" target="_blank" rel="noreferrer">Open post</a></span>':'')+
+    '</div>';
+  $('backdrop').classList.add('open');$('drawer').classList.add('open');
+}
+function closeDrawer(){$('backdrop').classList.remove('open');$('drawer').classList.remove('open')}
+
+/* ═══════════════════════════════════════════
+   File Import
+   ═══════════════════════════════════════════ */
+function handleFile(file){
+  if(!file)return;
+  if(!window.XLSX){toast('XLSX library still loading...');return}
+  $('lastUpdated').textContent='Reading file...';
+  file.arrayBuffer().then(function(buf){
+    var rows=[];
+    try{
+      if(file.name.toLowerCase().indexOf('.csv')>=0){
+        var txt=new TextDecoder('utf-8').decode(buf);
+        var wb=XLSX.read(txt,{type:'string'});
+        rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{defval:''});
+      }else{
+        var wb2=XLSX.read(buf,{type:'array',cellDates:true});
+        var sheetName=wb2.SheetNames.indexOf('all')>=0?'all':wb2.SheetNames[0];
+        rows=XLSX.utils.sheet_to_json(wb2.Sheets[sheetName],{defval:''});
+      }
+      DATA=normalize(rows);
+      setColors();initFilters();applyFilters();
+      $('lastUpdated').textContent=DATA.length.toLocaleString()+' records | '+file.name+' | '+new Date().toLocaleTimeString();
+      toast('Loaded '+DATA.length.toLocaleString()+' records');
+    }catch(e){
+      console.error(e);toast('Error: '+e.message);$('lastUpdated').textContent='Error reading file';
+    }
+  });
+}
+
+/* CSV Export */
+function exportCSV(){
+  if(!FILTERED.length)return toast('No data to export');
+  var keys=Object.keys(FILTERED[0].raw);
+  var lines=[keys.join(',')];
+  FILTERED.forEach(function(r){lines.push(keys.map(function(k){return'"'+safe(r.raw[k]).replace(/"/g,'""')+'"'}).join(','))});
+  var blob=new Blob(['\uFEFF'+lines.join('\n')],{type:'text/csv;charset=utf-8'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='social-export-'+new Date().toISOString().slice(0,10)+'.csv';
+  a.click();setTimeout(function(){URL.revokeObjectURL(a.href)},2000);
+}
+
+/* ═══════════════════════════════════════════
+   Event Bindings
+   ═══════════════════════════════════════════ */
+$('chooseBtn').onclick=function(){$('fileInput').click()};
+$('fileInput').onchange=function(e){handleFile(e.target.files[0])};
+$('clearBtn').onclick=function(){
+  DATA=[];FILTERED=[];PAGE=0;
+  $('dash').classList.add('hidden');$('lastUpdated').textContent='No data loaded';
+  ['q','fSource','fBrand','fKeyword','fSentiment','fAudience','fFrom','fTo'].forEach(function(id){$(id).value=''});
+  $('chips').innerHTML='';
+};
+$('resetBtn').onclick=function(){
+  ['q','fSource','fBrand','fKeyword','fSentiment','fAudience'].forEach(function(id){$(id).value=''});
+  initFilters();applyFilters();
+};
+$('exportBtn').onclick=exportCSV;
+$('topBtn').onclick=function(){$('sortBy').value='engagement';$('sortDir').value='desc';PAGE=0;renderFeed()};
+$('backdrop').onclick=closeDrawer;
+$('closeBtn').onclick=closeDrawer;
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeDrawer()});
+
+// Drag & drop
+var dropArea=$('dropArea');
+['dragenter','dragover'].forEach(function(ev){dropArea.addEventListener(ev,function(e){e.preventDefault();dropArea.classList.add('over')})});
+['dragleave','drop'].forEach(function(ev){dropArea.addEventListener(ev,function(e){e.preventDefault();dropArea.classList.remove('over');if(ev==='drop')handleFile(e.dataTransfer.files[0])})});
+
+// Resize
+var _rt;
+window.addEventListener('resize',function(){if(DATA.length){clearTimeout(_rt);_rt=setTimeout(render,200)}});
+
+setTimeout(function(){if(!window.XLSX)$('lastUpdated').textContent='XLSX parser loading...'},1500);
+</script>
+</body>
+</html>
