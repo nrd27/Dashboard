@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Social Intelligence Dashboard V6.3.1 Beta</title>
+<title>Social Intelligence Dashboard V6.3.2 Beta</title>
 <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 <style>
 :root{
@@ -31,6 +31,7 @@ button,input,select{font:inherit}button{cursor:pointer}.app{width:100%;max-width
 .heatmapWrap{overflow:auto;-webkit-overflow-scrolling:touch}.heatmapGrid{display:grid;grid-template-columns:58px repeat(24,38px);gap:3px;min-width:970px}.hmCell,.hmHead,.hmDay{min-height:30px;border-radius:8px;display:grid;place-items:center;font-size:10px}.hmHead,.hmDay{color:var(--muted);font-weight:850}.hmCell{background:rgba(148,163,184,.08);border:1px solid rgba(148,163,184,.08);color:rgba(248,250,252,.86);cursor:default}.hmCell.hot1{background:rgba(255,122,26,.16)}.hmCell.hot2{background:rgba(255,122,26,.28)}.hmCell.hot3{background:rgba(255,122,26,.42);color:#fff}.hmCell.hot4{background:rgba(255,122,26,.62);color:#111827;font-weight:950}.trendPopupBackdrop{position:fixed;inset:0;background:rgba(0,0,0,.52);z-index:118;display:none}.trendPopupBackdrop.open{display:block}.trendPopup{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:119;width:min(620px,94vw);max-height:min(720px,86vh);overflow:auto;background:#0b1424;border:1px solid var(--line);border-radius:22px;box-shadow:0 30px 80px rgba(0,0,0,.55);padding:18px;display:none}.trendPopup.open{display:block}.trendPopupTop{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:12px}.trendPost{display:grid;grid-template-columns:46px minmax(0,1fr);gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}.trendPost:last-child{border-bottom:0}.trendAvatar{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-weight:950;color:#111827}.trendMsg{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;color:#e5e7eb;font-size:13px}.trendMeta{color:var(--muted);font-size:12px;margin-top:3px}.clickHint{font-size:12px;color:var(--muted);margin-top:8px}.dot{cursor:pointer}.dot:hover{r:5}
 
 .influencerGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.influencerGrid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.rankList{display:grid;gap:10px}.rankItem{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.045)}.rankNo{display:grid;place-items:center;width:30px;height:30px;border-radius:999px;background:rgba(255,122,26,.16);color:#fed7aa;font-weight:950}.rankMain{min-width:0}.rankName{font-weight:950;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rankSub{font-size:12px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rankVal{text-align:right;font-weight:950;white-space:nowrap}.tierGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.tierCard{padding:13px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.045)}.tierCard b{display:block;font-size:24px;letter-spacing:-.5px}.tierCard span{font-size:12px;color:var(--muted)}
+.matrixTable{min-width:980px}.matrixTable th{position:sticky;top:0;z-index:2}.matrixTable th:first-child,.matrixTable td:first-child{position:sticky;left:0;z-index:3;background:#0b1424}.matrixTable th:nth-child(2),.matrixTable td:nth-child(2){position:sticky;left:92px;z-index:3;background:#0b1424}.heatCell{border-radius:12px;padding:9px 10px;min-width:112px;border:1px solid rgba(148,163,184,.12);background:rgba(148,163,184,.06)}.heatCell.hot0{opacity:.45}.heatCell.hot1{background:rgba(255,122,26,.12)}.heatCell.hot2{background:rgba(255,122,26,.22)}.heatCell.hot3{background:rgba(255,122,26,.36)}.heatCell.hot4{background:rgba(255,122,26,.58);color:#111827}.heatCell b{display:block;font-size:15px}.heatCell span{display:block;font-size:11px;color:inherit;opacity:.82}.brandTotalHead{font-size:11px;color:var(--muted);font-weight:750;margin-top:2px;white-space:nowrap}.rowTotal{font-weight:950;color:#fed7aa;white-space:nowrap}.matrixLegend{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--muted)}.matrixLegend i{display:inline-block;width:24px;height:10px;border-radius:99px;vertical-align:middle;margin-right:4px}
 @media(max-width:940px){.influencerGrid,.influencerGrid3{grid-template-columns:1fr}.tierGrid{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.tierGrid{grid-template-columns:1fr}.rankItem{grid-template-columns:30px minmax(0,1fr);}.rankVal{grid-column:2;text-align:left}}
 
@@ -39,7 +40,7 @@ button,input,select{font:inherit}button{cursor:pointer}.app{width:100%;max-width
 <body>
 <div class="app">
   <div class="header">
-    <div class="top"><div class="title"><h1>Social Intelligence Dashboard V6.3.1 Beta</h1><div class="sub">Premium tab dashboard · Import XLSX/CSV locally · Brand battle, platform battle, topic intelligence and content leaderboard.</div></div><div class="badge"><span class="live"></span><span id="lastUpdated">No data loaded · V6.3.1</span></div></div>
+    <div class="top"><div class="title"><h1>Social Intelligence Dashboard V6.3.2 Beta</h1><div class="sub">Premium tab dashboard · Import XLSX/CSV locally · Brand battle, platform battle, topic intelligence and content leaderboard.</div></div><div class="badge"><span class="live"></span><span id="lastUpdated">No data loaded · V6.3.2</span></div></div>
     <div class="tabs"><button class="tab active" data-tab="overview">Overview</button><button class="tab" data-tab="brand">Brand Battle</button><button class="tab" data-tab="platform">Platform</button><button class="tab" data-tab="topics">Topics</button><button class="tab" data-tab="content">Content</button><button class="tab" data-tab="influencers">Influencers</button></div>
   </div>
 
@@ -83,15 +84,8 @@ button,input,select{font:inherit}button{cursor:pointer}.app{width:100%;max-width
       </div>
       <div class="card panel">
         <h2>Brand × Platform × Tier comparison</h2>
-        <div class="note">Compare unique influencer usage across selected brands. % is calculated within each brand's total unique accounts.</div>
-        <div class="tableScroll">
-          <table class="table">
-            <thead>
-              <tr><th>#</th><th>Brand</th><th>Platform</th><th>Tier</th><th>Influencers</th><th>% of brand</th><th>Brand total</th><th>Mentions</th><th>Engagement</th><th>Reach proxy</th><th>ER</th></tr>
-            </thead>
-            <tbody id="brandPlatformTierRows"></tbody>
-          </table>
-        </div>
+        <div class="note">Rows are Platform × Tier. Brand columns show unique influencers and % of that brand's total. Darker cells mean that brand uses more influencers than other brands in the same row.</div>
+        <div class="tableScroll" id="brandPlatformTierMatrix"></div>
       </div>
 
       <div class="card panel">
@@ -298,7 +292,7 @@ function renderInfluencers(){
   $('accountRows').innerHTML=acc.slice().sort((a,b)=>b.engagement-a.engagement).slice(0,50).map((o,i)=>`<tr><td>${i+1}</td><td>${esc(o.name)}</td><td>${esc(o.type)}</td><td>${esc(o.tier)}</td><td>${esc(o.platform)}</td><td>${fmt(o.mentions)}</td><td>${fmt(o.engagement)}</td><td>${fmt(o.followers)}</td><td>${pct(o.er)}</td><td>${pct((o.positive)/(Math.max(1,o.positive+o.negative+o.neutral)))}</td></tr>`).join('')||'<tr><td colspan="10">No account data</td></tr>';
 }
 function renderBrandPlatformTierComparison(){
-  const el=$('brandPlatformTierRows');
+  const el=$('brandPlatformTierMatrix')||$('brandPlatformTierRows');
   if(!el)return;
   const brandAccounts=new Map();
   const comboMap=new Map();
@@ -309,7 +303,7 @@ function renderBrandPlatformTierComparison(){
     const account=r.account||'Unknown';
     if(!brandAccounts.has(brand))brandAccounts.set(brand,new Set());
     brandAccounts.get(brand).add(account);
-    const key=[brand,platform,tier].join('\u0001');
+    const key=[platform,tier,brand].join('\u0001');
     if(!comboMap.has(key))comboMap.set(key,{brand,platform,tier,accounts:new Set(),mentions:0,engagement:0,followersByAccount:new Map()});
     const o=comboMap.get(key);
     o.accounts.add(account);
@@ -317,24 +311,51 @@ function renderBrandPlatformTierComparison(){
     o.engagement+=Number(r.engagement||0);
     o.followersByAccount.set(account,Math.max(o.followersByAccount.get(account)||0,Number(r.followers||0)));
   });
-  const brandOrder=[...brandAccounts.entries()].sort((a,b)=>b[1].size-a[1].size).map(x=>x[0]);
+
+  const brands=[...brandAccounts.entries()].sort((a,b)=>b[1].size-a[1].size||safe(a[0]).localeCompare(safe(b[0]))).map(x=>x[0]);
+  const brandTotals=new Map([...brandAccounts.entries()].map(([b,set])=>[b,set.size]));
   const platformOrder=[...new Set(FILTERED.map(r=>r.source||'Unknown'))].sort((a,b)=>safe(a).localeCompare(safe(b)));
   const tierOrder=['Pico','Nano','Micro','Mid-tier','Macro','Mega','Elite','Unknown'];
-  const rows=[...comboMap.values()].map(o=>{
-    o.influencers=o.accounts.size;
-    o.brandTotal=brandAccounts.get(o.brand)?.size||0;
-    o.share=o.brandTotal?o.influencers/o.brandTotal:0;
-    o.followers=[...o.followersByAccount.values()].reduce((a,b)=>a+b,0);
-    o.er=o.followers?o.engagement/o.followers:0;
-    return o;
-  }).sort((a,b)=>{
-    const brandDiff=brandOrder.indexOf(a.brand)-brandOrder.indexOf(b.brand);
-    if(brandDiff!==0)return brandDiff;
-    const platDiff=platformOrder.indexOf(a.platform)-platformOrder.indexOf(b.platform);
-    if(platDiff!==0)return platDiff;
-    return tierOrder.indexOf(a.tier)-tierOrder.indexOf(b.tier);
+  const rowKeys=[];
+  platformOrder.forEach(platform=>tierOrder.forEach(tier=>{
+    const has=brands.some(brand=>comboMap.has([platform,tier,brand].join('\u0001')));
+    if(has)rowKeys.push({platform,tier});
+  }));
+
+  if(!brands.length||!rowKeys.length){
+    el.innerHTML='<div class="empty">No comparison data</div>';
+    return;
+  }
+
+  const metricFor=(platform,tier,brand)=>{
+    const o=comboMap.get([platform,tier,brand].join('\u0001'));
+    if(!o)return{influencers:0,share:0,mentions:0,engagement:0,followers:0,er:0};
+    const influencers=o.accounts.size;
+    const followers=[...o.followersByAccount.values()].reduce((a,b)=>a+b,0);
+    const er=followers?o.engagement/followers:0;
+    const total=brandTotals.get(brand)||0;
+    return{influencers,share:total?influencers/total:0,mentions:o.mentions,engagement:o.engagement,followers,er};
+  };
+
+  let html='<table class="table matrixTable"><thead><tr><th>Platform</th><th>Tier</th><th>Row total</th>';
+  brands.forEach(brand=>{
+    html+=`<th><span style="color:${brandColor(brand)};font-weight:950">${esc(brand)}</span><div class="brandTotalHead">Total ${fmt(brandTotals.get(brand)||0)} accounts</div></th>`;
   });
-  el.innerHTML=rows.length?rows.map((o,i)=>`<tr><td>${i+1}</td><td><span style="color:${brandColor(o.brand)};font-weight:900">${esc(o.brand)}</span></td><td>${esc(o.platform)}</td><td>${esc(o.tier)}</td><td>${fmt(o.influencers)}</td><td>${pct(o.share)}</td><td>${fmt(o.brandTotal)}</td><td>${fmt(o.mentions)}</td><td>${fmt(o.engagement)}</td><td>${fmt(o.followers)}</td><td>${pct(o.er)}</td></tr>`).join(''):'<tr><td colspan="11">No comparison data</td></tr>';
+  html+='</tr></thead><tbody>';
+
+  rowKeys.forEach(({platform,tier})=>{
+    const values=brands.map(brand=>metricFor(platform,tier,brand));
+    const rowMax=Math.max(...values.map(v=>v.influencers),1);
+    const rowTotal=values.reduce((a,v)=>a+v.influencers,0);
+    html+=`<tr><td><span class="pill source" style="background:${colorPlatform(platform)}">${esc(platform)}</span></td><td>${esc(tier)}</td><td class="rowTotal">${fmt(rowTotal)}</td>`;
+    values.forEach(v=>{
+      const level=v.influencers?Math.max(1,Math.ceil(v.influencers/rowMax*4)):0;
+      html+=`<td><div class="heatCell hot${level}" title="${fmt(v.influencers)} influencers · ${pct(v.share)} of brand · ${fmt(v.mentions)} mentions · ${fmt(v.engagement)} engagement"><b>${fmt(v.influencers)} <span style="display:inline;font-size:11px">(${pct(v.share)})</span></b><span>${fmt(v.mentions)} mentions</span><span>Eng. ${fmt(v.engagement)} · ER ${pct(v.er)}</span></div></td>`;
+    });
+    html+='</tr>';
+  });
+  html+='</tbody></table><div class="matrixLegend"><span><i style="background:rgba(255,122,26,.12)"></i>Lower</span><span><i style="background:rgba(255,122,26,.36)"></i>Mid</span><span><i style="background:rgba(255,122,26,.58)"></i>Higher in same row</span></div>';
+  el.innerHTML=html;
 }
 function setRankList(id,rows,metric){const el=$(id);if(!el)return;el.innerHTML=rows.length?rows.map((o,i)=>`<div class="rankItem"><div class="rankNo">${i+1}</div><div class="rankMain"><div class="rankName">${esc(o.name)}</div><div class="rankSub">${esc(o.platform)} · ${esc(o.type)} · ${esc(o.tier)} · ${fmt(o.mentions)} mentions</div></div><div class="rankVal">${metric==='er'?pct(o.er):fmt(o[metric])}</div></div>`).join(''):'<div class="empty">No account data</div>'}
 function renderTopics(){setTopicList('topicMentioned',TOPICS.slice().sort((a,b)=>b.mentions-a.mentions));setTopicList('topicEngaged',TOPICS.slice().sort((a,b)=>b.engagement-a.engagement));setTopicList('topicPositive',TOPICS.slice().sort((a,b)=>(b.positive/Math.max(1,b.mentions))-(a.positive/Math.max(1,a.mentions))));setTopicList('topicNegative',TOPICS.slice().sort((a,b)=>(b.negative/Math.max(1,b.mentions))-(a.negative/Math.max(1,a.mentions))))}
@@ -342,7 +363,7 @@ function renderFeed(){const by=$('sortBy').value,dir=$('sortDir').value,limit=+$
 function openDetail(r){if(!r)return;$('dAccount').textContent=r.account;$('detail').innerHTML=`${r.imageUrl?`<img class="heroImg" src="${esc(r.imageUrl)}" onerror="this.remove()">`:''}<div class="detailMsg">${esc(r.message)}</div><div class="detailMeta"><b>Date</b><span>${esc(r.postTime||r.date)}</span><b>Platform</b><span>${esc(r.source)}</span><b>Brand</b><span>${esc(r.category)}</span><b>Sentiment</b><span>${esc(r.sentiment)}</span><b>Engagement</b><span>${fmt(r.engagement)}</span><b>Followers</b><span>${fmt(r.followers)}</span><b>Keyword</b><span>${esc((r.keywords&&r.keywords.length?r.keywords.join(', '):r.mainKeyword))}</span><b>URL</b><span>${r.url?`<a href="${esc(r.url)}" target="_blank" rel="noopener">Open post</a>`:'-'}</span></div>`;$('drawer').classList.add('open')}function closeDrawer(){$('drawer').classList.remove('open')}function showTip(e,html){const t=$('tip');t.innerHTML=html;t.style.display='block';t.style.left=Math.min(e.clientX+14,innerWidth-280)+'px';t.style.top=Math.min(e.clientY+14,innerHeight-120)+'px'}function hideTip(){$('tip').style.display='none'}window.addEventListener('scroll',hideTip,{passive:true});
 function downloadCSV(rows,name){if(!rows.length)return alert('No data to export');const flat=rows.map(r=>{const o={};Object.keys(r).forEach(k=>{if(!['raw','rows'].includes(k))o[k]=r[k]});return o});const keys=[...new Set(flat.flatMap(Object.keys))],csv=[keys.join(','),...flat.map(r=>keys.map(k=>'"'+safe(r[k]).replace(/"/g,'""')+'"').join(','))].join('\n'),a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
 function setTab(){document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===activeTab));document.querySelectorAll('.tabPanel').forEach(p=>p.classList.add('hidden'));$('tab-'+activeTab).classList.remove('hidden');closeDrawer();hideTip();setTimeout(()=>{if(DATA.length)render()},30)}
-function bind(){document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{activeTab=b.dataset.tab;setTab()});$('keywordBtn').onclick=e=>{e.stopPropagation();$('keywordPanel').classList.toggle('hidden')};document.addEventListener('click',e=>{if(!e.target.closest('#keywordMulti'))$('keywordPanel').classList.add('hidden')});$('chooseBtn').onclick=()=>$('fileInput').click();$('fileInput').onchange=e=>handleFile(e.target.files[0]);$('clearBtn').onclick=()=>{DATA=[];FILTERED=[];$('dash').classList.add('hidden');$('lastUpdated').textContent='No data loaded · V6.3.1'};['dragover','drop'].forEach(ev=>$('dropZone').addEventListener(ev,e=>{e.preventDefault();if(ev==='drop')handleFile(e.dataTransfer.files[0])}));['q','source','category','sentiment','from','to','metric','sortBy','sortDir','limit'].forEach(id=>['input','change'].forEach(ev=>$(id).addEventListener(ev,()=>{syncDateDisplay();closeDrawer();if(DATA.length)render()})));$('fromDisplay').onclick=()=>openNativeDate('from');$('toDisplay').onclick=()=>openNativeDate('to');$('resetBtn').onclick=()=>{['q','source','category','sentiment'].forEach(id=>$(id).value='');SELECTED_KEYWORDS.clear();updateKeywordUI();const dates=DATA.map(r=>r.date).filter(Boolean).sort();if(dates.length){$('from').value=dates[0];$('to').value=dates[dates.length-1]}syncDateDisplay();render()};$('exportBtn').onclick=()=>downloadCSV(FILTERED,'filtered_messages_v6_3.csv');$('closeBtn').onclick=closeDrawer;if($('trendClose'))$('trendClose').onclick=closeTrendDrilldown;if($('trendBackdrop'))$('trendBackdrop').onclick=closeTrendDrilldown;document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDrawer();closeTrendDrilldown()}});document.addEventListener('click',e=>{if($('drawer').classList.contains('open')&&!$('drawer').contains(e.target)&&!e.target.closest('.post'))closeDrawer()});let rt;window.addEventListener('resize',()=>{if(DATA.length){clearTimeout(rt);rt=setTimeout(render,180)}})}
+function bind(){document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{activeTab=b.dataset.tab;setTab()});$('keywordBtn').onclick=e=>{e.stopPropagation();$('keywordPanel').classList.toggle('hidden')};document.addEventListener('click',e=>{if(!e.target.closest('#keywordMulti'))$('keywordPanel').classList.add('hidden')});$('chooseBtn').onclick=()=>$('fileInput').click();$('fileInput').onchange=e=>handleFile(e.target.files[0]);$('clearBtn').onclick=()=>{DATA=[];FILTERED=[];$('dash').classList.add('hidden');$('lastUpdated').textContent='No data loaded · V6.3.2'};['dragover','drop'].forEach(ev=>$('dropZone').addEventListener(ev,e=>{e.preventDefault();if(ev==='drop')handleFile(e.dataTransfer.files[0])}));['q','source','category','sentiment','from','to','metric','sortBy','sortDir','limit'].forEach(id=>['input','change'].forEach(ev=>$(id).addEventListener(ev,()=>{syncDateDisplay();closeDrawer();if(DATA.length)render()})));$('fromDisplay').onclick=()=>openNativeDate('from');$('toDisplay').onclick=()=>openNativeDate('to');$('resetBtn').onclick=()=>{['q','source','category','sentiment'].forEach(id=>$(id).value='');SELECTED_KEYWORDS.clear();updateKeywordUI();const dates=DATA.map(r=>r.date).filter(Boolean).sort();if(dates.length){$('from').value=dates[0];$('to').value=dates[dates.length-1]}syncDateDisplay();render()};$('exportBtn').onclick=()=>downloadCSV(FILTERED,'filtered_messages_v6_3.csv');$('closeBtn').onclick=closeDrawer;if($('trendClose'))$('trendClose').onclick=closeTrendDrilldown;if($('trendBackdrop'))$('trendBackdrop').onclick=closeTrendDrilldown;document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDrawer();closeTrendDrilldown()}});document.addEventListener('click',e=>{if($('drawer').classList.contains('open')&&!$('drawer').contains(e.target)&&!e.target.closest('.post'))closeDrawer()});let rt;window.addEventListener('resize',()=>{if(DATA.length){clearTimeout(rt);rt=setTimeout(render,180)}})}
 bind();if(!window.XLSX){setTimeout(()=>{if(!window.XLSX)$('lastUpdated').textContent='Ready · XLSX parser may still be loading'},1200)}
 </script>
 </body>
