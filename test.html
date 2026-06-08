@@ -675,8 +675,8 @@ function renderDataManager(){
   $('dmPageInfo').textContent=rows.length?`Showing ${fmt(start+1)}–${fmt(Math.min(start+size,rows.length))} of ${fmt(rows.length)} records · Page ${DM_PAGE} of ${pages}`:'Showing 0 records';
   $('dmPrev').disabled=DM_PAGE<=1;$('dmNext').disabled=DM_PAGE>=pages;
   $('managerRows').querySelectorAll('.dmCheck').forEach(cb=>cb.onchange=e=>{const id=Number(e.target.dataset.i);if(e.target.checked)MANAGER_SELECTED.add(id);else MANAGER_SELECTED.delete(id);syncManagerSelectionUI()});
-  $('managerRows').querySelectorAll('[data-toggle]').forEach(btn=>btn.onclick=()=>{const id=Number(btn.dataset.toggle);if(EXCLUDED.has(id))EXCLUDED.delete(id);else EXCLUDED.add(id);MANAGER_SELECTED.delete(id);render()});
-  $('managerRows').querySelectorAll('[data-view]').forEach(btn=>btn.onclick=()=>openDetail(DATA.find(r=>r.idx===Number(btn.dataset.view))));
+  $('managerRows').querySelectorAll('[data-toggle]').forEach(btn=>btn.onclick=e=>{e.stopPropagation();const id=Number(btn.dataset.toggle);if(EXCLUDED.has(id))EXCLUDED.delete(id);else EXCLUDED.add(id);MANAGER_SELECTED.delete(id);render()});
+  $('managerRows').querySelectorAll('[data-view]').forEach(btn=>btn.onclick=e=>{e.stopPropagation();openDetail(DATA.find(r=>r.idx===Number(btn.dataset.view)))});
 }
 function changeExcluded(selected,exclude){
   if(!selected.size)return alert('Select at least one record first.');
