@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Social Intelligence Dashboard V6.4.3 Beta</title>
+<title>Social Intelligence Dashboard V6.4.5 Beta</title>
 <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 <style>
 :root{
@@ -83,7 +83,7 @@ button,input,select{font:inherit}button{cursor:pointer}.app{width:100%;max-width
 <body>
 <div class="app">
   <div class="header">
-    <div class="top"><div class="title"><h1>Social Intelligence Dashboard V6.4.3 Beta</h1><div class="sub">Premium tab dashboard · Import XLSX/CSV locally · Brand battle, platform battle, topic intelligence and content leaderboard.</div></div><div class="badge"><span class="live"></span><span id="lastUpdated">No data loaded · V6.4.3</span></div></div>
+    <div class="top"><div class="title"><h1>Social Intelligence Dashboard V6.4.5 Beta</h1><div class="sub">Premium tab dashboard · Import XLSX/CSV locally · Brand battle, platform battle, topic intelligence and content leaderboard.</div></div><div class="badge"><span class="live"></span><span id="lastUpdated">No data loaded · V6.4.5</span></div></div>
     <div class="tabs"><button class="tab active" data-tab="overview">Overview</button><button class="tab" data-tab="brand">Brand Battle</button><button class="tab" data-tab="platform">Platform</button><button class="tab" data-tab="topics">Topics</button><button class="tab" data-tab="content">Content</button><button class="tab" data-tab="influencers">Influencers</button><button class="tab" data-tab="manager">Data Manager</button></div>
   </div>
 
@@ -154,7 +154,7 @@ button,input,select{font:inherit}button{cursor:pointer}.app{width:100%;max-width
               <option value="er">By ER / Proxy</option>
             </select>
           </div>
-          <div class="note">Choose the metric used to rank top accounts. Click an account to explore its content.</div>
+          <div class="note">Choose the metric used to rank top accounts. Click an account to explore its content. Shows top 10 accounts.</div>
           <div class="rankList" id="topAccountsRank"></div>
         </div>
       </div>
@@ -248,7 +248,7 @@ button,input,select{font:inherit}button{cursor:pointer}.app{width:100%;max-width
       </div>
     </section>
 
-    <div class="foot">V6.4.3 Beta ER Patch · Local-only dashboard. XLSX/CSV is parsed in your browser and is not uploaded.</div>
+    <div class="foot">V6.4.5 Beta Platform Account Patch · Local-only dashboard. XLSX/CSV is parsed in your browser and is not uploaded.</div>
   </div>
 </div>
 <div class="tooltip" id="tip"></div><div class="drawer" id="drawer"><div class="drawerTop"><h2 id="dAccount">Post detail</h2><button class="ghost close" id="closeBtn">Close</button></div><div id="detail"></div></div><div class="trendPopupBackdrop" id="trendBackdrop"></div><div class="trendPopup" id="trendPopup"><div class="trendPopupTop"><div><h2 id="trendTitle">Top posts</h2><div class="note" id="trendSub"></div></div><button class="ghost close" id="trendClose">Close</button></div><div id="trendBody"></div></div><div class="formulaBackdrop" id="formulaBackdrop"></div><div class="formulaPanel" id="formulaPanel"><div class="formulaTop"><div><h2>Metric Tips</h2><div class="note">How the dashboard calculates each metric in this view.</div></div><button class="ghost close" id="formulaClose">Close</button></div><div class="formulaList" id="formulaBody"></div></div>
@@ -354,7 +354,7 @@ function normalize(rows){return rows.map((r,i)=>{
   return{idx:i,account,message,source,category,mainKeyword,subKeyword,keywords,sentiment:cleanSentiment(pick(r,['sentiment','Sentiment','tone','Tone'])),engagement,followers,views,plays,contentType,erBase,er:erBase?engagement/erBase:0,postTime:d?d.toISOString().replace('T',' ').slice(0,19):safe(pick(r,['postTime','Post Time'])),date:isoDay(d),month:d?isoDay(d).slice(0,7):'',hour:d?d.getHours():null,dow:d?d.getDay():null,audienceTier,accountType,url,imageUrl,raw:r}
 }).filter(r=>r.message||r.account!=='Unknown'||r.category!=='Unknown')}
 function csvToRows(text){const rows=[],lines=text.replace(/^\uFEFF/,'').split(/\r?\n/).filter(Boolean);if(!lines.length)return rows;const parse=line=>{const out=[];let cur='',q=false;for(let i=0;i<line.length;i++){const c=line[i];if(c==='"'&&line[i+1]==='"'){cur+='"';i++}else if(c==='"'){q=!q}else if(c===','&&!q){out.push(cur);cur=''}else cur+=c}out.push(cur);return out};const head=parse(lines[0]);for(const line of lines.slice(1)){const vals=parse(line),o={};head.forEach((h,i)=>o[h]=vals[i]||'');rows.push(o)}return rows}
-async function handleFile(file){try{if(!file)return;SOURCE_FILE_NAME=safe(file.name).replace(/\.[^.]+$/,'')||'social_data';$('lastUpdated').textContent='Reading '+file.name+' ...';const buf=await file.arrayBuffer();let rows=[];if(file.name.toLowerCase().endsWith('.csv'))rows=csvToRows(new TextDecoder().decode(buf));else{if(!window.XLSX)throw new Error('XLSX library did not load. Please check internet connection or export CSV.');const wb=XLSX.read(buf,{type:'array',cellDates:true});rows=mergeWorkbookRows(wb)}DATA=normalize(rows);if(!DATA.length)throw new Error('No usable records found.');EXCLUDED.clear();MANAGER_SELECTED.clear();DM_PAGE=1;initData();$('dash').classList.remove('hidden');$('lastUpdated').textContent=fmt(DATA.length)+' records loaded · V6.4.3 · '+new Date().toLocaleString();render()}catch(err){alert('Cannot read file: '+err.message);$('lastUpdated').textContent='Import failed'}}
+async function handleFile(file){try{if(!file)return;SOURCE_FILE_NAME=safe(file.name).replace(/\.[^.]+$/,'')||'social_data';$('lastUpdated').textContent='Reading '+file.name+' ...';const buf=await file.arrayBuffer();let rows=[];if(file.name.toLowerCase().endsWith('.csv'))rows=csvToRows(new TextDecoder().decode(buf));else{if(!window.XLSX)throw new Error('XLSX library did not load. Please check internet connection or export CSV.');const wb=XLSX.read(buf,{type:'array',cellDates:true});rows=mergeWorkbookRows(wb)}DATA=normalize(rows);if(!DATA.length)throw new Error('No usable records found.');EXCLUDED.clear();MANAGER_SELECTED.clear();DM_PAGE=1;initData();$('dash').classList.remove('hidden');$('lastUpdated').textContent=fmt(DATA.length)+' records loaded · V6.4.5 · '+new Date().toLocaleString();render()}catch(err){alert('Cannot read file: '+err.message);$('lastUpdated').textContent='Import failed'}}
 function uniq(key){return[...new Set(DATA.map(r=>r[key]).filter(v=>v&&v!=='-'))].sort((a,b)=>safe(a).localeCompare(safe(b)))}function fillSelect(id,values,label){$(id).innerHTML='<option value="">'+label+'</option>'+values.map(v=>'<option>'+esc(v)+'</option>').join('')}function syncDateDisplay(){}
 
 function fillKeywordMulti(values){
@@ -608,7 +608,7 @@ function renderInfluencers(){
   };
   const rankSetting=rankConfig[rankMetric]||rankConfig.engagement;
   const rankedAccounts=(rankMetric==='er'?acc.filter(a=>a.followers>0):acc)
-    .slice().sort((a,b)=>rankSetting.value(b)-rankSetting.value(a)).slice(0,8);
+    .slice().sort((a,b)=>rankSetting.value(b)-rankSetting.value(a)).slice(0,10);
   $('topAccountsTitle').textContent='Top accounts by '+rankSetting.label;
   setRankList('topAccountsRank',rankedAccounts,rankMetric);
   renderBrandPlatformTierComparison();
@@ -750,7 +750,7 @@ function exportFileName(type){
 
 function downloadCSV(rows,name){if(!rows.length)return alert('No data to export');const flat=rows.map(r=>{const o={};Object.keys(r).forEach(k=>{if(!['raw','rows'].includes(k))o[k]=r[k]});return o});const keys=[...new Set(flat.flatMap(Object.keys))],csv=[keys.join(','),...flat.map(r=>keys.map(k=>'"'+safe(r[k]).replace(/"/g,'""')+'"').join(','))].join('\n'),a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
 function setTab(){document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===activeTab));document.querySelectorAll('.tabPanel').forEach(p=>p.classList.add('hidden'));$('tab-'+activeTab).classList.remove('hidden');if($('analysisFilters'))$('analysisFilters').classList.toggle('hidden',activeTab==='manager');syncManagerSelectionUI();closeDrawer();hideTip();setTimeout(()=>{if(DATA.length)render()},30)}
-function bind(){document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{activeTab=b.dataset.tab;setTab()});$('keywordBtn').onclick=e=>{e.stopPropagation();$('keywordPanel').classList.toggle('hidden')};document.addEventListener('click',e=>{if(!e.target.closest('#keywordMulti'))$('keywordPanel').classList.add('hidden')});$('chooseBtn').onclick=()=>$('fileInput').click();$('fileInput').onchange=e=>handleFile(e.target.files[0]);$('clearBtn').onclick=()=>{DATA=[];FILTERED=[];EXCLUDED.clear();MANAGER_SELECTED.clear();DM_PAGE=1;$('dash').classList.add('hidden');$('lastUpdated').textContent='No data loaded · V6.4.3'};['dragover','drop'].forEach(ev=>$('dropZone').addEventListener(ev,e=>{e.preventDefault();if(ev==='drop')handleFile(e.dataTransfer.files[0])}));['q','source','category','sentiment','from','to','metric','sortBy','sortDir','limit','influencerRankMetric'].forEach(id=>['input','change'].forEach(ev=>$(id).addEventListener(ev,()=>{syncDateDisplay();closeDrawer();if(DATA.length)render()})));document.querySelectorAll('.momentumMetric').forEach(el=>el.onchange=()=>{MOMENTUM_METRIC=el.value;syncMomentumControls();if(DATA.length){renderBrandMomentum('brandMomentum');renderBrandMomentum('brandMomentum2')}});document.querySelectorAll('.momentumSlot').forEach(el=>el.onchange=()=>{MOMENTUM_SLOT=el.value;syncMomentumControls();if(DATA.length){renderBrandMomentum('brandMomentum');renderBrandMomentum('brandMomentum2')}});syncMomentumControls();$('resetBtn').onclick=()=>{['q','source','category','sentiment'].forEach(id=>$(id).value='');SELECTED_KEYWORDS.clear();updateKeywordUI();const dates=DATA.map(r=>r.date).filter(Boolean).sort();if(dates.length){$('from').value=dates[0];$('to').value=dates[dates.length-1]}syncDateDisplay();render()};$('exportBtn').onclick=()=>downloadCSV(FILTERED,exportFileName('dashboard_filtered'));$('formulaBtn').onclick=e=>{e.stopPropagation();openFormulaTips()};if($('formulaClose'))$('formulaClose').onclick=closeFormulaTips;if($('formulaBackdrop'))$('formulaBackdrop').onclick=closeFormulaTips;
+function bind(){document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{activeTab=b.dataset.tab;setTab()});$('keywordBtn').onclick=e=>{e.stopPropagation();$('keywordPanel').classList.toggle('hidden')};document.addEventListener('click',e=>{if(!e.target.closest('#keywordMulti'))$('keywordPanel').classList.add('hidden')});$('chooseBtn').onclick=()=>$('fileInput').click();$('fileInput').onchange=e=>handleFile(e.target.files[0]);$('clearBtn').onclick=()=>{DATA=[];FILTERED=[];EXCLUDED.clear();MANAGER_SELECTED.clear();DM_PAGE=1;$('dash').classList.add('hidden');$('lastUpdated').textContent='No data loaded · V6.4.5'};['dragover','drop'].forEach(ev=>$('dropZone').addEventListener(ev,e=>{e.preventDefault();if(ev==='drop')handleFile(e.dataTransfer.files[0])}));['q','source','category','sentiment','from','to','metric','sortBy','sortDir','limit','influencerRankMetric'].forEach(id=>['input','change'].forEach(ev=>$(id).addEventListener(ev,()=>{syncDateDisplay();closeDrawer();if(DATA.length)render()})));document.querySelectorAll('.momentumMetric').forEach(el=>el.onchange=()=>{MOMENTUM_METRIC=el.value;syncMomentumControls();if(DATA.length){renderBrandMomentum('brandMomentum');renderBrandMomentum('brandMomentum2')}});document.querySelectorAll('.momentumSlot').forEach(el=>el.onchange=()=>{MOMENTUM_SLOT=el.value;syncMomentumControls();if(DATA.length){renderBrandMomentum('brandMomentum');renderBrandMomentum('brandMomentum2')}});syncMomentumControls();$('resetBtn').onclick=()=>{['q','source','category','sentiment'].forEach(id=>$(id).value='');SELECTED_KEYWORDS.clear();updateKeywordUI();const dates=DATA.map(r=>r.date).filter(Boolean).sort();if(dates.length){$('from').value=dates[0];$('to').value=dates[dates.length-1]}syncDateDisplay();render()};$('exportBtn').onclick=()=>downloadCSV(FILTERED,exportFileName('dashboard_filtered'));$('formulaBtn').onclick=e=>{e.stopPropagation();openFormulaTips()};if($('formulaClose'))$('formulaClose').onclick=closeFormulaTips;if($('formulaBackdrop'))$('formulaBackdrop').onclick=closeFormulaTips;
 ['dmQ','dmPlatform','dmBrand','dmKeyword','dmTier','dmStatus','dmFrom','dmTo'].forEach(id=>['input','change'].forEach(ev=>$(id).addEventListener(ev,()=>{DM_PAGE=1;MANAGER_SELECTED.clear();renderDataManager()})));
 $('dmPageSize').onchange=()=>{DM_PAGE=1;renderDataManager()};
 $('dmPrev').onclick=()=>{if(DM_PAGE>1){DM_PAGE--;renderDataManager()}};
@@ -765,6 +765,188 @@ $('dmReset').onclick=()=>{['dmQ','dmPlatform','dmBrand','dmKeyword','dmTier','dm
 $('dmExportClean').onclick=()=>downloadCSV(DATA.filter(r=>!EXCLUDED.has(r.idx)),exportFileName('cleaned'));
 $('dmExportExcluded').onclick=()=>downloadCSV(DATA.filter(r=>EXCLUDED.has(r.idx)),exportFileName('excluded'));
 $('closeBtn').onclick=closeDrawer;if($('trendClose'))$('trendClose').onclick=closeTrendDrilldown;if($('trendBackdrop'))$('trendBackdrop').onclick=closeTrendDrilldown;document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDrawer();closeTrendDrilldown();closeFormulaTips()}});document.addEventListener('click',e=>{if($('drawer').classList.contains('open')&&!$('drawer').contains(e.target)&&!e.target.closest('.post')&&!e.target.closest('.rankItem'))closeDrawer()});let rt;window.addEventListener('resize',()=>{if(DATA.length){clearTimeout(rt);rt=setTimeout(render,180)}})}
+
+/* --- V6.4.5 Platform Account Patch
+   Purpose: keep the same influencer name deduplicated inside each platform,
+   but split the same account across different platforms for Top accounts,
+   account drawer, account summary, and Brand × Platform × Tier comparison.
+--- */
+function platformAccountKey(account,platform){
+  return lower(safe(platform||'Unknown')).trim()+'\u0001'+lower(safe(account||'Unknown')).trim();
+}
+function platformAccountLabel(account,platform){
+  return safe(account||'Unknown')+' · '+safe(platform||'Unknown');
+}
+function accountGroups(){
+  const m=new Map();
+  FILTERED.forEach(r=>{
+    const account=r.account||'Unknown';
+    const platform=r.source||'Unknown';
+    const k=platformAccountKey(account,platform);
+    if(!m.has(k))m.set(k,{
+      key:k,
+      name:account,
+      displayName:platformAccountLabel(account,platform),
+      platform,
+      rows:[],
+      mentions:0,
+      engagement:0,
+      followers:0,
+      erBase:0,
+      positive:0,
+      negative:0,
+      neutral:0,
+      unknown:0,
+      platforms:new Map(),
+      types:new Map(),
+      tiers:new Map()
+    });
+    const o=m.get(k);
+    o.rows.push(r);
+    o.mentions++;
+    o.engagement+=Number(r.engagement||0);
+    o.followers=Math.max(o.followers,Number(r.followers||0));
+    o.erBase+=erBaseOf(r);
+    if(r.sentiment==='Positive')o.positive++;
+    else if(r.sentiment==='Negative')o.negative++;
+    else if(r.sentiment==='Neutral')o.neutral++;
+    else o.unknown++;
+    o.platforms.set(platform,(o.platforms.get(platform)||0)+1);
+    o.types.set(r.accountType||'Creator',(o.types.get(r.accountType||'Creator')||0)+1);
+    o.tiers.set(r.audienceTier||'Unknown',(o.tiers.get(r.audienceTier||'Unknown')||0)+1);
+  });
+  return [...m.values()].map(o=>{
+    o.er=o.erBase?o.engagement/o.erBase:0;
+    o.platform=[...o.platforms.entries()].sort((a,b)=>b[1]-a[1])[0]?.[0]||o.platform||'Unknown';
+    o.type=[...o.types.entries()].sort((a,b)=>b[1]-a[1])[0]?.[0]||'Creator';
+    o.tier=[...o.tiers.entries()].sort((a,b)=>b[1]-a[1])[0]?.[0]||'Unknown';
+    return o;
+  });
+}
+function setRankList(id,rows,metric){
+  const el=$(id);
+  if(!el)return;
+  el.innerHTML=rows.length?rows.map((o,i)=>`<div class="rankItem" role="button" tabindex="0" data-rank-i="${i}" aria-label="View content by ${esc(o.displayName||o.name)}"><div class="rankNo">${i+1}</div><div class="rankMain"><div class="rankName">${esc(o.name)}</div><div class="rankSub">${esc(o.platform)} · ${esc(o.type)} · ${esc(o.tier)} · ${fmt(o.mentions)} mentions</div></div><div class="rankVal">${metric==='er'?pct(o.er):fmt(o[metric])}</div></div>`).join(''):'<div class="empty">No account data</div>';
+  el.querySelectorAll('.rankItem').forEach(item=>{
+    const open=e=>{
+      e.stopPropagation();
+      const row=rows[Number(item.dataset.rankI)];
+      if(row)openAccountContents(row);
+    };
+    item.onclick=open;
+    item.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open(e)}};
+  });
+}
+function accountContentState(groupOrAccount,platform){
+  if(groupOrAccount&&typeof groupOrAccount==='object'){
+    return {
+      account:groupOrAccount.name||'Unknown',
+      platform:groupOrAccount.platform||'',
+      title:groupOrAccount.displayName||platformAccountLabel(groupOrAccount.name,groupOrAccount.platform)
+    };
+  }
+  return {
+    account:safe(groupOrAccount||'Unknown'),
+    platform:safe(platform||''),
+    title:platform?platformAccountLabel(groupOrAccount,platform):safe(groupOrAccount||'Unknown')
+  };
+}
+function openAccountContents(groupOrAccount,platform){
+  const state=accountContentState(groupOrAccount,platform);
+  ACTIVE_ACCOUNT_CONTENT=state;
+  const rows=FILTERED
+    .filter(r=>r.account===state.account&&(!state.platform||r.source===state.platform))
+    .slice()
+    .sort((a,b)=>b.engagement-a.engagement);
+  const totalEng=sum(rows,'engagement');
+  const bestPlatform=group(rows,'source').sort((a,b)=>b.engagement-a.engagement)[0]?.name||state.platform||'-';
+  $('dAccount').textContent=state.title;
+  $('detail').innerHTML=`<div class="note">Content posted by this account in the current filtered view · ${state.platform?'filtered to '+esc(state.platform):'all platforms'} · sorted by engagement</div><div class="accountContentSummary"><div class="accountContentStat"><b>${fmt(rows.length)}</b><span>Contents</span></div><div class="accountContentStat"><b>${fmt(totalEng)}</b><span>Engagement</span></div><div class="accountContentStat"><b>${esc(bestPlatform)}</b><span>Platform</span></div></div><div class="accountContentList">${rows.length?rows.map(r=>`<div class="accountContentItem" data-i="${r.idx}">${r.imageUrl?`<img class="accountContentThumb" src="${esc(r.imageUrl)}" loading="lazy" onerror="this.outerHTML='<div class=&quot;accountContentThumbEmpty&quot;>${esc((r.source||'?')[0]).toUpperCase()}</div>'">`:`<div class="accountContentThumbEmpty">${esc((r.source||'?')[0]).toUpperCase()}</div>`}<div><b>${esc(r.category)}</b><div class="accountContentMsg">${esc(r.message||'(No message)')}</div><div class="accountContentMeta">${esc(r.date||r.postTime)} · ${esc(r.source)} · Eng. ${fmt(r.engagement)} · ER ${pct(r.er)}</div></div></div>`).join(''):'<div class="empty">No content found</div>'}</div>`;
+  $('detail').querySelectorAll('.accountContentItem').forEach(p=>p.onclick=e=>{e.stopPropagation();openDetail(DATA.find(r=>r.idx==p.dataset.i),true)});
+  $('drawer').classList.add('open');
+}
+function openDetail(r,fromAccount=false){
+  if(!r)return;
+  const backLabel=(ACTIVE_ACCOUNT_CONTENT&&typeof ACTIVE_ACCOUNT_CONTENT==='object')?ACTIVE_ACCOUNT_CONTENT.title:ACTIVE_ACCOUNT_CONTENT;
+  $('dAccount').textContent=r.account;
+  $('detail').innerHTML=`${fromAccount&&ACTIVE_ACCOUNT_CONTENT?`<div class="drawerAction"><button class="ghost" id="backToAccount">← Back to ${esc(backLabel)} contents</button></div>`:''}${r.imageUrl?`<img class="heroImg" src="${esc(r.imageUrl)}" onerror="this.remove()">`:''}<div class="detailMsg">${esc(r.message)}</div><div class="detailMeta"><b>Date</b><span>${esc(r.postTime||r.date)}</span><b>Platform</b><span>${esc(r.source)}</span><b>Brand</b><span>${esc(r.category)}</span><b>Sentiment</b><span>${esc(r.sentiment)}</span><b>Engagement</b><span>${fmt(r.engagement)}</span><b>Followers</b><span>${fmt(r.followers)}</span><b>ER base</b><span>${fmt(erBaseOf(r))}</span><b>Keyword</b><span>${esc((r.keywords&&r.keywords.length?r.keywords.join(', '):r.mainKeyword))}</span><b>URL</b><span>${r.url?`<a href="${esc(r.url)}" target="_blank" rel="noopener">Open post</a>`:'-'}</span></div>`;
+  if($('backToAccount'))$('backToAccount').onclick=e=>{e.stopPropagation();openAccountContents(ACTIVE_ACCOUNT_CONTENT)};
+  $('drawer').classList.add('open');
+}
+function renderBrandPlatformTierComparison(){
+  const el=$('brandPlatformTierMatrix')||$('brandPlatformTierRows');
+  if(!el)return;
+  const brandAccounts=new Map();
+  const comboMap=new Map();
+
+  FILTERED.forEach(r=>{
+    const brand=r.category||'Unknown';
+    const platform=r.source||'Unknown';
+    const tier=r.audienceTier||'Unknown';
+    const account=r.account||'Unknown';
+    const platformAccount=platformAccountKey(account,platform);
+
+    if(!brandAccounts.has(brand))brandAccounts.set(brand,new Set());
+    brandAccounts.get(brand).add(platformAccount);
+
+    const key=[platform,tier,brand].join('\u0001');
+    if(!comboMap.has(key))comboMap.set(key,{brand,platform,tier,accounts:new Set(),mentions:0,engagement:0,followersByAccount:new Map(),erBase:0});
+    const o=comboMap.get(key);
+    o.accounts.add(account);
+    o.mentions++;
+    o.engagement+=Number(r.engagement||0);
+    o.followersByAccount.set(account,Math.max(o.followersByAccount.get(account)||0,Number(r.followers||0)));
+    o.erBase+=erBaseOf(r);
+  });
+
+  const brands=[...brandAccounts.entries()].sort((a,b)=>b[1].size-a[1].size||safe(a[0]).localeCompare(safe(b[0]))).map(x=>x[0]);
+  const brandTotals=new Map([...brandAccounts.entries()].map(([b,set])=>[b,set.size]));
+  const platformOrder=[...new Set(FILTERED.map(r=>r.source||'Unknown'))].sort((a,b)=>safe(a).localeCompare(safe(b)));
+  const tierOrder=['Pico','Nano','Micro','Mid-tier','Macro','Mega','Elite','Unknown'];
+  const rowKeys=[];
+  platformOrder.forEach(platform=>tierOrder.forEach(tier=>{
+    const has=brands.some(brand=>comboMap.has([platform,tier,brand].join('\u0001')));
+    if(has)rowKeys.push({platform,tier});
+  }));
+
+  if(!brands.length||!rowKeys.length){
+    el.innerHTML='<div class="empty">No comparison data</div>';
+    return;
+  }
+
+  const metricFor=(platform,tier,brand)=>{
+    const o=comboMap.get([platform,tier,brand].join('\u0001'));
+    if(!o)return{influencers:0,share:0,mentions:0,engagement:0,followers:0,er:0};
+    const influencers=o.accounts.size;
+    const followers=[...o.followersByAccount.values()].reduce((a,b)=>a+b,0);
+    const erBase=o.erBase||followers;
+    const er=erBase?o.engagement/erBase:0;
+    const total=brandTotals.get(brand)||0;
+    return{influencers,share:total?influencers/total:0,mentions:o.mentions,engagement:o.engagement,followers,er};
+  };
+
+  let html='<table class="table matrixTable"><thead><tr><th>Platform</th><th>Tier</th><th>Row total</th>';
+  brands.forEach(brand=>{
+    html+=`<th><span style="color:${brandColor(brand)};font-weight:950">${esc(brand)}</span><div class="brandTotalHead">Total ${fmt(brandTotals.get(brand)||0)} platform-accounts</div></th>`;
+  });
+  html+='</tr></thead><tbody>';
+
+  rowKeys.forEach(({platform,tier})=>{
+    const values=brands.map(brand=>metricFor(platform,tier,brand));
+    const rowMax=Math.max(...values.map(v=>v.influencers),1);
+    const rowTotal=values.reduce((a,v)=>a+v.influencers,0);
+    html+=`<tr><td><span class="pill source" style="background:${colorPlatform(platform)}">${esc(platform)}</span></td><td>${esc(tier)}</td><td class="rowTotal">${fmt(rowTotal)}</td>`;
+    values.forEach(v=>{
+      const level=v.influencers?Math.max(1,Math.ceil(v.influencers/rowMax*4)):0;
+      html+=`<td><div class="heatCell hot${level}" title="${fmt(v.influencers)} unique accounts on this platform · ${pct(v.share)} of brand platform-accounts · ${fmt(v.mentions)} mentions · ${fmt(v.engagement)} engagement"><b>${fmt(v.influencers)} <span style="display:inline;font-size:11px">(${pct(v.share)})</span></b><span>${fmt(v.mentions)} mentions</span><span>Eng. ${fmt(v.engagement)} · ER ${pct(v.er)}</span></div></td>`;
+    });
+    html+='</tr>';
+  });
+  html+='</tbody></table><div class="matrixLegend"><span><i style="background:rgba(255,122,26,.12)"></i>Lower</span><span><i style="background:rgba(255,122,26,.36)"></i>Mid</span><span><i style="background:rgba(255,122,26,.58)"></i>Higher in same row</span></div>';
+  el.innerHTML=html;
+}
+
+
 bind();if(!window.XLSX){setTimeout(()=>{if(!window.XLSX)$('lastUpdated').textContent='Ready · XLSX parser may still be loading'},1200)}
 </script>
 </body>
