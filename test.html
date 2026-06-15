@@ -36,9 +36,9 @@ button,input,select{font:inherit}button{cursor:pointer}.app{width:100%;max-width
 
 .influencerHead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}.influencerHead h2{margin:0}.influencerMetric{width:auto;min-width:184px;min-height:42px;padding:9px 12px;font-size:13px;font-weight:850}
 .influencerGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.influencerGrid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.rankList{display:grid;gap:10px}.rankItem{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.045);cursor:pointer;transition:background .16s ease,border-color .16s ease}.rankItem:hover{background:rgba(255,122,26,.10);border-color:rgba(255,122,26,.32)}.rankItem:focus-visible{outline:2px solid var(--orange);outline-offset:2px}.rankNo{display:grid;place-items:center;width:30px;height:30px;border-radius:999px;background:rgba(255,122,26,.16);color:#fed7aa;font-weight:950}.rankMain{min-width:0}.rankName{font-weight:950;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rankSub{font-size:12px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rankVal{text-align:right;font-weight:950;white-space:nowrap}.tierGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.tierCard{padding:13px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.045)}.tierCard b{display:block;font-size:24px;letter-spacing:-.5px}.tierCard span{font-size:12px;color:var(--muted)}
-.matrixTable{min-width:980px}.matrixTable th{position:sticky;top:0;z-index:2}.matrixTable th:first-child,.matrixTable td:first-child{position:sticky;left:0;z-index:3;background:#0b1424}.matrixTable th:nth-child(2),.matrixTable td:nth-child(2){position:sticky;left:92px;z-index:3;background:#0b1424}.heatCell{border-radius:12px;padding:9px 10px;min-width:112px;border:1px solid rgba(148,163,184,.12);background:rgba(148,163,184,.06)}.heatCell.hot0{opacity:.45}.heatCell.hot1{background:rgba(255,122,26,.12)}.heatCell.hot2{background:rgba(255,122,26,.22)}.heatCell.hot3{background:rgba(255,122,26,.36)}.heatCell.hot4{background:rgba(255,122,26,.58);color:#111827}.heatCell b{display:block;font-size:15px}.heatCell span{display:block;font-size:11px;color:inherit;opacity:.82}.brandTotalHead{font-size:11px;color:var(--muted);font-weight:750;margin-top:2px;white-space:nowrap}.rowTotal{font-weight:950;color:#fed7aa;white-space:nowrap}.matrixLegend{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--muted)}.matrixLegend i{display:inline-block;width:24px;height:10px;border-radius:99px;vertical-align:middle;margin-right:4px}
+.matrixHead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}.matrixHead h2{margin:0}.matrixMetric{width:auto;min-width:190px;min-height:42px;padding:9px 12px;font-size:13px;font-weight:850}.matrixTable{min-width:980px}.matrixTable th{position:sticky;top:0;z-index:2}.matrixTable th:first-child,.matrixTable td:first-child{position:sticky;left:0;z-index:3;background:#0b1424}.matrixTable th:nth-child(2),.matrixTable td:nth-child(2){position:sticky;left:92px;z-index:3;background:#0b1424}.heatCell{border-radius:12px;padding:9px 10px;min-width:112px;border:1px solid rgba(148,163,184,.12);background:rgba(148,163,184,.06)}.heatCell.hot0{opacity:.45}.heatCell.hot1{background:rgba(255,122,26,.12)}.heatCell.hot2{background:rgba(255,122,26,.22)}.heatCell.hot3{background:rgba(255,122,26,.36)}.heatCell.hot4{background:rgba(255,122,26,.58);color:#111827}.heatCell b{display:block;font-size:15px}.heatCell span{display:block;font-size:11px;color:inherit;opacity:.82}.brandTotalHead{font-size:11px;color:var(--muted);font-weight:750;margin-top:2px;white-space:nowrap}.rowTotal{font-weight:950;color:#fed7aa;white-space:nowrap}.matrixLegend{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--muted)}.matrixLegend i{display:inline-block;width:24px;height:10px;border-radius:99px;vertical-align:middle;margin-right:4px}
 @media(max-width:940px){.influencerGrid,.influencerGrid3{grid-template-columns:1fr}.tierGrid{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.influencerHead{display:block}.influencerMetric{width:100%;margin:10px 0 2px}.tierGrid{grid-template-columns:1fr}.rankItem{grid-template-columns:30px minmax(0,1fr);}.rankVal{grid-column:2;text-align:left}}
+@media(max-width:560px){.influencerHead,.matrixHead{display:block}.influencerMetric,.matrixMetric{width:100%;margin:10px 0 2px}.tierGrid{grid-template-columns:1fr}.rankItem{grid-template-columns:30px minmax(0,1fr);}.rankVal{grid-column:2;text-align:left}}
 
 
 /* Data Manager workspace */
@@ -159,8 +159,16 @@ button,input,select{font:inherit}button{cursor:pointer}.app{width:100%;max-width
         </div>
       </div>
       <div class="card panel">
-        <h2>Brand × Platform × Tier comparison</h2>
-        <div class="note">Rows are Platform × Tier. Brand columns show unique influencers and % of that brand's total. Darker cells mean that brand uses more influencers than other brands in the same row.</div>
+        <div class="matrixHead">
+          <h2>Brand × Platform × Tier comparison</h2>
+          <select id="brandPlatformTierMetric" class="matrixMetric" aria-label="Select comparison heatmap metric">
+            <option value="mentions" selected>Heatmap: Mentions</option>
+            <option value="engagement">Heatmap: Engagement</option>
+            <option value="er">Heatmap: ER / Proxy</option>
+            <option value="influencers">Heatmap: Unique Account</option>
+          </select>
+        </div>
+        <div class="note" id="brandPlatformTierNote">Rows are Platform × Tier. Brand columns show mentions by default. Darker cells mean that brand has more mentions than other brands in the same row.</div>
         <div class="tableScroll" id="brandPlatformTierMatrix"></div>
       </div>
 
@@ -254,7 +262,7 @@ button,input,select{font:inherit}button{cursor:pointer}.app{width:100%;max-width
 <div class="tooltip" id="tip"></div><div class="drawer" id="drawer"><div class="drawerTop"><h2 id="dAccount">Post detail</h2><button class="ghost close" id="closeBtn">Close</button></div><div id="detail"></div></div><div class="trendPopupBackdrop" id="trendBackdrop"></div><div class="trendPopup" id="trendPopup"><div class="trendPopupTop"><div><h2 id="trendTitle">Top posts</h2><div class="note" id="trendSub"></div></div><button class="ghost close" id="trendClose">Close</button></div><div id="trendBody"></div></div><div class="formulaBackdrop" id="formulaBackdrop"></div><div class="formulaPanel" id="formulaPanel"><div class="formulaTop"><div><h2>Metric Tips</h2><div class="note">How the dashboard calculates each metric in this view.</div></div><button class="ghost close" id="formulaClose">Close</button></div><div class="formulaList" id="formulaBody"></div></div>
 <script>
 const $=id=>document.getElementById(id), safe=v=>(v??'').toString(), lower=v=>safe(v).toLowerCase(), fmt=n=>Number(n||0).toLocaleString('en-US',{maximumFractionDigits:0}), pct=n=>(Number(n||0)*100).toLocaleString('en-US',{maximumFractionDigits:1})+'%', esc=s=>safe(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
-let DATA=[],FILTERED=[],BRANDS=[],PLATFORMS=[],TOPICS=[],activeTab='overview',ACTIVE_ACCOUNT_CONTENT=null,MOMENTUM_METRIC='engagement',MOMENTUM_SLOT='day';
+let DATA=[],FILTERED=[],BRANDS=[],PLATFORMS=[],TOPICS=[],activeTab='overview',ACTIVE_ACCOUNT_CONTENT=null,MOMENTUM_METRIC='engagement',MOMENTUM_SLOT='day',BPT_HEATMAP_METRIC='mentions';
 let EXCLUDED=new Set(),MANAGER_SELECTED=new Set(),DM_PAGE=1,SOURCE_FILE_NAME='social_data';
 let ALL_KEYWORDS=[],SELECTED_KEYWORDS=new Set();
 const PLATFORM={facebook:'#1877F2',instagram:'#E1306C',ig:'#E1306C',tiktok:'#25F4EE',youtube:'#FF0000',x:'#111827',twitter:'#111827',lemon8:'#F6D84A',forum:'#8B5CF6',pantip:'#8B5CF6',news:'#06B6D4',other:'#64748B',unknown:'#64748B'};
@@ -518,6 +526,11 @@ function buildTopics(){
     if(sourceSet.has(key))return false;
     if(/^\d+$/.test(key))return false;
     if(key.length<2)return false;
+    if(type==='phrase'){
+      if(key.length<6)return false;
+      if(key.split(/\s+/).length>10)return false;
+      if(brandSet.has(key))return false;
+    }
     if(type==='token'){
       if(brandSet.has(key))return false;
       if(key.length<3&&!/[\u0E00-\u0E7F]/.test(key))return false;
@@ -530,11 +543,12 @@ function buildTopics(){
     if(!isMeaningful(label,type))return;
     const key=topicKey(label);
     if(!key)return;
-    if(!m.has(key))m.set(key,{key,label:label.startsWith('#')?label:label,mentions:0,engagement:0,positive:0,negative:0,neutral:0,keywordHits:0,hashtagHits:0,tokenHits:0,_rows:new Set()});
+    if(!m.has(key))m.set(key,{key,label:label.startsWith('#')?label:label,mentions:0,engagement:0,positive:0,negative:0,neutral:0,keywordHits:0,hashtagHits:0,phraseHits:0,tokenHits:0,_rows:new Set()});
     const o=m.get(key);
     if(label.startsWith('#')&&!o.label.startsWith('#'))o.label=label;
     if(type==='keyword')o.keywordHits++;
     if(type==='hashtag')o.hashtagHits++;
+    if(type==='phrase')o.phraseHits++;
     if(type==='token')o.tokenHits++;
     if(o._rows.has(r.idx))return;
     o._rows.add(r.idx);
@@ -542,33 +556,71 @@ function buildTopics(){
     o.engagement+=r.engagement;
     if(r.sentiment==='Positive')o.positive++;else if(r.sentiment==='Negative')o.negative++;else o.neutral++;
   }
+  function compactPhrase(v){
+    return cleanTopicText(v)
+      .replace(/https?:\/\/\S+/g,' ')
+      .replace(/[@]\w+/g,' ')
+      .replace(/#[\p{L}\p{M}\p{N}_]+/gu,' ')
+      .replace(/[0-9]{3,}/g,' ')
+      .replace(/\s+/g,' ')
+      .trim();
+  }
+  function phrasePieces(message){
+    const text=compactPhrase(message);
+    if(!text)return[];
+    const pieces=text
+      .split(/(?:[.!?。！？\n\r]+|[•·]+|[,，;；|/]+|\s[-–—]\s)/)
+      .map(compactPhrase)
+      .filter(Boolean);
+    const out=[];
+    pieces.forEach(piece=>{
+      const words=piece.split(/\s+/).map(cleanTopicText).filter(Boolean);
+      const meaningful=words.filter(w=>!stop.has(topicKey(w))&&topicKey(w).length>1);
+      const hasThai=/[\u0E00-\u0E7F]/.test(piece);
+      if(hasThai&&piece.length>=8&&piece.length<=72)out.push(piece);
+      if(words.length>=2&&words.length<=10&&meaningful.length>=2&&piece.length<=84)out.push(piece);
+      if(words.length>3){
+        for(let size=3;size<=Math.min(5,words.length);size++){
+          for(let i=0;i<=words.length-size;i++){
+            const gram=words.slice(i,i+size).join(' ');
+            const gramMeaningful=words.slice(i,i+size).filter(w=>!stop.has(topicKey(w)));
+            if(gramMeaningful.length>=2&&gram.length>=8&&gram.length<=64)out.push(gram);
+          }
+        }
+      }
+    });
+    return [...new Set(out.map(compactPhrase).filter(Boolean))];
+  }
 
   FILTERED.forEach(r=>{
     const rowKeywords=[...(r.keywords||[]),...splitKeywords(r.mainKeyword),...splitKeywords(r.subKeyword)];
     rowKeywords.forEach(k=>add(k,r,'keyword'));
-    (safe(r.message).match(/#[\p{L}\p{N}_]+/gu)||[]).forEach(k=>add(k,r,'hashtag'));
+    (safe(r.message).match(/#[\p{L}\p{M}\p{N}_]+/gu)||[]).forEach(k=>add(k,r,'hashtag'));
+    phrasePieces(r.message).forEach(k=>add(k,r,'phrase'));
 
     const cleaned=safe(r.message)
       .replace(/https?:\/\/\S+/g,' ')
+      .replace(/#[\p{L}\p{M}\p{N}_]+/gu,' ')
       .replace(/[@]\w+/g,' ')
       .replace(/[0-9]{3,}/g,' ');
     const tokens=cleaned.split(/[\s,.;:!?()[\]{}"'“”‘’\n\r]+/).map(cleanTopicText).filter(Boolean);
     tokens.forEach(w=>{
       const key=topicKey(w);
-      if(key.length>=3&&!stop.has(key))add(w,r,'token');
+      if(key.length>=3&&!stop.has(key)&&!/[\u0E00-\u0E7F]/.test(key))add(w,r,'token');
     });
     for(let i=0;i<tokens.length-1;i++){
       const phrase=cleanTopicText(tokens[i]+' '+tokens[i+1]);
       const k1=topicKey(tokens[i]),k2=topicKey(tokens[i+1]);
-      if(!stop.has(k1)&&!stop.has(k2)&&phrase.length>=7)add(phrase,r,'token');
+      if(!/[\u0E00-\u0E7F]/.test(phrase)&&!stop.has(k1)&&!stop.has(k2)&&phrase.length>=7)add(phrase,r,'token');
     }
   });
 
   let arr=[...m.values()].map(o=>{
-    o.score=(o.keywordHits*8)+(o.hashtagHits*7)+(o.mentions*3)+Math.log10(o.engagement+10);
+    const phraseBonus=o.phraseHits?Math.min(4,o.label.length/18):0;
+    o.score=(o.keywordHits*10)+(o.hashtagHits*8)+(o.phraseHits*6)+(o.mentions*3)+phraseBonus+Math.log10(o.engagement+10);
     delete o._rows;
     return o;
-  }).filter(o=>o.keywordHits||o.hashtagHits||o.mentions>=2||o.engagement>=100);
+  }).filter(o=>o.keywordHits||o.hashtagHits||o.phraseHits||o.mentions>=2||o.engagement>=100);
 
   arr.sort((a,b)=>b.score-a.score);
   const kept=[];
@@ -653,13 +705,13 @@ function renderBrandPlatformTierComparison(){
 
   const metricFor=(platform,tier,brand)=>{
     const o=comboMap.get([platform,tier,brand].join('\u0001'));
-    if(!o)return{influencers:0,share:0,mentions:0,engagement:0,followers:0,er:0};
+    if(!o)return{influencers:0,share:0,mentions:0,engagement:0,followers:0,erBase:0,er:0};
     const influencers=o.accounts.size;
     const followers=[...o.followersByAccount.values()].reduce((a,b)=>a+b,0);
     const erBase=o.erBase||followers;
     const er=erBase?o.engagement/erBase:0;
     const total=brandTotals.get(brand)||0;
-    return{influencers,share:total?influencers/total:0,mentions:o.mentions,engagement:o.engagement,followers,er};
+    return{influencers,share:total?influencers/total:0,mentions:o.mentions,engagement:o.engagement,followers,erBase,er};
   };
 
   let html='<table class="table matrixTable"><thead><tr><th>Platform</th><th>Tier</th><th>Row total</th>';
@@ -672,7 +724,7 @@ function renderBrandPlatformTierComparison(){
     const values=brands.map(brand=>metricFor(platform,tier,brand));
     const rowMax=Math.max(...values.map(v=>v.influencers),1);
     const rowTotal=values.reduce((a,v)=>a+v.influencers,0);
-    html+=`<tr><td><span class="pill source" style="background:${colorPlatform(platform)}">${esc(platform)}</span></td><td>${esc(tier)}</td><td class="rowTotal">${fmt(rowTotal)}</td>`;
+    html+=`<tr><td><span class="pill source" style="background:${colorPlatform(platform)}">${esc(platform)}</span></td><td>${esc(tier)}</td><td class="rowTotal">${activeMeta.format(rowTotal)}</td>`;
     values.forEach(v=>{
       const level=v.influencers?Math.max(1,Math.ceil(v.influencers/rowMax*4)):0;
       html+=`<td><div class="heatCell hot${level}" title="${fmt(v.influencers)} influencers · ${pct(v.share)} of brand · ${fmt(v.mentions)} mentions · ${fmt(v.engagement)} engagement"><b>${fmt(v.influencers)} <span style="display:inline;font-size:11px">(${pct(v.share)})</span></b><span>${fmt(v.mentions)} mentions</span><span>Eng. ${fmt(v.engagement)} · ER ${pct(v.er)}</span></div></td>`;
@@ -750,7 +802,7 @@ function exportFileName(type){
 
 function downloadCSV(rows,name){if(!rows.length)return alert('No data to export');const flat=rows.map(r=>{const o={};Object.keys(r).forEach(k=>{if(!['raw','rows'].includes(k))o[k]=r[k]});return o});const keys=[...new Set(flat.flatMap(Object.keys))],csv=[keys.join(','),...flat.map(r=>keys.map(k=>'"'+safe(r[k]).replace(/"/g,'""')+'"').join(','))].join('\n'),a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
 function setTab(){document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===activeTab));document.querySelectorAll('.tabPanel').forEach(p=>p.classList.add('hidden'));$('tab-'+activeTab).classList.remove('hidden');if($('analysisFilters'))$('analysisFilters').classList.toggle('hidden',activeTab==='manager');syncManagerSelectionUI();closeDrawer();hideTip();setTimeout(()=>{if(DATA.length)render()},30)}
-function bind(){document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{activeTab=b.dataset.tab;setTab()});$('keywordBtn').onclick=e=>{e.stopPropagation();$('keywordPanel').classList.toggle('hidden')};document.addEventListener('click',e=>{if(!e.target.closest('#keywordMulti'))$('keywordPanel').classList.add('hidden')});$('chooseBtn').onclick=()=>$('fileInput').click();$('fileInput').onchange=e=>handleFile(e.target.files[0]);$('clearBtn').onclick=()=>{DATA=[];FILTERED=[];EXCLUDED.clear();MANAGER_SELECTED.clear();DM_PAGE=1;$('dash').classList.add('hidden');$('lastUpdated').textContent='No data loaded · V6.4.5'};['dragover','drop'].forEach(ev=>$('dropZone').addEventListener(ev,e=>{e.preventDefault();if(ev==='drop')handleFile(e.dataTransfer.files[0])}));['q','source','category','sentiment','from','to','metric','sortBy','sortDir','limit','influencerRankMetric'].forEach(id=>['input','change'].forEach(ev=>$(id).addEventListener(ev,()=>{syncDateDisplay();closeDrawer();if(DATA.length)render()})));document.querySelectorAll('.momentumMetric').forEach(el=>el.onchange=()=>{MOMENTUM_METRIC=el.value;syncMomentumControls();if(DATA.length){renderBrandMomentum('brandMomentum');renderBrandMomentum('brandMomentum2')}});document.querySelectorAll('.momentumSlot').forEach(el=>el.onchange=()=>{MOMENTUM_SLOT=el.value;syncMomentumControls();if(DATA.length){renderBrandMomentum('brandMomentum');renderBrandMomentum('brandMomentum2')}});syncMomentumControls();$('resetBtn').onclick=()=>{['q','source','category','sentiment'].forEach(id=>$(id).value='');SELECTED_KEYWORDS.clear();updateKeywordUI();const dates=DATA.map(r=>r.date).filter(Boolean).sort();if(dates.length){$('from').value=dates[0];$('to').value=dates[dates.length-1]}syncDateDisplay();render()};$('exportBtn').onclick=()=>downloadCSV(FILTERED,exportFileName('dashboard_filtered'));$('formulaBtn').onclick=e=>{e.stopPropagation();openFormulaTips()};if($('formulaClose'))$('formulaClose').onclick=closeFormulaTips;if($('formulaBackdrop'))$('formulaBackdrop').onclick=closeFormulaTips;
+function bind(){document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{activeTab=b.dataset.tab;setTab()});$('keywordBtn').onclick=e=>{e.stopPropagation();$('keywordPanel').classList.toggle('hidden')};document.addEventListener('click',e=>{if(!e.target.closest('#keywordMulti'))$('keywordPanel').classList.add('hidden')});$('chooseBtn').onclick=()=>$('fileInput').click();$('fileInput').onchange=e=>handleFile(e.target.files[0]);$('clearBtn').onclick=()=>{DATA=[];FILTERED=[];EXCLUDED.clear();MANAGER_SELECTED.clear();DM_PAGE=1;BPT_HEATMAP_METRIC='mentions';if($('brandPlatformTierMetric'))$('brandPlatformTierMetric').value=BPT_HEATMAP_METRIC;$('dash').classList.add('hidden');$('lastUpdated').textContent='No data loaded · V6.4.5'};['dragover','drop'].forEach(ev=>$('dropZone').addEventListener(ev,e=>{e.preventDefault();if(ev==='drop')handleFile(e.dataTransfer.files[0])}));['q','source','category','sentiment','from','to','metric','sortBy','sortDir','limit','influencerRankMetric'].forEach(id=>['input','change'].forEach(ev=>$(id).addEventListener(ev,()=>{syncDateDisplay();closeDrawer();if(DATA.length)render()})));if($('brandPlatformTierMetric'))$('brandPlatformTierMetric').onchange=e=>{BPT_HEATMAP_METRIC=e.target.value||'mentions';if(DATA.length)renderBrandPlatformTierComparison()};document.querySelectorAll('.momentumMetric').forEach(el=>el.onchange=()=>{MOMENTUM_METRIC=el.value;syncMomentumControls();if(DATA.length){renderBrandMomentum('brandMomentum');renderBrandMomentum('brandMomentum2')}});document.querySelectorAll('.momentumSlot').forEach(el=>el.onchange=()=>{MOMENTUM_SLOT=el.value;syncMomentumControls();if(DATA.length){renderBrandMomentum('brandMomentum');renderBrandMomentum('brandMomentum2')}});syncMomentumControls();$('resetBtn').onclick=()=>{['q','source','category','sentiment'].forEach(id=>$(id).value='');SELECTED_KEYWORDS.clear();updateKeywordUI();const dates=DATA.map(r=>r.date).filter(Boolean).sort();if(dates.length){$('from').value=dates[0];$('to').value=dates[dates.length-1]}syncDateDisplay();render()};$('exportBtn').onclick=()=>downloadCSV(FILTERED,exportFileName('dashboard_filtered'));$('formulaBtn').onclick=e=>{e.stopPropagation();openFormulaTips()};if($('formulaClose'))$('formulaClose').onclick=closeFormulaTips;if($('formulaBackdrop'))$('formulaBackdrop').onclick=closeFormulaTips;
 ['dmQ','dmPlatform','dmBrand','dmKeyword','dmTier','dmStatus','dmFrom','dmTo'].forEach(id=>['input','change'].forEach(ev=>$(id).addEventListener(ev,()=>{DM_PAGE=1;MANAGER_SELECTED.clear();renderDataManager()})));
 $('dmPageSize').onchange=()=>{DM_PAGE=1;renderDataManager()};
 $('dmPrev').onclick=()=>{if(DM_PAGE>1){DM_PAGE--;renderDataManager()}};
@@ -876,7 +928,18 @@ function openDetail(r,fromAccount=false){
 function renderBrandPlatformTierComparison(){
   const el=$('brandPlatformTierMatrix')||$('brandPlatformTierRows');
   if(!el)return;
+  const metric=BPT_HEATMAP_METRIC||$('brandPlatformTierMetric')?.value||'mentions';
+  if($('brandPlatformTierMetric'))$('brandPlatformTierMetric').value=metric;
+  const metricMeta={
+    influencers:{label:'Unique Account',total:'platform-accounts',format:fmt,cell:v=>v.influencers,note:'Rows are Platform × Tier. Brand columns show unique accounts and % of that brand\'s total. Darker cells mean that brand uses more unique accounts than other brands in the same row.'},
+    mentions:{label:'Mentions',total:'mentions',format:fmt,cell:v=>v.mentions,note:'Rows are Platform × Tier. Brand columns show mentions by default. Darker cells mean that brand has more mentions than other brands in the same row.'},
+    engagement:{label:'Engagement',total:'engagement',format:fmt,cell:v=>v.engagement,note:'Rows are Platform × Tier. Brand columns show engagement totals. Darker cells mean that brand earns more engagement than other brands in the same row.'},
+    er:{label:'ER / Proxy',total:'avg ER',format:pct,cell:v=>v.er,note:'Rows are Platform × Tier. Brand columns show ER / Proxy. Darker cells mean higher efficiency than other brands in the same row.'}
+  };
+  const activeMeta=metricMeta[metric]||metricMeta.mentions;
+  if($('brandPlatformTierNote'))$('brandPlatformTierNote').textContent=activeMeta.note;
   const brandAccounts=new Map();
+  const brandTotalsByMetric=new Map();
   const comboMap=new Map();
 
   FILTERED.forEach(r=>{
@@ -888,6 +951,11 @@ function renderBrandPlatformTierComparison(){
 
     if(!brandAccounts.has(brand))brandAccounts.set(brand,new Set());
     brandAccounts.get(brand).add(platformAccount);
+    if(!brandTotalsByMetric.has(brand))brandTotalsByMetric.set(brand,{mentions:0,engagement:0,erBase:0});
+    const brandTotal=brandTotalsByMetric.get(brand);
+    brandTotal.mentions++;
+    brandTotal.engagement+=Number(r.engagement||0);
+    brandTotal.erBase+=erBaseOf(r);
 
     const key=[platform,tier,brand].join('\u0001');
     if(!comboMap.has(key))comboMap.set(key,{brand,platform,tier,accounts:new Set(),mentions:0,engagement:0,followersByAccount:new Map(),erBase:0});
@@ -916,33 +984,54 @@ function renderBrandPlatformTierComparison(){
 
   const metricFor=(platform,tier,brand)=>{
     const o=comboMap.get([platform,tier,brand].join('\u0001'));
-    if(!o)return{influencers:0,share:0,mentions:0,engagement:0,followers:0,er:0};
+    if(!o)return{influencers:0,share:0,mentions:0,engagement:0,followers:0,erBase:0,er:0};
     const influencers=o.accounts.size;
     const followers=[...o.followersByAccount.values()].reduce((a,b)=>a+b,0);
     const erBase=o.erBase||followers;
     const er=erBase?o.engagement/erBase:0;
     const total=brandTotals.get(brand)||0;
-    return{influencers,share:total?influencers/total:0,mentions:o.mentions,engagement:o.engagement,followers,er};
+    return{influencers,share:total?influencers/total:0,mentions:o.mentions,engagement:o.engagement,followers,erBase,er};
+  };
+
+  const brandTotalLabel=brand=>{
+    const totals=brandTotalsByMetric.get(brand)||{mentions:0,engagement:0,erBase:0};
+    if(metric==='mentions')return `${fmt(totals.mentions)} mentions`;
+    if(metric==='engagement')return `${fmt(totals.engagement)} engagement`;
+    if(metric==='er')return `${pct(totals.erBase?totals.engagement/totals.erBase:0)} avg ER`;
+    return `${fmt(brandTotals.get(brand)||0)} platform-accounts`;
+  };
+
+  const primaryLabel=v=>{
+    if(metric==='mentions')return fmt(v.mentions);
+    if(metric==='engagement')return fmt(v.engagement);
+    if(metric==='er')return pct(v.er);
+    return fmt(v.influencers);
   };
 
   let html='<table class="table matrixTable"><thead><tr><th>Platform</th><th>Tier</th><th>Row total</th>';
   brands.forEach(brand=>{
-    html+=`<th><span style="color:${brandColor(brand)};font-weight:950">${esc(brand)}</span><div class="brandTotalHead">Total ${fmt(brandTotals.get(brand)||0)} platform-accounts</div></th>`;
+    html+=`<th><span style="color:${brandColor(brand)};font-weight:950">${esc(brand)}</span><div class="brandTotalHead">Total ${brandTotalLabel(brand)}</div></th>`;
   });
   html+='</tr></thead><tbody>';
 
   rowKeys.forEach(({platform,tier})=>{
     const values=brands.map(brand=>metricFor(platform,tier,brand));
-    const rowMax=Math.max(...values.map(v=>v.influencers),1);
-    const rowTotal=values.reduce((a,v)=>a+v.influencers,0);
-    html+=`<tr><td><span class="pill source" style="background:${colorPlatform(platform)}">${esc(platform)}</span></td><td>${esc(tier)}</td><td class="rowTotal">${fmt(rowTotal)}</td>`;
+    const metricValues=values.map(activeMeta.cell);
+    const rowMax=Math.max(...metricValues,1);
+    const rowTotal=metric==='er'
+      ? values.reduce((a,v)=>a+v.erBase,0)
+        ? values.reduce((a,v)=>a+v.engagement,0)/values.reduce((a,v)=>a+v.erBase,0)
+        : 0
+      : metricValues.reduce((a,v)=>a+v,0);
+    html+=`<tr><td><span class="pill source" style="background:${colorPlatform(platform)}">${esc(platform)}</span></td><td>${esc(tier)}</td><td class="rowTotal">${activeMeta.format(rowTotal)}</td>`;
     values.forEach(v=>{
-      const level=v.influencers?Math.max(1,Math.ceil(v.influencers/rowMax*4)):0;
-      html+=`<td><div class="heatCell hot${level}" title="${fmt(v.influencers)} unique accounts on this platform · ${pct(v.share)} of brand platform-accounts · ${fmt(v.mentions)} mentions · ${fmt(v.engagement)} engagement"><b>${fmt(v.influencers)} <span style="display:inline;font-size:11px">(${pct(v.share)})</span></b><span>${fmt(v.mentions)} mentions</span><span>Eng. ${fmt(v.engagement)} · ER ${pct(v.er)}</span></div></td>`;
+      const heatValue=activeMeta.cell(v);
+      const level=heatValue?Math.max(1,Math.ceil(heatValue/rowMax*4)):0;
+      html+=`<td><div class="heatCell hot${level}" title="${fmt(v.influencers)} unique accounts on this platform · ${pct(v.share)} of brand platform-accounts · ${fmt(v.mentions)} mentions · ${fmt(v.engagement)} engagement · ER ${pct(v.er)}"><b>${primaryLabel(v)} <span style="display:inline;font-size:11px">${esc(activeMeta.label)}</span></b><span>${fmt(v.influencers)} accounts · ${pct(v.share)}</span><span>${fmt(v.mentions)} mentions · Eng. ${fmt(v.engagement)} · ER ${pct(v.er)}</span></div></td>`;
     });
     html+='</tr>';
   });
-  html+='</tbody></table><div class="matrixLegend"><span><i style="background:rgba(255,122,26,.12)"></i>Lower</span><span><i style="background:rgba(255,122,26,.36)"></i>Mid</span><span><i style="background:rgba(255,122,26,.58)"></i>Higher in same row</span></div>';
+  html+=`</tbody></table><div class="matrixLegend"><span>Heatmap: ${esc(activeMeta.label)}</span><span><i style="background:rgba(255,122,26,.12)"></i>Lower</span><span><i style="background:rgba(255,122,26,.36)"></i>Mid</span><span><i style="background:rgba(255,122,26,.58)"></i>Higher in same row</span></div>`;
   el.innerHTML=html;
 }
 
